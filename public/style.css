@@ -1,0 +1,177 @@
+body {
+  background: lavender;
+}
+/* navbar */
+.navBarOne * {
+  margin: 0;
+  padding: 0;
+}
+.navBarOne {
+  background: white;
+  padding: 20px 0 20px 0;
+  display: flex;
+}
+.navBarOne .logo {
+  position: absolute;
+  left: 30px;
+  top: 10px;
+  font-size: 30px;
+}
+.navBarOne .searchInput {
+  margin-left: auto;
+  margin-right: auto;
+}
+.navBarOne .searchInput input {
+  width: 300px;
+}
+.navBarOne .searchInput img {
+  position: relative;
+  top: 2.5px;
+  right: 19px;
+  max-height: 15px;
+  transform: scaleX(-1);
+  cursor: pointer;
+}
+.navBarOne ul {
+  position: absolute;
+  right: 40px;
+}
+.navBarOne ul li {
+  display: inline;
+  list-style: none;
+  margin-left: 20px;
+}
+
+/* departamentos */
+.departamentosDiv {
+  background: rgb(81, 145, 150);
+  text-align: center;
+  width: 100%;
+}
+.departamentosDiv ul {
+  margin: 0;
+  padding: 5px 0 5px 0;
+}
+.departamentosDiv ul li {
+  list-style: none;
+  display: inline;
+  padding: 0 5px 0 5px;
+  color: white;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  cursor: pointer;
+}
+.departamentosDiv ul li.borderRight {
+  border-right: 1px solid rgb(77, 108, 110);
+}
+
+/* catálogo de itens */
+.itensCatalogo {
+  margin-top: 30px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  height: 1000px;
+  display: flex;
+}
+.itensCatalogo .classificações {
+  width: 200px;
+  min-width: 180px;
+}
+.itensCatalogo .classificações ul li {
+  list-style: none;
+  margin-top: 2px;
+  color: rgb(58, 69, 73);
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  cursor: pointer;
+  font-size: 17px;
+  border-bottom: 1px solid black;
+  user-select: none;
+}
+
+/* everyItem */
+.itemToBuy {
+  position: relative;
+  display: inline-block;
+  width: 210px;
+  height: 370px;
+  background: white;
+  margin: 10px;
+  padding: 10px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+.itemToBuy:hover {
+  transition: 0.2s;
+  transform: scale(1.02);
+  box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.35);
+}
+.itemToBuy .favoriteHeart {
+  color: black;
+  position: absolute;
+  right: 10px;
+  max-width: 25px;
+}
+.itemToBuy .productImgDiv {
+  position: absolute;
+  top: 30px;
+  left: 25px;
+}
+.itemToBuy .itemImg {
+  position: absolute;
+  max-width: 180px;
+  max-height: 170px;
+  left: 5px;
+}
+.itemToBuy .productContent {
+  position: absolute;
+  text-align: left;
+  top: 180px;
+  color: rgb(66, 70, 77);
+  font-family: sans-serif;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.itemToBuy .prices {
+  position: absolute;
+  top: 270px;
+  padding-left: 5px;
+  font-family: sans-serif;
+}
+.itemToBuy .prices .price {
+  color: grey;
+  margin-bottom: 0;
+  font-family: sans-serif;
+}
+.itemToBuy .prices .priceComplement {
+  margin-top: 0;
+  color: grey;
+}
+.numDeVendas {
+  position: absolute;
+  bottom: 18px;
+  font-size: 10px;
+  left: 17px;
+}
+
+/* itensDiv */
+.ecommerceItensDiv {
+  min-width: 250px;
+}
+.promoHot {
+  max-width: 110px;
+  position: absolute;
+  top: -10px;
+  left: -20px;
+  z-index: 1;
+}
+.estoque {
+  position: absolute;
+  bottom: 30px;
+  left: 16px;
+  font-size: 11px;
+}
+.bolinhaMenu {
+  position: relative;
+  left: 35px;
+  transition: 0.3s;
+}
