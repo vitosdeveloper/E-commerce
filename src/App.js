@@ -5,7 +5,6 @@ import Catalog from './components/Catalog.jsx';
 function App() {
   const [isLoggedIn] = useState(false);
   const [catalogIs, setCatalogIs] = useState('normal');
-  console.log(catalogIs)
   return (
     <div>
       <NavBar isLoggedIn={isLoggedIn}/>

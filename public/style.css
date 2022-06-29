@@ -63,6 +63,13 @@ body {
 .departamentosDiv ul li.borderRight {
   border-right: 1px solid rgb(77, 108, 110);
 }
+.menuSublinhado {
+  position: absolute;
+  font-size: 120px;
+  margin: 0;
+  transition: 0.3s;
+  z-index: -1;
+}
 
 /* catálogo de itens */
 .itensCatalogo {

@@ -129,7 +129,6 @@ function Catalog(props) {
         setBolinhaHeight(topDoUl - topDoLi + 13)
         setSelectedList('TODOS')
     }, [props.catalogIs]);
-
     //tentando colocar as ultimas 20 compras aparecendo
 
     //colocar maiores numeros de compra do maior pro menor (organização)
@@ -169,7 +168,6 @@ function Catalog(props) {
                         })
                         : null
                     }
-                    
                 </ul>
             </div>
             <div className="ecommerceItensDiv">
