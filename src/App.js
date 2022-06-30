@@ -1,17 +1,21 @@
-import { useState } from 'react';
-import NavBar from './components/NavBar.jsx';
-import Departamentos from './components/Departamentos.jsx';
-import Catalog from './components/Catalog.jsx';
+import { Routes, Route } from 'react-router-dom';
+import Login from './components/Login.jsx';
+import Profile from './components/Profile.jsx';
+import MainPage from './components/MainPage.jsx';
+import { IsLoggedInProvider } from './LoginContext';
 
 function App() {
-  //const [isLoggedIn] = useState(false);
-  const [catalogIs, setCatalogIs] = useState('normal');
+  
   return (
-    <div>
-      <NavBar />
-      <Departamentos setCatalog={setCatalogIs} />
-      <Catalog catalogIs={catalogIs}/>
-    </div>
+    <IsLoggedInProvider>
+      <div>
+        <Routes>
+            <Route path="/" element={<MainPage />} />
+            <Route path="login" element={<Login />} />
+            <Route path="profile" element={<Profile />} />
+        </Routes>
+      </div>
+    </IsLoggedInProvider>
   );
 }
 

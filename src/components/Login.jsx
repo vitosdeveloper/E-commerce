@@ -1,13 +1,12 @@
 import NavBar from './NavBar.jsx';
 import { useState } from 'react';
-import useGlobalStorage from 'use-global-storage';
+import { useLoggedIn, useLoggedInUpdate } from '../LoginContext.jsx';
+//pegar url atual e tals
+import { Navigate } from 'react-router-dom';
 
 function Login (){
-    const useStorage = useGlobalStorage({
-        storageOptions: { name: 'store-db' }
-    });
-    // eslint-disable-next-line
-    const [isLoggedIn, setIsLoggedIn] = useStorage('loggin', false);
+    const isLoggedIn = useLoggedIn();
+    const setIsLoggedIn = useLoggedInUpdate();
 
     const [logOrReg, setLogOrReg] = useState('choose');
     const [loginName, setLoginName] = useState('');
@@ -24,7 +23,7 @@ function Login (){
     //redirect após logado para a home
     function logadoComSucesso(){
         setTimeout(() => {
-            window.location.href = '/';
+            //window.location.href = '/';
             setIsLoggedIn(true)
         }, 1500);
     }
@@ -33,7 +32,7 @@ function Login (){
         <div>
             <NavBar />
             <div className="loginOrRegister">
-                {
+                {isLoggedIn ? <Navigate to="/" /> :
                     logOrReg==='choose' ?
                         <div className="logChoose">
                             <h3 className="loginButtons" onClick={()=>{setLogOrReg('log')}}>Login</h3> 

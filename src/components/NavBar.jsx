@@ -1,12 +1,9 @@
 import { Link } from 'react-router-dom';
-import useGlobalStorage from 'use-global-storage';
+import { useLoggedIn } from '../LoginContext.jsx';
 
 function NavBar() {
-    const useStorage = useGlobalStorage({
-      storageOptions: { name: 'store-db' }
-    });
-    // eslint-disable-next-line
-    const [isLoggedIn, setIsLoggedIn] = useStorage('loggin', false);
+    const isLoggedIn = useLoggedIn();
+    //const setIsLoggedIn = useLoggedInUpdate;
 
     const navBarOneItens = [
       {// eslint-disable-next-line

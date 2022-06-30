@@ -1,17 +1,22 @@
 import NavBar from './NavBar.jsx';
-import useGlobalStorage from 'use-global-storage';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useLoggedIn, useLoggedInUpdate } from '../LoginContext.jsx';
+import { Navigate } from 'react-router-dom';
 
 function Profile(){
-    const useStorage = useGlobalStorage({
-        storageOptions: { name: 'store-db' }
-    });
-    // eslint-disable-next-line
-    const [isLoggedIn, setIsLoggedIn] = useStorage('loggin', false);
+
+    const isLoggedIn = useLoggedIn();
+    const setIsLoggedIn = useLoggedInUpdate();
+
+    const [redirect, setRedirect] = useState('');
 
     function deslogar(){
-        window.location.href = '/';
-        setIsLoggedIn(false)
+        setTimeout(() => {
+            setRedirect(<Navigate to="/" />)
+        }, 1500);
+        setIsLoggedIn(false);
+        
     }
     function redirecionarLogin() {
         window.location.href = '/login';
@@ -41,8 +46,10 @@ function Profile(){
                     <h4>Logue para acessar essa página.</h4>
                     <h4>Redirecionando...</h4>
                     <br/><h3 className="loginButtonLogin" onClick={redirecionarLogin}>Logar</h3>
+                    {redirect}
                 </div>
             }
+            
         </div>
     )
 }
