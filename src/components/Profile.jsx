@@ -19,7 +19,7 @@ function Profile(){
         
     }
     function redirecionarLogin() {
-        window.location.href = '/login';
+        <Navigate to="/login" />
     }
 
     return (
