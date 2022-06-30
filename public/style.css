@@ -182,3 +182,91 @@ body {
   left: 35px;
   transition: 0.3s;
 }
+/* linksTeste */
+.linkLindo {
+  color: rgb(58, 69, 73);
+  text-decoration: none;
+}
+
+/* loogin/register screen */
+.loginOrRegister {
+  border: 3px dashed rgb(111, 111, 170);
+  background: rgb(200, 200, 241);
+  width: 300px;
+  height: 340px;
+  padding: auto;
+  margin: auto;
+  position: relative;
+  top: 60px;
+  text-align: center;
+}
+.logChoose {
+  padding-top: 50px;
+}
+.loginButtons {
+  cursor: pointer;
+  font-size: 45px;
+  display: inline;
+  border-bottom: 5px dashed rgb(111, 111, 170);
+  padding: 6px;
+}
+.loginOr {
+  margin: 25px 0 0 0;
+}
+.loginButtonsBack {
+  cursor: pointer;
+  font-size: 15px;
+  display: inline;
+  border-bottom: 3px dashed rgb(111, 111, 170);
+  padding: 0;
+  position: relative;
+  top: 90px;
+}
+.logName {
+  position: relative;
+  top: -17px;
+  display: inline;
+  border-bottom: 5px dashed rgb(111, 111, 170);
+}
+.loginInput {
+  margin-bottom: 3px;
+}
+.loginButtonLogin {
+  border-bottom: 3px dashed rgb(111, 111, 170);
+  padding: 0;
+  display: inline;
+  position: relative;
+  top: 10px;
+  cursor: pointer;
+}
+.regButtonsBack {
+  cursor: pointer;
+  font-size: 15px;
+  display: inline;
+  border-bottom: 3px dashed rgb(111, 111, 170);
+  padding: 0;
+  position: relative;
+  top: 63px;
+}
+.logou {
+  margin-top: 110px;
+}
+/* profile */
+.loginScreen {
+  text-align: center;
+  width: 600px;
+  height: 500px;
+  border: 1px solid black;
+  margin: 30px auto 0 auto;
+  padding: 15px 70px 0 70px;
+}
+.linksDoProfile {
+  cursor: pointer;
+  font-size: 15px;
+  display: inline;
+  position: relative;
+  top: 35px;
+}
+.aboutAcc {
+  text-align: left;
+}
