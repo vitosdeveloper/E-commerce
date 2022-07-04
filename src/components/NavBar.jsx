@@ -1,20 +1,22 @@
 import { Link } from 'react-router-dom';
 import { useLoggedIn } from '../LoginContext.jsx';
+import { useUsuarioDados } from '../LoginContext.jsx';
 
 function NavBar() {
     const isLoggedIn = useLoggedIn();
     //const setIsLoggedIn = useLoggedInUpdate;
+    const usuarioDados = useUsuarioDados();
 
     const navBarOneItens = [
-      {// eslint-disable-next-line
-        name: isLoggedIn ? 'Olá, mewTwo.' : "Login/Register",
+      {
+        name: isLoggedIn ? 'Ola, ' + usuarioDados.nome.slice(0, usuarioDados.nome.indexOf(' ')) : "Login/Register",
         linkPath: isLoggedIn ? '/profile' : '/login'
-      }, {
-        name: 'Carrinho',
-        linkPath: '/carrinho'
       }, {
         name: 'Favoritados',
         linkPath: '/favoritados'
+      }, {
+        name: 'Carrinho',
+        linkPath: '/carrinho'
       }, {
         name: 'Meus pedidos',
         linkPath: '/meus-pedidos'

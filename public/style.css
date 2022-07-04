@@ -92,6 +92,7 @@ body {
   cursor: pointer;
   font-size: 17px;
   border-bottom: 1px solid black;
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -119,24 +120,23 @@ body {
   max-width: 25px;
 }
 .itemToBuy .productImgDiv {
-  position: absolute;
+  position: relative;
   top: 30px;
-  left: 25px;
+  text-align: center;
+  overflow-x: hidden;
 }
 .itemToBuy .itemImg {
-  position: absolute;
-  max-width: 180px;
+  position: relative;
   max-height: 170px;
-  left: 5px;
 }
 .itemToBuy .productContent {
   position: absolute;
   text-align: left;
-  top: 180px;
   color: rgb(66, 70, 77);
   font-family: sans-serif;
   padding-left: 5px;
   padding-right: 5px;
+  top: 200px;
 }
 .itemToBuy .prices {
   position: absolute;
@@ -236,7 +236,15 @@ body {
   padding: 0;
   display: inline;
   position: relative;
-  top: 10px;
+  top: 20px;
+  cursor: pointer;
+}
+.logoffButtonLogin {
+  border-bottom: 3px dashed rgb(111, 111, 170);
+  padding: 0;
+  display: inline;
+  position: relative;
+  top: -10px;
   cursor: pointer;
 }
 .regButtonsBack {
@@ -256,17 +264,136 @@ body {
   text-align: center;
   width: 600px;
   height: 500px;
-  border: 1px solid black;
+  border: 3px dashed rgb(111, 111, 170);
   margin: 30px auto 0 auto;
   padding: 15px 70px 0 70px;
 }
 .linksDoProfile {
   cursor: pointer;
   font-size: 15px;
-  display: inline;
+  display: inline-block;
   position: relative;
-  top: 35px;
+  top: 15px;
 }
 .aboutAcc {
   text-align: left;
+  margin: 0 auto 0 25%;
+}
+.aboutAcc h4 {
+  margin: 0;
+}
+.inputEdit {
+  margin: 16px 0 16px 0;
+}
+/* favoritados */
+.favoritados {
+  border: 3px dashed rgb(111, 111, 170);
+  background: rgb(200, 200, 241);
+  width: 1100px;
+  min-height: 300px;
+  margin: 0 auto 50px auto;
+  position: relative;
+  top: 30px;
+}
+.favTitle {
+  text-align: center;
+}
+.favoritados .listaDeItens {
+  border: 1px dashed rgb(111, 111, 170);
+  background: rgb(171 171 220);
+  width: 890px;
+  height: 90px;
+  margin: 60px auto 30px auto;
+}
+
+.listaDeItens .imgBox {
+  border: 1px solid black;
+  max-height: 70px;
+  min-width: 90px;
+  max-widtH: 90px;
+  margin-left: 7px;
+  position: relative;
+  margin-top: 7px;
+  text-align: center;
+  background: rgb(111, 111, 170);
+}
+.imgBox .img {
+  max-width: auto;
+  height: 70px;
+}
+.listaDeItens .item {
+  display: flex;
+}
+.descri .desH5 {
+  font-size: 22px;
+  margin: 0;
+  position: relative;
+  top: 7px;
+  left: 10px;
+}
+.descri .price {
+  position: relative;
+  left: 10px;
+  margin: 0;
+  top: 6px;
+}
+.favoritados .ifNotLogged {
+  text-align: center;
+}
+.listaDeItens .favButtons {
+  position: relative;
+  float: right;
+  right: 90px;
+  top: 10px;
+}
+.favExcluir {
+  position: relative;
+}
+.favAddCart {
+  position: absolute;
+}
+.favButComum {
+  width: 70px;
+  margin: 0 3px 0 3px;
+  height: 70px;
+  border: 1px solid black;
+  background: rgb(111, 111, 170);
+}
+.favButComum:hover {
+  background: rgb(96, 96, 146);
+  cursor: pointer;
+}
+.favAddCart h5 {
+  margin-top: 14px;
+}
+.comprarBut {
+  width: 250px;
+  height: 70px;
+  border: 1px solid black;
+  background: rgb(111, 111, 170);
+}
+.precoTotal {
+  position: relative;
+  display: block;
+  float: right;
+  text-align: right;
+}
+.precoTotal h3 {
+  font-size: 35px;
+  margin: 0;
+  font-family: sans-serif;
+  margin: 8px 0 8px 0;
+}
+.quantidade {
+  right: 30px;
+  float: left;
+  position: relative;
+  bottom: -50px;
+}
+.quantidade .disp {
+  margin-right: 15px;
+}
+.quantityBut {
+  border: 1px solid black;
+  background: rgb(111, 111, 170);
 }

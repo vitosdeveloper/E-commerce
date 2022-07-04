@@ -1,57 +1,9 @@
 import { useState, useEffect } from 'react';
+import { useItensDaLoja, useFavoritos, useSetFavoritos } from '../LoginContext.jsx';
+
 function Catalog(props) {
     //fake data provisória
-    const storeModel = [
-        {
-            productImg: 'https://pngimg.com/uploads/spinner/spinner_PNG99778.png',
-            productTitle: 'Fidget spiner irado para sua criança babona',
-            productPrice: '40,00',
-            class: 'Fidget spiners',
-            status: 'promoção',
-            estoque: '350',
-            numDeCompras: '0'
-        }, {
-            productImg: 'https://images9.kabum.com.br/produtos/fotos/sync_mirakl/311349/Monitor-Led-21-5-Brazil-Pc-22w-xie-Fhd-75hz-Preto-Widescreen_1655987254_m.jpg',
-            productTitle: 'Monitor Gamer Ozone 27 LED, 144 Hz, Quad HD, 1ms, FreeSync, HDR, sRGB, HDMI/DisplayPort - OZDSP27IPS',
-            productPrice: '1472,00',
-            class: 'Monitores',
-            status: 'promoção',
-            estoque: '32',
-            numDeCompras: '12'
-        }, {
-            productImg: 'https://www.pngmart.com/files/7/Graphics-Card-PNG-Transparent-HD-Photo.png',
-            productTitle: 'GPU genérica usada do gustavo kei amemiya',
-            productPrice: '2400,00',
-            class: 'Placas de vídeo',
-            status: 'normal',
-            estoque: '4',
-            numDeCompras: '0'
-        }, {
-            productImg: 'https://integrae.com.br/wp-content/uploads/2021/05/mauricio-3.png',
-            productTitle: 'Camisinha sabor leite com moedas',
-            productPrice: '2,00',
-            class: 'Cuidados pessoais',
-            status: 'promoção',
-            estoque: '120',
-            numDeCompras: '2'
-        }, {
-            productImg: 'https://pngimg.com/uploads/mercedes/mercedes_PNG1903.png',
-            productTitle: 'Ford top nunca atropelou ninguém',
-            productPrice: '20400,00',
-            class: 'Automóveis',
-            status: 'normal',
-            estoque: '1',
-            numDeCompras: '3'
-        }, {
-            productImg: 'https://pngimg.com/uploads/mercedes/mercedes_PNG1903.png',
-            productTitle: 'Ford top que já atropelou criança',
-            productPrice: '10200,00',
-            class: 'Automóveis',
-            status: 'normal',
-            estoque: '2',
-            numDeCompras: '4'
-        }
-      ];
+    const storeModel = useItensDaLoja();
 
     //lista de todos departamentos
     const [catalogList, setCatalogList] = useState([]);
@@ -86,10 +38,25 @@ function Catalog(props) {
         setSelectedList(e.target.innerHTML)
     }
 
+    //favHeart
+    const fav = useFavoritos();
+    const setFav = useSetFavoritos();
+
+    function logTeste(e){
+        if (!fav.includes(e.target.name)){
+            setFav((prevData)=>{
+                return [
+                    ...prevData, 
+                    e.target.name
+                ]
+            });
+        }
+    }
+    
     function itemHtmlGenerator(item, index) {
         return (
             <div key={index} className="itemToBuy">
-            <img onMouseOver={(e)=>{
+            <img name={item._id} onClick={logTeste} onMouseOver={(e)=>{
                 e.target.src = 'https://i.imgur.com/A65fyuM.png';
             }}
             onMouseOut={(e)=>{

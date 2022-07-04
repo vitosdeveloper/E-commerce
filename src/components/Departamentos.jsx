@@ -27,13 +27,16 @@ function Departamentos(props) {
     setTimeout(() => {
         const departMenuBottom = document.querySelector('.departamentosDiv');
         const menuSublinhado = document.querySelector('.menuSublinhado');
+        if (menuSublinhado){
         menuSublinhado.style.opacity = '0.5';
+        }
         setPosicaoDaBarra((lastValues)=>{
             return {
                 ...lastValues,
                 altura: departMenuBottom.getBoundingClientRect().bottom - 140
             } 
-        });
+        })
+        
     }, 500); 
 
     return (
