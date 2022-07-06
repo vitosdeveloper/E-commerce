@@ -7,7 +7,7 @@ body {
   padding: 0;
 }
 .navBarOne {
-  background: white;
+  background: #b3a8f1;
   padding: 20px 0 20px 0;
   display: flex;
 }
@@ -44,7 +44,7 @@ body {
 
 /* departamentos */
 .departamentosDiv {
-  background: rgb(81, 145, 150);
+  background: rgb(111, 111, 170);
   text-align: center;
   width: 100%;
 }
@@ -114,10 +114,18 @@ body {
   box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.35);
 }
 .itemToBuy .favoriteHeart {
-  color: black;
+  color: white;
   position: absolute;
   right: 10px;
   max-width: 25px;
+  font-size: 40px;
+  display: inline-block;
+  top: -5px;
+  z-index: 2;
+  -webkit-text-stroke: 2px black;
+}
+.itemToBuy .favoriteHeart:hover {
+  color: red;
 }
 .itemToBuy .productImgDiv {
   position: relative;
@@ -186,6 +194,10 @@ body {
 .linkLindo {
   color: rgb(58, 69, 73);
   text-decoration: none;
+  font-weight: lighter;
+}
+.linkLindo:hover {
+  color: black;
 }
 
 /* loogin/register screen */
@@ -267,6 +279,7 @@ body {
   border: 3px dashed rgb(111, 111, 170);
   margin: 30px auto 0 auto;
   padding: 15px 70px 0 70px;
+  background: rgb(200, 200, 241);
 }
 .linksDoProfile {
   cursor: pointer;
@@ -284,6 +297,7 @@ body {
 }
 .inputEdit {
   margin: 16px 0 16px 0;
+  background: #9a9ad8;
 }
 /* favoritados */
 .favoritados {
@@ -371,6 +385,8 @@ body {
   height: 70px;
   border: 1px solid black;
   background: rgb(111, 111, 170);
+  margin-bottom: 30px;
+  cursor: pointer;
 }
 .precoTotal {
   position: relative;
@@ -396,4 +412,86 @@ body {
 .quantityBut {
   border: 1px solid black;
   background: rgb(111, 111, 170);
+  cursor: pointer;
+}
+.editButton {
+  width: 90px;
+  margin: 0 3px 0 3px;
+  height: 20px;
+  border: 1px solid black;
+  background: rgb(111, 111, 170);
+  position: relative;
+  right: 3px;
+}
+.editButton:hover {
+  background: rgb(96, 96, 146);
+  cursor: pointer;
+}
+.loguePls {
+  background: rgb(107, 107, 110);
+}
+.link .loguePls {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+.confirmarCompra {
+  width: 200px;
+  height: 400px;
+  background: rgb(111, 111, 194);
+  border: 4px dashed rgb(164, 164, 235);
+  position: absolute;
+  top: 300px;
+  display: inline-block;
+  left: 0;
+  right: 0;
+  margin: auto;
+  padding: 50px;
+}
+.confirmarCompra h4 {
+  margin-bottom: 0;
+}
+.confirmarCompra p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.confirmarCompra select {
+  margin-top: 6px;
+}
+.confirmarCompra button {
+  background: #9a9ad8;
+  margin: 0;
+  font-size: 12px;
+  text-align: left;
+}
+.confirmarCompra .finalizarCompra {
+  position: absolute;
+  bottom: 25px;
+  width: 150px;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+.confirmarCompra .finalizarCompra:hover {
+  cursor: pointer;
+}
+.confirmarCompra .card {
+  margin-top: 0;
+}
+.confirmarCompra .valorTotal {
+  margin-top: 0;
+  text-decoration: underline;
+}
+.totalAPager {
+  margin-bottom: -15px;
+}
+.closeWindow {
+  position: absolute;
+  top: 0px;
+  right: 5px;
+  font-size: 25px;
+  cursor: pointer;
+}
+.trocarEndereço {
+  cursor: pointer;
 }

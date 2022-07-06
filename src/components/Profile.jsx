@@ -58,19 +58,19 @@ function Profile(){
                         {
                         !editando ? <p>{usuarioDados.sexo}</p> : 
                             <div>
-	                            <select className="inputEdit" name="sexo" onChange={editarDeFato}>
-	                            	<option value="">Escolha seu sexo</option>
-	                            	<option value="Masculino">Masculino</option>
-	                            	<option value="Feminino">Feminino</option>
-	                            	<option value="Não-binário">Não-binário</option>
-	                            	<option value="Prefiro não informar">Prefiro não informar</option>
-	                            	<option value="Outros">Outros</option>
+                                <select className="inputEdit" name="sexo" onChange={editarDeFato}>
+	                                	<option value="">Escolha seu sexo</option>
+	                                	<option value="Masculino">Masculino</option>
+	                                	<option value="Feminino">Feminino</option>
+	                                	<option value="Não-binário">Não-binário</option>
+	                                	<option value="Prefiro não informar">Prefiro não informar</option>
+	                                	<option value="Outros">Outros</option>
 	                            </select><br/>
                             </div>
                         }
-                        {!editando ? <button onClick={()=>{editToggle(); backupDasInfos();}}>Editar profile</button> : 
+                        {!editando ? <button className="editButton" onClick={()=>{editToggle(); backupDasInfos();}}>Editar profile</button> : 
                         <div>
-                        <button onClick={editToggle}>Salvar</button><br/><button onClick={()=>{editToggle(); voltarAoBackup();}}>Cancelar</button>
+                        <button className="editButton" onClick={editToggle}>Salvar</button><br/><button className="editButton" onClick={()=>{editToggle(); voltarAoBackup();}}>Cancelar</button>
                         </div>}
                     </div>
                     <div className="linksDoProfile">

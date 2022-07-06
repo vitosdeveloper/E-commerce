@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
 function Departamentos(props) {
     function clickCatalog(z) {
         props.setCatalog(z)
@@ -23,8 +24,8 @@ function Departamentos(props) {
         });  
     };
     //substrair do tanto que a barra for movida
-
-    setTimeout(() => {
+ 
+    useEffect(() => {
         const departMenuBottom = document.querySelector('.departamentosDiv');
         const menuSublinhado = document.querySelector('.menuSublinhado');
         if (menuSublinhado){
@@ -36,8 +37,7 @@ function Departamentos(props) {
                 altura: departMenuBottom.getBoundingClientRect().bottom - 140
             } 
         })
-        
-    }, 500); 
+    }, []);
 
     return (
             <div className="departamentosDiv">

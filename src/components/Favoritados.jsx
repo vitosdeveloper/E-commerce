@@ -2,6 +2,7 @@ import NavBar from './NavBar.jsx';
 //trocar pelo context certo que vou fazer
 import { useItensDaLoja, useFavoritos, useSetFavoritos, useSetCarrinhoItens, useCarrinhoItens } from '../LoginContext.jsx';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
 function Favoritados(){
     const todosItens = useItensDaLoja();
@@ -10,8 +11,8 @@ function Favoritados(){
     const carrinhoItens = useCarrinhoItens();
     const setCarrinhoItens = useSetCarrinhoItens();
     
-    //animaçaobotoes
-    setInterval(() => {
+    //efeitos nos botoes
+    useEffect(() => {
         const botaoAnimation = document.querySelectorAll('.favButComum');
         botaoAnimation.forEach((item)=>{
             item.addEventListener('mousedown', ()=>{
@@ -21,7 +22,8 @@ function Favoritados(){
                 item.style.transform = 'scale(1)';
             });
         });
-    }, 100);
+    }, [carrinhoItens]);
+
     //deletar favoritos
     function favDelete(e){
         const idToDelete = e.currentTarget.name;
@@ -32,21 +34,18 @@ function Favoritados(){
         );
     }
     //copiar item para o carrinho
+
     function favToCart(e){
         const itemId = e.currentTarget.name;
-        const carFilter = carrinhoItens.filter((item)=>{
-            return item._id !== itemId
-        })
-
-        carrinhoItens.forEach((item)=>{
-            
-        })
-
-        //if (!item._id.includes(itemId)){
-            setCarrinhoItens((prevItens)=>{
-               return [...carFilter, { _id: itemId, quantidade: 1 }];
+        
+        setCarrinhoItens((prevItens)=>{
+            const carFilter = prevItens.filter((item)=>{
+                return item._id !== itemId
             })
-        //}
+            return [...carFilter, { _id: itemId, quantidade: 1 }]
+        })
+        e.currentTarget.style.background = 'grey';
+        e.currentTarget.innerText = 'Sucess!';
     }
 
     return (
@@ -62,10 +61,14 @@ function Favoritados(){
                                     fav.includes(item._id)?
                                     <div key={index} className="listaDeItens">
                                         <div className="favButtons">
-                                            <button type="submit" name={item._id} onClick={favDelete} className="favExcluir favButComum">
+                                            <button name={item._id} onClick={favDelete} className="favExcluir favButComum">
                                                 Excluir dos favoritos
                                             </button>
-                                            <button type="submit" name={item._id} onClick={favToCart} className="favAddCart favButComum">
+                                            <button name={item._id} onClick={
+                                                (e)=>{
+                                                    favToCart(e); 
+                                                }
+                                            } className="favAddCart favButComum">
                                                 <h5>Colocar no carrinho</h5>
                                             </button>
                                         </div>

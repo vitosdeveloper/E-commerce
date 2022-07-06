@@ -42,28 +42,29 @@ function Catalog(props) {
     const fav = useFavoritos();
     const setFav = useSetFavoritos();
 
-    function logTeste(e){
-        if (!fav.includes(e.target.name)){
+    function favoritar(e, itemId){
+        if (!fav.includes(itemId)){
             setFav((prevData)=>{
                 return [
                     ...prevData, 
-                    e.target.name
+                    itemId
                 ]
             });
         }
+        e.target.style.transform = 'scale(0.9)';
+        e.target.style.color = 'red';
     }
     
     function itemHtmlGenerator(item, index) {
         return (
             <div key={index} className="itemToBuy">
-            <img name={item._id} onClick={logTeste} onMouseOver={(e)=>{
-                e.target.src = 'https://i.imgur.com/A65fyuM.png';
-            }}
-            onMouseOut={(e)=>{
-                e.target.src = 'https://www.svgrepo.com/show/13666/heart.svg';
-            }}
-             className="favoriteHeart" src="https://www.svgrepo.com/show/13666/heart.svg" alt="" />
-            {item.status==='promoção'? <img className="promoHot" src="https://i.pinimg.com/originals/c8/cb/ff/c8cbffccee47e8d229aaf97f08cb1e2b.png" alt="hotPromo" />: null}
+            <span onClick={(e)=>{favoritar(e, item._id);}} className="favoriteHeart">♥</span>
+
+            {
+                item.status==='promoção'? <img className="promoHot" src="https://i.pinimg.com/originals/c8/cb/ff/c8cbffccee47e8d229aaf97f08cb1e2b.png" alt="hotPromo" />
+                : null
+            }
+            
             <div className="productImgDiv">
               <img className="itemImg" src={item.productImg} alt="" />
             </div>
@@ -109,13 +110,21 @@ function Catalog(props) {
         return b - a;
     });
 
+    //mudar lugar da bolinha clicando nos menus e nao na ul õ_õ
+    function bolinhaAltura(e){
+        //só vai pegar se clicar no LI uwu
+        if (e.target.constructor.name === 'HTMLLIElement'){
+            setBolinhaHeight(Math.round(e.target.getBoundingClientRect().top - e.currentTarget.getBoundingClientRect().top + 13))
+        }
+    }
+
     return (
         <div className="itensCatalogo">
             <div className="bolinhaMenu" style={{top: bolinhaHeight + 'px'}}>
                 <span>●</span>
             </div>
             <div className="classificações">
-                <ul onClick={(e)=>{setBolinhaHeight(Math.round(e.target.getBoundingClientRect().top - e.currentTarget.getBoundingClientRect().top + 13))}}>
+                <ul onClick={bolinhaAltura}>
                     <li onClick={filterList}>TODOS</li>
                     {   //render pra abas de todos departamentos
                         props.catalogIs==='normal' ?
