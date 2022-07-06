@@ -66,7 +66,7 @@ export function IsLoggedInProvider({ children }){
     //o set só vai ser usado depois que tiver a plataforma de admin de adicionar itens na DB, obviamente.
     const [itensDaLoja, setItensDaLoja] = useState([]);
     useEffect(() => {
-        fetch("http://localhost:5000/itensDaLoja").then(
+        fetch("https://ecommercefakedb.herokuapp.com/itensDaLoja").then(
             response => response.json()
           ).then(
             data => {
