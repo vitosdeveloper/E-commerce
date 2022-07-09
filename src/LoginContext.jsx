@@ -66,14 +66,14 @@ export function IsLoggedInProvider({ children }){
     const [itensDaLoja, setItensDaLoja] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:5000/users").then(
+        fetch("https://ecommercefakedb.herokuapp.com/users").then(
             response => response.json()
           ).then(
             data => {
                 setUsuarioDados(data[0]);
             }
           )
-    }, []);
+    }, [setUsuarioDados]);
 
     
     useEffect(() => {

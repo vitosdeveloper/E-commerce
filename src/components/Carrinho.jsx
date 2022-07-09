@@ -1,7 +1,7 @@
 import NavBar from './NavBar.jsx'
 import { useCarrinhoItens, useSetCarrinhoItens, useItensDaLoja, useLoggedIn, useUsuarioDados } from '../LoginContext.jsx';
 import { Link, Navigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Axios from 'axios';
 
 function Carrinho(){
@@ -106,7 +106,7 @@ function Carrinho(){
             horarioDeCompra: horario+amOrPm
         }
         
-        Axios.post("http://localhost:5000/efetuarCompra", {formulario});
+        Axios.post("https://ecommercefakedb.herokuapp.com/efetuarCompra", {formulario});
         //esvaziar carrinho após compra
         setConfirmarCompra(false);
         sucess.innerText = 'Processando compra...';
@@ -116,8 +116,11 @@ function Carrinho(){
         setTimeout(()=>{
             setCarrinho([])
         }, 2000)
-        
     }
+
+    useEffect(()=>{
+        setConfirmarCompra(false);
+    },[carrinho])
 
     return (
         <div>
