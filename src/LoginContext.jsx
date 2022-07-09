@@ -53,33 +53,40 @@ export function IsLoggedInProvider({ children }){
 
     const [isLoggedIn, setIsLoggedIn] = useLocalStorage('islogged', false)
     //usuario, ja ja vai buscar da DB
-    const [usuariosDados, setUsuarioDados] = useLocalStorage('usuario', 
-        {
-            nome: 'Leozinho felipe kei parklez loucura haru te amo',
-            endereco: 'Rua perigosa no rio de janeiro 103',
-            sexo: 'Prefiro não informar',
-            itensComprados: []
-        }
-    );
+    const [usuariosDados, setUsuarioDados] = useLocalStorage('usuario', );
+    
+    //context para segurar favoritados no localStorage
+    const [favoritos, setFavoritos] = useLocalStorage('fav', []);
+    
+    //context pra segurar itens do carrinho
+    const [carrinhoItens, setCarrinhoItens] = useLocalStorage('carrinho', []);
 
     //itens da loja
     //o set só vai ser usado depois que tiver a plataforma de admin de adicionar itens na DB, obviamente.
     const [itensDaLoja, setItensDaLoja] = useState([]);
+
+    useEffect(() => {
+        fetch("http://localhost:5000/users").then(
+            response => response.json()
+          ).then(
+            data => {
+                setUsuarioDados(data[0]);
+            }
+          )
+    }, []);
+
+    
     useEffect(() => {
         fetch("https://ecommercefakedb.herokuapp.com/itensDaLoja").then(
             response => response.json()
           ).then(
             data => {
-                setItensDaLoja(data)
+                setItensDaLoja(data);
             }
           )
     }, []);
 
-    //context para segurar favoritados no localStorage
-    const [favoritos, setFavoritos] = useLocalStorage('fav', []);
-
-    //context pra segurar itens do carrinho
-    const [carrinhoItens, setCarrinhoItens] = useLocalStorage('carrinho', []);
+    
 
 
     return (

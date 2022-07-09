@@ -1,7 +1,8 @@
 import NavBar from './NavBar.jsx'
 import { useCarrinhoItens, useSetCarrinhoItens, useItensDaLoja, useLoggedIn, useUsuarioDados } from '../LoginContext.jsx';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { useState } from 'react';
+import Axios from 'axios';
 
 function Carrinho(){
     //carrinho
@@ -13,6 +14,9 @@ function Carrinho(){
     const isLoggedIn = useLoggedIn();
     //dados usuario
     const dadosUsuario = useUsuarioDados();
+
+    const sucess = document.querySelector('.favoritados .favTitle');
+    const [redirectPosCompra, setRedirectPosCompra] = useState(false);
 
     //deletar do carrinho 
     function carDelete(e){
@@ -44,7 +48,7 @@ function Carrinho(){
         let itemQuantidade = ++e.currentTarget.id;
         const itemId = e.currentTarget.name;
         const disponiveis = e.currentTarget.value;
-
+        const precoDoItem = e.currentTarget.getAttribute('href');
         if (itemQuantidade <= disponiveis) {
             carrinho.forEach((item)=>{
                 if (item._id === itemId) {
@@ -52,7 +56,7 @@ function Carrinho(){
                         const carrinhoFiltrado = lastValues.filter((itemFilter)=>{
                             return itemFilter._id !== itemId
                         })
-                        return [...carrinhoFiltrado, { _id: itemId, quantidade: itemQuantidade }]
+                        return [...carrinhoFiltrado, { _id: itemId, quantidade: itemQuantidade, preco: precoDoItem }]
                     } 
                 )}
             })
@@ -61,6 +65,7 @@ function Carrinho(){
     function removerItem(e){
         let itemQuantidade = e.currentTarget.id;
         const itemId = e.currentTarget.name;
+        const precoDoItem = e.currentTarget.getAttribute('href');
         if (itemQuantidade > 1) {
             carrinho.forEach((item)=>{
                 if (item._id === itemId) {
@@ -68,7 +73,7 @@ function Carrinho(){
                         const carrinhoFiltrado = lastValues.filter((itemFilter)=>{
                             return itemFilter._id !== itemId
                         })
-                        return [...carrinhoFiltrado, { _id: itemId, quantidade: --itemQuantidade }]
+                        return [...carrinhoFiltrado, { _id: itemId, quantidade: --itemQuantidade, preco: precoDoItem }]
                     })
                 }
             })
@@ -79,15 +84,40 @@ function Carrinho(){
 
     //depois fazer formulário e enviar os dados pra db com axios ou algo, testar com console.log
     function formularioDaCompra(){
+        const diaCompleto = new Date();
+        
         //lembrar de descontar do estoque
-        const formulario = {
-            userId: '',
-            valorDaCompra: precoTotal,
-            itensByIdAndItsQuantity: carrinho 
+        let amOrPm = '';
+        if (diaCompleto.getHours() < 12) {
+            amOrPm = ' am';
+        } else {
+            amOrPm = ' pm';
         }
-        console.log(formulario);
-    }
+        const horario = (diaCompleto.getMonth()+1).toString().padStart(2, 0)+'/'+diaCompleto.getDate().toString().padStart(2, 0)+', às '+diaCompleto.getHours().toString().padStart(2, 0)+':'+(diaCompleto.getMinutes().toString().padStart(2, 0));
 
+        const carrinhoFiltrado = carrinho.filter((item)=>{
+            return item.quantidade >= 1;
+        })
+        
+        const formulario = {
+            userId: dadosUsuario._id,
+            valorDaCompra: precoTotal,
+            itensByIdAndItsQuantity: carrinhoFiltrado,
+            horarioDeCompra: horario+amOrPm
+        }
+        
+        Axios.post("http://localhost:5000/efetuarCompra", {formulario});
+        //esvaziar carrinho após compra
+        setConfirmarCompra(false);
+        sucess.innerText = 'Processando compra...';
+        
+        setRedirectPosCompra(<Navigate to="/success" />)
+        
+        setTimeout(()=>{
+            setCarrinho([])
+        }, 2000)
+        
+    }
 
     return (
         <div>
@@ -117,13 +147,13 @@ function Carrinho(){
                                                                 </span>
                                                                 Quantidade:<span> </span>
                                                                 <button value={item.estoque} 
-                                                                onClick={removerItem} name={item._id} id={carItem.quantidade} className="quantityBut">
+                                                                onClick={removerItem} name={item._id} href={item.productPrice} id={carItem.quantidade} className="quantityBut">
                                                                     -
                                                                 </button>
                                                                 <span> </span>
                                                                 {carItem.quantidade}
                                                                 <span> </span>
-                                                                <button value={item.estoque} onClick={addItem} id={carItem.quantidade} name={item._id} 
+                                                                <button value={item.estoque} href={item.productPrice} onClick={addItem} id={carItem.quantidade} name={item._id} 
                                                                 className="quantityBut">
                                                                     +
                                                                 </button>
@@ -176,7 +206,7 @@ function Carrinho(){
                                 </button></Link>
                         
                             :carrinho.length > 1?
-                                <button onClick={()=>{setConfirmarCompra(true)}} type="submit" className="comprarBut">
+                                <button onClick={()=>{setConfirmarCompra(true); window.scrollTo({top: 0, behavior: "smooth"})}} type="submit" className="comprarBut">
                                     <h1>Comprar itens</h1>
                                 </button>
                             :
@@ -190,7 +220,9 @@ function Carrinho(){
             {confirmarCompra?
                 <div className="confirmarCompra">
                 <div>
-                    <span className='closeWindow' onClick={()=>{setConfirmarCompra(false)}}>🗙</span>
+                    <span className='closeWindow' onClick={()=>{
+                        setConfirmarCompra(false);
+                    }}>🗙</span>
                     <h4>Seu endereço:</h4>
                     <small><p>{dadosUsuario.endereco.slice(0, 26) + '...'}</p></small>
                     <Link to="/profile"><button className="trocarEndereço">Trocar meu endereço</button></Link>
@@ -218,7 +250,7 @@ function Carrinho(){
             </div>
             : null
             }
-            
+            {redirectPosCompra}
         </div>
     )
 }

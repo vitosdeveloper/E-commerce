@@ -37,12 +37,27 @@ function Favoritados(){
 
     function favToCart(e){
         const itemId = e.currentTarget.name;
-        
+        let pricePerItem = '';
+        todosItens.forEach((itemZ)=>{
+            return itemZ._id === itemId ?
+            pricePerItem = itemZ.productPrice
+            : null;
+        })
+
         setCarrinhoItens((prevItens)=>{
-            const carFilter = prevItens.filter((item)=>{
-                return item._id !== itemId
+            let emFalta = 0;
+            const itemFound = todosItens.find((item)=>{
+                return item._id === itemId;
             })
-            return [...carFilter, { _id: itemId, quantidade: 1 }]
+            if (itemFound.estoque > 1) {
+                emFalta = 1;
+            } else {
+                emFalta = 0;
+            }
+            const carFilter = prevItens.filter((item)=>{
+                return item._id !== itemId;
+            })
+            return [...carFilter, { _id: itemId, quantidade: emFalta, preco: pricePerItem }]
         })
         e.currentTarget.style.background = 'grey';
         e.currentTarget.innerText = 'Sucess!';

@@ -5,6 +5,8 @@ import MainPage from './components/MainPage.jsx';
 import { IsLoggedInProvider } from './LoginContext.jsx';
 import Favoritados from './components/Favoritados.jsx';
 import Carrinho from './components/Carrinho.jsx';
+import Historico from './components/Historico.jsx';
+import Success from './components/Success.jsx';
 
 function App() {
   
@@ -17,6 +19,8 @@ function App() {
             <Route path="profile" element={<Profile />} />
             <Route path="favoritados" element={<Favoritados />} />
             <Route path="carrinho" element={<Carrinho />} />
+            <Route path="meus-pedidos" element={<Historico />} />
+            <Route path="success" element={<Success />} />
         </Routes>
       </div>
     </IsLoggedInProvider>

@@ -495,3 +495,47 @@ body {
 .trocarEndereço {
   cursor: pointer;
 }
+/* meus pedidos */
+.favoritados .historicoLista {
+  border: 1px dashed rgb(111, 111, 170);
+  background: rgb(133, 133, 187);
+  margin: 60px 200px 30px 200px;
+  padding: 0 40px 25px 40px;
+}
+.readyItem {
+  border: 1px dashed black;
+  background: rgb(171 171 220);
+  margin: 10px 0 10px 0;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 5px;
+}
+.descri h2 {
+  display: inline-block;
+  position: relative;
+  bottom: 0px;
+  left: 0px;
+  margin-top: 0;
+}
+.readyItem h4 {
+  display: inline-block;
+  position: relative;
+  bottom: 18px;
+  right: -2px;
+  margin: 0;
+  font-family: monospace;
+}
+.segundaInfo {
+  left: 18px;
+  display: inline;
+  font-family: monospace;
+}
+.precoTotalHist {
+  display: contents;
+  font-family: monospace;
+}
+.favoritados .success {
+  position: relative;
+  top: 70px;
+  text-align: center;
+}
