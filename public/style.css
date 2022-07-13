@@ -184,6 +184,7 @@ body {
   bottom: 30px;
   left: 16px;
   font-size: 11px;
+  color: black;
 }
 .bolinhaMenu {
   position: relative;
@@ -538,4 +539,94 @@ body {
   position: relative;
   top: 70px;
   text-align: center;
+}
+/* item individual */
+.itemIndividual {
+  width: 1000px;
+  margin: 30px auto 0 auto;
+  padding: 17px 30px 17px 30px;
+  background: white;
+  border-radius: 5px;
+  margin-bottom: 30px;
+}
+.itemIndividual .itemTitle {
+  padding: 2px 8px 6px 8px;
+  margin-bottom: 15px;
+}
+.itemIndividual .itemTitle h1 {
+  margin: 0 0 0 0;
+}
+.itemIndividual .imgDiv img {
+  width: 540px;
+  height: auto;
+}
+.itemIndividual .imgDiv {
+  display: inline;
+}
+.descDiv {
+  border-radius: 4px;
+  padding: 0 8px 6px 0px;
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 30px;
+}
+.imgDiv .img {
+  max-height: 540px;
+  overflow: auto;
+  display: inline-block;
+}
+.itemLinkToCar button {
+  width: 70px;
+  margin: 0 3px 0 3px;
+  height: 70px;
+  border: 1px solid black;
+  background: rgb(111, 111, 170);
+}
+.descDiv h4 {
+  margin: 0;
+}
+.h4Inline {
+  display: inline;
+}
+.descDiv .dispo {
+  margin: 0 0 5px 0;
+}
+.everyItemLinkToCar button {
+  width: 70px;
+  margin: 15px 3px 15px 3px;
+  height: 70px;
+  border: 1px solid black;
+  background: rgb(111, 111, 170);
+}
+.bigFontEveryItem {
+  font-size: 40px;
+}
+.everyCompra {
+  display: block;
+  margin-left: 200px;
+  width: 200px;
+  height: 64px;
+}
+.comprarAgora {
+  text-align: right;
+  position: relative;
+  bottom: 153px;
+}
+.aboutEveryItem {
+  text-align: left;
+  width: 370px;
+  top: 340px;
+  padding: 15px;
+  background: #c6c6fb;;
+  border-radius: 5px;
+}
+.aboutEveryItem li {
+  list-style-type: none;
+}
+.socials {
+  text-align: center;
+  margin: 0 5px 0 5px;
+}
+.socials a {
+  margin: auto 5px auto 5px;
 }

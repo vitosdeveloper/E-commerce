@@ -60,7 +60,7 @@ function Historico(){
                                 <h1 className="precoTotalHist">Preço total: {item.detalhes.valor} R$.</h1>
                             </div>
                         )
-                    })
+                    }).reverse()
                     : isloggedIn === true && usuarioDados.itensComprados.length === 0 ?
                         <div className="ifNotLogged">
                             <h2>Parece que você ainda não comprou nada.</h2>

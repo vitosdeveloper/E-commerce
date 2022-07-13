@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useItensDaLoja, useFavoritos, useSetFavoritos } from '../LoginContext.jsx';
+import { Link } from 'react-router-dom';
 
 function Catalog(props) {
     //fake data provisória
     const storeModel = useItensDaLoja();
-
+    
     //lista de todos departamentos
     const [catalogList, setCatalogList] = useState([]);
     //nomes de classe repetidos são ignorados
@@ -57,9 +58,10 @@ function Catalog(props) {
     
     function itemHtmlGenerator(item, index) {
         return (
-            <div key={index} className="itemToBuy">
-            <span onClick={(e)=>{favoritar(e, item._id);}} className="favoriteHeart">♥</span>
-
+            <Link key={index} to={item._id}>
+            <div className="itemToBuy">
+            <span onClick={(e)=>{e.preventDefault(); favoritar(e, item._id);}} className="favoriteHeart">♥</span>
+            
             {
                 item.status==='promoção'? <img className="promoHot" src="https://i.pinimg.com/originals/c8/cb/ff/c8cbffccee47e8d229aaf97f08cb1e2b.png" alt="hotPromo" />
                 : null
@@ -85,7 +87,8 @@ function Catalog(props) {
               <p className="numDeVendas">Vendido {item.numDeCompras} vezes</p>
               : null
               }
-            </div>
+              
+            </div></Link>
         )
     }
     //altura da bolinha do menu
