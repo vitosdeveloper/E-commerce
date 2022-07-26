@@ -35,18 +35,20 @@ function Historico(){
                                                                 itensDaLoja.map((readyToPost, readyIndex)=>{
                                                                     return (
                                                                         readyToPost._id === itemToPost._id ?
-                                                                        <div className="readyItem" key={readyIndex}>
-                                                                            <div className="imgBox">
-                                                                                <img className="img" src={readyToPost.productImg} alt="" />
+                                                                        <Link key={readyIndex} className="linkLindo" to={"/"+readyToPost._id}>
+                                                                            <div className="readyItem">
+                                                                                <div className="imgBox">
+                                                                                    <img className="img" src={readyToPost.productImg} alt="" />
+                                                                                </div>
+                                                                                <div className="descri">
+                                                                                    <h2>
+                                                                                        {readyToPost.productTitle}
+                                                                                    </h2>
+                                                                                </div>
+                                                                                <h4>Quantidade: {itemToPost.quantidade}</h4>
+                                                                                <h4 className="segundaInfo">Preço por unidade: {itemToPost.preco} R$</h4>
                                                                             </div>
-                                                                            <div className="descri">
-                                                                                <h2>
-                                                                                    {readyToPost.productTitle}
-                                                                                </h2>
-                                                                            </div>
-                                                                            <h4>Quantidade: {itemToPost.quantidade}</h4>
-                                                                            <h4 className="segundaInfo">Preço por unidade: {itemToPost.preco} R$</h4>
-                                                                        </div>
+                                                                        </Link>
                                                                         :
                                                                         null
                                                                     )

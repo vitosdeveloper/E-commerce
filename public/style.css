@@ -74,7 +74,7 @@ body {
 /* catálogo de itens */
 .itensCatalogo {
   margin-top: 30px;
-  width: 80%;
+  width: 1050px;
   margin-left: auto;
   margin-right: auto;
   height: 1000px;
@@ -200,7 +200,9 @@ body {
 .linkLindo:hover {
   color: black;
 }
-
+.linkLindo p {
+  margin-top: 0;
+}
 /* loogin/register screen */
 .loginOrRegister {
   border: 3px dashed rgb(111, 111, 170);
@@ -337,7 +339,7 @@ body {
   height: 70px;
 }
 .listaDeItens .item {
-  display: flex;
+  display: inline-flex;
 }
 .descri .desH5 {
   font-size: 22px;
@@ -442,12 +444,13 @@ body {
   background: rgb(111, 111, 194);
   border: 4px dashed rgb(164, 164, 235);
   position: absolute;
-  top: 300px;
+  top: 100px;
   display: inline-block;
   left: 0;
   right: 0;
   margin: auto;
   padding: 50px;
+  z-index: 1;
 }
 .confirmarCompra h4 {
   margin-bottom: 0;
@@ -597,6 +600,10 @@ body {
   height: 70px;
   border: 1px solid black;
   background: rgb(111, 111, 170);
+  cursor: pointer;
+  z-index: 1;
+  position: relative;
+  display: inline-block;
 }
 .bigFontEveryItem {
   font-size: 40px;
@@ -612,6 +619,11 @@ body {
   position: relative;
   bottom: 153px;
 }
+.comprarAgora .botaoCarrinho {
+  text-align: left;
+  position: relative;
+  display: table;
+}
 .aboutEveryItem {
   text-align: left;
   width: 370px;
@@ -623,10 +635,15 @@ body {
 .aboutEveryItem li {
   list-style-type: none;
 }
+.aboutEveryItem p {
+  margin-top: 2px;
+}
 .socials {
   text-align: center;
-  margin: 0 5px 0 5px;
+  margin: auto 5px auto 5px;
 }
 .socials a {
   margin: auto 5px auto 5px;
+  position: relative;
+  bottom: 45px;
 }

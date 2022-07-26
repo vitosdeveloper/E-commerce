@@ -1,10 +1,17 @@
 import NavBar from './NavBar.jsx';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useLoggedIn, useLoggedInUpdate, useUsuarioDados, useSetUsuarioDados } from '../LoginContext.jsx';
+import { useLoggedIn, useLoggedInUpdate, useUsuarioDados, useSetUsuarioDados, useSetJwt, useJwt, useCheckJwt } from '../LoginContext.jsx';
 import { Navigate } from 'react-router-dom';
+import Axios from 'axios';
+import { useEffect } from 'react';
 
 function Profile(){
+
+    const jwt = useJwt();
+    const setJwt = useSetJwt();
+
+    const checkJwt = useCheckJwt();
 
     const isLoggedIn = useLoggedIn();
     const setIsLoggedIn = useLoggedInUpdate();
@@ -40,7 +47,40 @@ function Profile(){
             setRedirect(<Navigate to="/" />)
         }, 1500);
         setIsLoggedIn(false);
+        setJwt();
+        setUsuarioDados({
+            _id: '',
+            login: '',
+            nome: '',
+            endereco: '',
+            sexo: '',
+            itensComprados: []
+        })
     };
+
+    function enviarForm(){
+            const dadosComJwt = {...usuarioDados, jwt};
+
+            Axios.post('http://localhost:5000/editarUser', {dadosComJwt})
+            .then((response)=>{
+                const profileResult = document.querySelector('.profileChangeResult');
+                if (response.data.status==='success') {
+                    setJwt(response.data.jwt);
+                    profileResult.innerText = 'Alterações realizadas com sucesso. Relogue aplicar as alterações.';
+                    profileResult.style.color = 'green';
+                    profileResult.style.opacity = '100';
+                } else if (response.data.status==='err') {
+                    profileResult.innerText = 'Houve algum erro. Por favor, tente mais tarde..';
+                    profileResult.style.color = 'red';
+                    profileResult.style.opacity = '100';
+                }
+            })
+    }
+
+    //useEffect(()=>{
+    //    checkJwt();
+    //    // eslint-disable-next-line
+    //}, [])
 
     return (
         <div>
@@ -70,9 +110,13 @@ function Profile(){
                         }
                         {!editando ? <button className="editButton" onClick={()=>{editToggle(); backupDasInfos();}}>Editar profile</button> : 
                         <div>
-                        <button className="editButton" onClick={editToggle}>Salvar</button><br/><button className="editButton" onClick={()=>{editToggle(); voltarAoBackup();}}>Cancelar</button>
+                            <button className="editButton" onClick={()=>{editToggle(); enviarForm();}}>Salvar</button><br/><button className="editButton" onClick={()=>{editToggle(); voltarAoBackup();}}>Cancelar</button>
                         </div>}
                     </div>
+                    {!editando ?
+                    <h4 className="profileChangeResult" style={{opacity: '0', margin: '0'}}>hidden content</h4>
+                    : null
+                    }
                     <div className="linksDoProfile">
                         <Link className="linkLindo" to="/carrinho"><p>Ir para carrinho</p></Link>
                         <Link className="linkLindo" to="/meus-pedidos"><p>Ver para histórico de pedidos</p></Link>

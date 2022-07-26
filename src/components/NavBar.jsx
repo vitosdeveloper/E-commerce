@@ -1,15 +1,12 @@
 import { Link } from 'react-router-dom';
 import { useLoggedIn } from '../LoginContext.jsx';
-import { useUsuarioDados } from '../LoginContext.jsx';
 
 function NavBar() {
     const isLoggedIn = useLoggedIn();
-    //const setIsLoggedIn = useLoggedInUpdate;
-    const usuarioDados = useUsuarioDados();
 
     const navBarOneItens = [
       {
-        name: isLoggedIn ? 'Ola, ' + usuarioDados.nome.slice(0, usuarioDados.nome.indexOf(' ')) : "Login/Register",
+        name: isLoggedIn ? 'Profile' : "Login/Register",
         linkPath: isLoggedIn ? '/profile' : '/login'
       }, {
         name: 'Favoritados',

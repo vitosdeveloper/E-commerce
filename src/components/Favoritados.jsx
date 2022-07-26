@@ -87,21 +87,22 @@ function Favoritados(){
                                                 <h5>Colocar no carrinho</h5>
                                             </button>
                                         </div>
-                                                
-                                        <div className="item">
-                                            <div className="imgBox">
-                                                <img className="img" src={item.productImg} alt="" />
+                                        <Link className="linkLindo" to={"/"+item._id}>
+                                            <div className="item">
+                                                <div className="imgBox">
+                                                    <img className="img" src={item.productImg} alt="" />
+                                                </div>
+                                                <div className="descri">
+                                                    <h5 className="desH5">{
+                                                        item.productTitle.length >= 48 ?
+                                                        item.productTitle.slice(0, 48) + '...'
+                                                        : item.productTitle.slice(0, 48)
+                                                        }</h5>
+                                                    <h5 className="price">{item.productPrice}</h5>
+                                                    
+                                                </div>
                                             </div>
-                                            <div className="descri">
-                                                <h5 className="desH5">{
-                                                    item.productTitle.length >= 48 ?
-                                                    item.productTitle.slice(0, 48) + '...'
-                                                    : item.productTitle.slice(0, 48)
-                                                    }</h5>
-                                                <h5 className="price">{item.productPrice}</h5>
-                                                
-                                            </div>
-                                        </div>
+                                        </Link>
                                     </div>
                                     : null
                                 )

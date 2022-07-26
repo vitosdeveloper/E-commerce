@@ -1,10 +1,13 @@
 import NavBar from './NavBar.jsx'
-import { useCarrinhoItens, useSetCarrinhoItens, useItensDaLoja, useLoggedIn, useUsuarioDados } from '../LoginContext.jsx';
+import { useCarrinhoItens, useSetCarrinhoItens, useItensDaLoja, useLoggedIn, useUsuarioDados, useJwt, useSetJwt } from '../LoginContext.jsx';
 import { Link, Navigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Axios from 'axios';
 
 function Carrinho(){
+
+    const jwt = useJwt();
+    const setJwt = useSetJwt();
     //carrinho
     const carrinho = useCarrinhoItens();
     const setCarrinho = useSetCarrinhoItens();
@@ -98,29 +101,28 @@ function Carrinho(){
         const carrinhoFiltrado = carrinho.filter((item)=>{
             return item.quantidade >= 1;
         })
-        
+    
         const formulario = {
             userId: dadosUsuario._id,
             valorDaCompra: precoTotal,
             itensByIdAndItsQuantity: carrinhoFiltrado,
-            horarioDeCompra: horario+amOrPm
+            horarioDeCompra: horario+amOrPm,
+            jwt: jwt
         }
         
-        Axios.post("https://ecommercefakedb.herokuapp.com/efetuarCompra", {formulario});
-        //esvaziar carrinho após compra
-        setConfirmarCompra(false);
-        sucess.innerText = 'Processando compra...';
-        
-        setRedirectPosCompra(<Navigate to="/success" />)
-        
-        setTimeout(()=>{
-            setCarrinho([])
-        }, 2000)
+        Axios.post("http://localhost:5000/efetuarCompra", {formulario})
+        .then(response => {
+            if (response.data.status==="success") {
+                sucess.innerText = 'Processando compra...';
+                setJwt(response.data.jwt);
+                setConfirmarCompra(false);
+                setCarrinho([])
+                setRedirectPosCompra(<Navigate to="/success" />);
+            } else if (response.data.status==="err") {
+                console.log('erro :s');
+            }
+        })
     }
-
-    useEffect(()=>{
-        setConfirmarCompra(false);
-    },[carrinho])
 
     return (
         <div>
@@ -167,20 +169,22 @@ function Carrinho(){
                                                         Excluir do carrinho
                                                     </button>
                                                 </div>
-                                                <div className="item">
-                                                    <div className="imgBox">
-                                                        <img className="img" src={item.productImg} alt="" />
+                                                <Link className="linkLindo" to={"/"+item._id}>
+                                                    <div className="item">
+                                                        <div className="imgBox">
+                                                            <img className="img" src={item.productImg} alt="" />
+                                                        </div>
+                                                        <div className="descri">
+                                                            <h5 className="desH5">{
+                                                                item.productTitle.length >= 48 ?
+                                                                item.productTitle.slice(0, 48) + '...'
+                                                                : item.productTitle.slice(0, 48)
+                                                                }</h5>
+                                                            <h5 className="price">{item.productPrice}</h5>
+                                                            
+                                                        </div>
                                                     </div>
-                                                    <div className="descri">
-                                                        <h5 className="desH5">{
-                                                            item.productTitle.length >= 48 ?
-                                                            item.productTitle.slice(0, 48) + '...'
-                                                            : item.productTitle.slice(0, 48)
-                                                            }</h5>
-                                                        <h5 className="price">{item.productPrice}</h5>
-                                                        
-                                                    </div>
-                                                </div>
+                                                </Link>
                                             </div>
                                         : null
                                     })
@@ -248,7 +252,12 @@ function Carrinho(){
                     </div>
                 </div>
                 <div>
-                    <button onClick={formularioDaCompra} className="finalizarCompra"><h2>Efetuar compra</h2></button>
+                    {
+                        precoTotal !== 0 ?
+                            <button onClick={formularioDaCompra} className="finalizarCompra"><h2>Efetuar compra</h2></button>
+                        :   <button className="finalizarCompra"><h2 style={{textAlign: 'center'}}>Item fora de estoque</h2></button>
+                    }
+                    
                 </div>
             </div>
             : null

@@ -12,7 +12,7 @@ import EveryItem from './components/EveryItem.jsx';
 function App() {
   
   const itensDaLojaTeste = useItensDaLoja();
-  
+
   return (
     
       <div>

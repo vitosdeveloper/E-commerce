@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import useLocalStorage from 'use-local-storage';
+import Axios from 'axios';
 
 const IsLoggedInContext = React.createContext();
 const SetIsLoggedInContext = React.createContext();
@@ -48,12 +49,34 @@ export function useSetCarrinhoItens(){
     return useContext(SetCarrinhoItens)
 };
 
+//jwt
+const Jwt = React.createContext();
+const SetJwt = React.createContext();
+export function useJwt(){
+    return useContext(Jwt)
+};
+export function useSetJwt(){
+    return useContext(SetJwt)
+};
+
+//check Jwt
+const CheckJwt = React.createContext();
+export function useCheckJwt(){
+    return useContext(CheckJwt)
+}
 
 export function IsLoggedInProvider({ children }){
 
     const [isLoggedIn, setIsLoggedIn] = useLocalStorage('islogged', false)
     //usuario, ja ja vai buscar da DB
-    const [usuariosDados, setUsuarioDados] = useLocalStorage('usuario', );
+    const [usuariosDados, setUsuarioDados] = useState({
+        _id: '',
+        login: '',
+        nome: '',
+        endereco: '',
+        sexo: '',
+        itensComprados: []
+    });
     
     //context para segurar favoritados no localStorage
     const [favoritos, setFavoritos] = useLocalStorage('fav', []);
@@ -65,29 +88,44 @@ export function IsLoggedInProvider({ children }){
     //o set só vai ser usado depois que tiver a plataforma de admin de adicionar itens na DB, obviamente.
     const [itensDaLoja, setItensDaLoja] = useState([]);
 
-    useEffect(() => {
-        fetch("https://ecommercefakedb.herokuapp.com/users").then(
-            response => response.json()
-          ).then(
-            data => {
-                setUsuarioDados(data[0]);
-            }
-          )
-    }, [setUsuarioDados]);
+    const [jwt, setJwt] = useLocalStorage('jwt', )
+    //checar valiadde do jwt e entregar dados do usuário
 
-    
+    const checkJwt = function(){
+        Axios.post("http://localhost:5000/checkJwt", {jwt})
+        .then(response =>{
+            if (response.data.status==='ok') {
+                setUsuarioDados(response.data.user);
+                setIsLoggedIn(true);
+            } else if (response.data.status==='err') {
+                setIsLoggedIn(false);
+                setUsuarioDados({
+                    _id: '',
+                    login: '',
+                    nome: '',
+                    endereco: '',
+                    sexo: '',
+                    itensComprados: []
+                });
+                setJwt();
+            }
+        })
+    }
+
     useEffect(() => {
-        fetch("https://ecommercefakedb.herokuapp.com/itensDaLoja").then(
+        fetch("http://localhost:5000/itensDaLoja").then(
             response => response.json()
           ).then(
             data => {
                 setItensDaLoja(data);
+                checkJwt();
+                setInterval(() => {
+                        checkJwt();
+                }, 60000);
             }
           )
+        // eslint-disable-next-line
     }, []);
-
-    
-
 
     return (
         <IsLoggedInContext.Provider value={isLoggedIn}>
@@ -99,7 +137,13 @@ export function IsLoggedInProvider({ children }){
                                 <SetFavoritos.Provider value={setFavoritos}>
                                     <CarrinhoItens.Provider value={carrinhoItens}>
                                         <SetCarrinhoItens.Provider value={setCarrinhoItens}>
-                                            {children}
+                                            <Jwt.Provider value={jwt}>
+                                                <SetJwt.Provider value={setJwt}>
+                                                    <CheckJwt.Provider value={checkJwt}>
+                                                        {children}
+                                                    </CheckJwt.Provider>
+                                                </SetJwt.Provider>
+                                            </Jwt.Provider>
                                         </SetCarrinhoItens.Provider>
                                     </CarrinhoItens.Provider>
                                 </SetFavoritos.Provider>

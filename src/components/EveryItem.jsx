@@ -1,9 +1,23 @@
 import NavBar from './NavBar.jsx';
 import { useState, useEffect } from 'react';
+import { useSetCarrinhoItens, useUsuarioDados, useJwt, useSetJwt } from '../LoginContext.jsx';
+import { Link, Navigate } from 'react-router-dom';
+import Axios from 'axios';
 
 function EveryItem(props){
 
+    const setCarrinhoItens = useSetCarrinhoItens();
+    const jwt = useJwt();
+    const setJwt = useSetJwt();
+
     const [quantidadeDoItem, setQuantidadeDoItem] = useState(1);
+    
+    //dados usuario
+    const dadosUsuario = useUsuarioDados();
+
+    const precoTotal = quantidadeDoItem * parseFloat(props.item.productPrice);
+    
+    const [redirectPosCompra, setRedirectPosCompra] = useState(false);
 
     function addItem(){
         if (quantidadeDoItem > 0 && quantidadeDoItem < props.item.estoque){
@@ -21,9 +35,77 @@ function EveryItem(props){
     }
 
     useEffect(()=>{
-        const innerWindowHeight = document.querySelector('.comprarAgora').getBoundingClientRect().height + 79;
-        document.querySelector('.itemIndividual').style.height = innerWindowHeight+'px';
-    }, [])
+        if (props.item.estoque < 1){
+            setQuantidadeDoItem(0)
+        }
+    }, [props.item.estoque])
+    
+    function toCart(e){
+        const itemId = props.item._id;
+        const pricePerItem =  props.item.productPrice;
+
+        setCarrinhoItens((prevItens)=>{
+            let emFalta = 0;
+
+            if (props.item.estoque > 1) {
+                emFalta = 1;
+            } else {
+                emFalta = 0;
+            }
+
+            const carFilter = prevItens.filter((item)=>{
+                return item._id !== itemId;
+            })
+
+            return [...carFilter, { _id: itemId, quantidade: emFalta, preco: pricePerItem }]
+        })
+        e.currentTarget.style.background = 'grey';
+        e.currentTarget.innerText = 'Sucess!';
+    }
+    //confirmação de compra, endereço, método de pagamento, frete
+    const [confirmarCompra, setConfirmarCompra] = useState(false);
+
+    //depois fazer formulário e enviar os dados pra db com axios ou algo, testar com console.log
+    function formularioDaCompra(){
+        const diaCompleto = new Date();
+        
+        //lembrar de descontar do estoque
+        let amOrPm = '';
+        if (diaCompleto.getHours() < 12) {
+            amOrPm = ' am';
+        } else {
+            amOrPm = ' pm';
+        }
+        const horario = (diaCompleto.getMonth()+1).toString().padStart(2, 0)+'/'+diaCompleto.getDate().toString().padStart(2, 0)+', às '+diaCompleto.getHours().toString().padStart(2, 0)+':'+(diaCompleto.getMinutes().toString().padStart(2, 0));
+
+        const itemDaPage = {
+            _id: props.item._id,
+            quantidade: quantidadeDoItem,
+            preco: props.item.productPrice
+        }
+        
+        const formulario = {
+            userId: dadosUsuario._id,
+            valorDaCompra: quantidadeDoItem * parseFloat(props.item.productPrice),
+            itensByIdAndItsQuantity: itemDaPage,
+            horarioDeCompra: horario+amOrPm,
+            jwt: jwt
+        }
+        
+        Axios.post("http://localhost:5000/efetuarCompraPeloItem", {formulario})
+        .then(response => {
+            if (response.data.status==='success'){
+                setJwt(response.data.jwt);
+                setConfirmarCompra(false);
+                //checkJwt();
+                setRedirectPosCompra(<Navigate to="/success" />);
+            } else if (response.data.status==='success') {
+                document.querySelector('.itemTitle').innerText='Quantidade de item comprado excede a quantidade no estoque. Tente novamente mais tarde.';
+                document.querySelector('.itemTitle').style.color='red';
+            }
+        })
+        //esvaziar carrinho após compra
+    }
 
     return (
         <div>
@@ -37,12 +119,16 @@ function EveryItem(props){
                         <img src={props.item.productImg} alt=""/>
                     </div>
                     <div className="descDiv">
-                        <h4 className="dispo">Disponíveis no estoque: {props.item.estoque}</h4>
-                        <h4 className="dispo">Comprado {props.item.numDeCompras} vezes.</h4>
-                        <div className="everyItemLinkToCar">
-                            <button>Colocar no carrinho</button>
+                        <div className="botaoCarrinho">
+                            <h4 className="dispo">Disponíveis no estoque: {props.item.estoque}</h4>
+                            <h4 className="dispo">Comprado {props.item.numDeCompras} vezes.</h4>
+                            <div className="everyItemLinkToCar">
+                                <button onClick={(e)=>{
+                                    toCart(e);
+                                    setConfirmarCompra(false);
+                                }}>Colocar no carrinho</button>
+                            </div>
                         </div>
-
                         <div className="comprarAgora">
                             <div className="quantidadeParaComprar">
                                 <h4 className="h4Inline">Quantidade:</h4><span> </span>
@@ -60,7 +146,7 @@ function EveryItem(props){
                             </div>
                             
                             <h4 className="h4Inline">Valor total:</h4> <h2 className="h4Inline bigFontEveryItem">{quantidadeDoItem * parseFloat(props.item.productPrice)}</h2>
-                            <button /*onClick={formularioDaCompra}*/ className="comprarBut everyCompra"><h2>Comprar agora!</h2></button>
+                            <button /*onClick={formularioDaCompra}*/ onClick={()=>{setConfirmarCompra(true); window.scrollTo({top: 0, behavior: "smooth"})}} className="comprarBut everyCompra"><h2>Comprar agora!</h2></button>
                             
                         
 
@@ -76,6 +162,47 @@ function EveryItem(props){
                         </div>
                     </div>
                 </div>
+                
+                {confirmarCompra?
+                <div className="confirmarCompra">
+                    <div>
+                        <span className='closeWindow' onClick={()=>{
+                            setConfirmarCompra(false);
+                        }}>🗙</span>
+                        <h4>Seu endereço:</h4>
+                        <small><p>{dadosUsuario.endereco.slice(0, 26) + '...'}</p></small>
+                        <Link to="/profile"><button className="trocarEndereço">Trocar meu endereço</button></Link>
+                        <h4>Escolha o serviço de frete:</h4>
+                        <div>
+	                        <select className="inputEdit" name="sexo">
+	                        	<option value="">PAC</option>
+	                        	<option value="Masculino">Sedex</option>
+	                        	<option value="Feminino">Sedex Hoje</option>
+	                        	<option value="Não-binário">Correio Mini Envios</option>
+	                        </select><br/>
+                        </div>
+                        <div>
+                            <h4 className="card">Cartão:</h4>
+                            <p>****-****-****-8477 (Visa)</p>
+                        </div>
+                        <div>
+                            <h3 className="totalAPager">Total a pagar:</h3><br/>
+                            <h1 className="valorTotal">{precoTotal}</h1>
+                        </div>
+                    </div>
+                    <div>
+                        {
+                            precoTotal !== 0 ?
+                                <button onClick={formularioDaCompra} className="finalizarCompra"><h2>Efetuar compra</h2></button>
+                            :   <button className="finalizarCompra"><h2 style={{textAlign: 'center'}}>Item fora de estoque</h2></button>
+                        }
+
+                    </div>
+                </div>
+                : null
+                }
+                {redirectPosCompra}
+
                 <div className="socials">
                     <a className="emotis" href="https://github.com/vitosnatios"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="black" className="bi bi-github" viewBox="0 0 16 16">
                         <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
