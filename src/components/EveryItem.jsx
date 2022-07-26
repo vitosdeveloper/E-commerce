@@ -92,7 +92,7 @@ function EveryItem(props){
             jwt: jwt
         }
         
-        Axios.post("http://localhost:5000/efetuarCompraPeloItem", {formulario})
+        Axios.post("https://ecommercefakedb.herokuapp.com/efetuarCompraPeloItem", {formulario})
         .then(response => {
             if (response.data.status==='success'){
                 setJwt(response.data.jwt);

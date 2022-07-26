@@ -110,7 +110,7 @@ function Carrinho(){
             jwt: jwt
         }
         
-        Axios.post("http://localhost:5000/efetuarCompra", {formulario})
+        Axios.post("https://ecommercefakedb.herokuapp.com/efetuarCompra", {formulario})
         .then(response => {
             if (response.data.status==="success") {
                 sucess.innerText = 'Processando compra...';

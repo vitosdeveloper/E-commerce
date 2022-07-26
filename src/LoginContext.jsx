@@ -92,7 +92,7 @@ export function IsLoggedInProvider({ children }){
     //checar valiadde do jwt e entregar dados do usuário
 
     const checkJwt = function(){
-        Axios.post("http://localhost:5000/checkJwt", {jwt})
+        Axios.post("https://ecommercefakedb.herokuapp.com/checkJwt", {jwt})
         .then(response =>{
             if (response.data.status==='ok') {
                 setUsuarioDados(response.data.user);
@@ -113,7 +113,7 @@ export function IsLoggedInProvider({ children }){
     }
 
     useEffect(() => {
-        fetch("http://localhost:5000/itensDaLoja").then(
+        fetch("https://ecommercefakedb.herokuapp.com/itensDaLoja").then(
             response => response.json()
           ).then(
             data => {
