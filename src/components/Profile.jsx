@@ -1,17 +1,14 @@
 import NavBar from './NavBar.jsx';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useLoggedIn, useLoggedInUpdate, useUsuarioDados, useSetUsuarioDados, useSetJwt, useJwt, useCheckJwt } from '../LoginContext.jsx';
+import { useLoggedIn, useLoggedInUpdate, useUsuarioDados, useSetUsuarioDados, useSetJwt, useJwt } from '../LoginContext.jsx';
 import { Navigate } from 'react-router-dom';
 import Axios from 'axios';
-import { useEffect } from 'react';
 
 function Profile(){
 
     const jwt = useJwt();
     const setJwt = useSetJwt();
-
-    const checkJwt = useCheckJwt();
 
     const isLoggedIn = useLoggedIn();
     const setIsLoggedIn = useLoggedInUpdate();
