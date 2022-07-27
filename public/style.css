@@ -32,11 +32,11 @@ body {
   transform: scaleX(-1);
   cursor: pointer;
 }
-.navBarOne ul {
+.navBarOne .ulMenuItens {
   position: absolute;
   right: 40px;
 }
-.navBarOne ul li {
+.navBarOne ul .menuItenss {
   display: inline;
   list-style: none;
   margin-left: 20px;
@@ -646,4 +646,17 @@ body {
   margin: auto 5px auto 5px;
   position: relative;
   bottom: 45px;
+}
+.searchUl {
+  position: absolute;
+  z-index: 3;
+}
+.searchUl ul li {
+  list-style: none;
+  border: 1px solid black;
+  padding: 0 3px 0 3px;
+  width: 296px;
+  background: white;
+  font-size: 13px;
+  font-family: monospace;
 }
