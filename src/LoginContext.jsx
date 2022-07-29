@@ -117,7 +117,8 @@ export function IsLoggedInProvider({ children }){
             response => response.json()
           ).then(
             data => {
-                setItensDaLoja(data);
+                const dataEmbaralhada = data.sort(()=>{ return Math.random() - 0.5 })
+                setItensDaLoja(dataEmbaralhada);
                 checkJwt();
                 setInterval(() => {
                         checkJwt();

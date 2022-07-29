@@ -10,7 +10,6 @@ function Historico(){
     return (
         <div>
             <NavBar />
-            
             <div className="favoritados">
                 <h1 className="favTitle">Meus pedidos ⌛</h1>
                 {    !isloggedIn?

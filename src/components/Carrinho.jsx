@@ -176,9 +176,9 @@ function Carrinho(){
                                                         </div>
                                                         <div className="descri">
                                                             <h5 className="desH5">{
-                                                                item.productTitle.length >= 48 ?
-                                                                item.productTitle.slice(0, 48) + '...'
-                                                                : item.productTitle.slice(0, 48)
+                                                                item.productTitle.length >= 42 ?
+                                                                item.productTitle.slice(0, 42) + '...'
+                                                                : item.productTitle.slice(0, 42)
                                                                 }</h5>
                                                             <h5 className="price">{item.productPrice}</h5>
                                                             

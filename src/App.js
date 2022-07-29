@@ -14,7 +14,6 @@ function App() {
   const itensDaLojaTeste = useItensDaLoja();
 
   return (
-    
       <div>
         <Routes>
             <Route path="/" element={<MainPage />} />

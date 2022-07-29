@@ -69,7 +69,7 @@ function NavBar() {
                       return (
                         item.productTitle.toLowerCase().startsWith(search.toLowerCase()) ?
                         <Link className="linkLindo" key={index} to={'/'+item._id}>
-                          <li className="resultadosDoSearch">{item.productTitle}
+                          <li className="resultadosDoSearch">{item.productTitle.slice(0, 35)+'...'}
                           {
                             item.length >= 36? '...' : null
                           }

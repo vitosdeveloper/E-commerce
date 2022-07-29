@@ -77,7 +77,6 @@ body {
   width: 1050px;
   margin-left: auto;
   margin-right: auto;
-  height: 1000px;
   display: flex;
 }
 .itensCatalogo .classificações {
@@ -170,7 +169,7 @@ body {
 
 /* itensDiv */
 .ecommerceItensDiv {
-  min-width: 250px;
+  min-width: 66px;
 }
 .promoHot {
   max-width: 110px;
@@ -659,4 +658,17 @@ body {
   background: white;
   font-size: 13px;
   font-family: monospace;
+}
+
+/* paginaçao */
+.pageLinks {
+  text-align: center;
+}
+.pageLinks .everyPage {
+  display: inline;
+  margin: 3px;
+  font-size: 20px;
+}
+.pageLinks .everyPage:hover {
+  cursor: pointer;
 }

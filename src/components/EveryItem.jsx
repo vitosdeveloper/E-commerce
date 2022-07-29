@@ -1,6 +1,6 @@
 import NavBar from './NavBar.jsx';
 import { useState, useEffect } from 'react';
-import { useSetCarrinhoItens, useUsuarioDados, useJwt, useSetJwt } from '../LoginContext.jsx';
+import { useSetCarrinhoItens, useUsuarioDados, useJwt, useSetJwt, useLoggedIn } from '../LoginContext.jsx';
 import { Link, Navigate } from 'react-router-dom';
 import Axios from 'axios';
 
@@ -9,6 +9,7 @@ function EveryItem(props){
     const setCarrinhoItens = useSetCarrinhoItens();
     const jwt = useJwt();
     const setJwt = useSetJwt();
+    const isLoggedIn = useLoggedIn();
 
     const [quantidadeDoItem, setQuantidadeDoItem] = useState(1);
     
@@ -146,9 +147,17 @@ function EveryItem(props){
                             </div>
                             
                             <h4 className="h4Inline">Valor total:</h4> <h2 className="h4Inline bigFontEveryItem">{quantidadeDoItem * parseFloat(props.item.productPrice)}</h2>
-                            <button /*onClick={formularioDaCompra}*/ onClick={()=>{setConfirmarCompra(true); window.scrollTo({top: 0, behavior: "smooth"})}} className="comprarBut everyCompra"><h2>Comprar agora!</h2></button>
-                            
-                        
+                            {
+                                isLoggedIn ?
+                                <button 
+                                onClick={()=>{setConfirmarCompra(true); window.scrollTo({top: 0, behavior: "smooth"})}} 
+                                className="comprarBut everyCompra"
+                                ><h2>Comprar agora!</h2></button>
+                                :
+                                <Link style={{textDecoration: 'none'}} to="/login">
+                                    <button className="comprarBut everyCompra">Você precisa estar logado para comprar</button>
+                                </Link>
+                            }
 
                             <div className="aboutEveryItem">
                                 <h4>Sobre:</h4>
@@ -191,10 +200,11 @@ function EveryItem(props){
                         </div>
                     </div>
                     <div>
-                        {
+                        {   isLoggedIn ?
                             precoTotal !== 0 ?
                                 <button onClick={formularioDaCompra} className="finalizarCompra"><h2>Efetuar compra</h2></button>
                             :   <button className="finalizarCompra"><h2 style={{textAlign: 'center'}}>Item fora de estoque</h2></button>
+                            : <Link to="/login"><button className="finalizarCompra"><h2>Você está deslogado</h2></button></Link>
                         }
 
                     </div>

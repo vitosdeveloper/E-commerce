@@ -36,7 +36,7 @@ function Catalog(props) {
     //qual sessão de compras está selecionada?
     const [selectedList, setSelectedList] = useState('TODOS')
     function filterList(e) {
-        setSelectedList(e.target.innerHTML)
+        setSelectedList(e.target.innerText)
     }
 
     //favHeart
@@ -56,9 +56,9 @@ function Catalog(props) {
         e.target.style.color = 'red';
     }
     
-    function itemHtmlGenerator(item, index) {
+    function itemHtmlGenerator(item, index, isHidden) {
         return (
-            <Link key={index} to={item._id}>
+            <Link key={index} to={item._id} style={isHidden?{display: 'none'}:null}>
             <div className="itemToBuy">
             <span onClick={(e)=>{e.preventDefault(); favoritar(e, item._id);}} className="favoriteHeart">♥</span>
             
@@ -100,7 +100,6 @@ function Catalog(props) {
         setBolinhaHeight(topDoUl - topDoLi + 13)
         setSelectedList('TODOS')
     }, [props.catalogIs]);
-    //tentando colocar as ultimas 20 compras aparecendo
 
     //colocar maiores numeros de compra do maior pro menor (organização)
     let maisCompradosPreco = []
@@ -121,29 +120,55 @@ function Catalog(props) {
         }
     }
 
+    //detecção de itens para paginação
+    const [numDeItens, setNumDeItens] = useState(0);
+
+    const [paginaSelecionada, setPaginaSelecionada] = useState(1);
+
+    useEffect(()=>{
+        const everyCard = document.querySelectorAll('.itemToBuy');
+        everyCard.forEach((item, index)=>{
+            item.style.display = 'none';
+        });
+        if (!!everyCard) {
+            setNumDeItens(everyCard.length)
+            everyCard.forEach((item, index)=>{
+                if (index < paginaSelecionada * 6 && index > paginaSelecionada * 6 -7) {
+                    item.style.display = 'inline-block';
+                }
+            })
+        }
+            // eslint-disable-next-line
+    }, [selectedList, props.catalogIs, []])
+
+    useEffect(()=>{
+        setPaginaSelecionada(1)
+    }, [props.catalogIs])
+
     return (
+        <div>
         <div className="itensCatalogo">
             <div className="bolinhaMenu" style={{top: bolinhaHeight + 'px'}}>
                 <span>●</span>
             </div>
             <div className="classificações">
                 <ul onClick={bolinhaAltura}>
-                    <li onClick={filterList}>TODOS</li>
+                    <li onClick={(e)=>{filterList(e); setPaginaSelecionada(1)}}>TODOS</li>
                     {   //render pra abas de todos departamentos
                         props.catalogIs==='normal' ?
                         catalogList.map((item, index)=>{
-                            return <li className="liNormal" onClick={filterList} key={index} >{item}</li>
+                            return <li className="liNormal" onClick={(e)=>{filterList(e); setPaginaSelecionada(1)}} key={index} >{item}</li>
                         })
                         : props.catalogIs==='promoção' ?
                         //render pra abas de promoção
                         catalogListPromo.map((item, index)=>{
                             return props.catalogIs==='promoção' ?
-                            <li onClick={filterList} key={index} >{item}</li>
+                            <li onClick={(e)=>{filterList(e); setPaginaSelecionada(1)}} key={index} >{item}</li>
                             : null
                         })
                         : props.catalogIs==='mais comprados' ?
                         catalogMaisComprados.map((item, index)=>{
-                            return <li onClick={filterList} key={index} >{item}</li>
+                            return <li onClick={(e)=>{filterList(e); setPaginaSelecionada(1)}} key={index} >{item}</li>
                         })
                         : null
                     }
@@ -164,29 +189,44 @@ function Catalog(props) {
                 storeModel.map((item, index)=>{
                     return item.class === selectedList ?
                     //mostrar apenas itens de determinada classe
-                    itemHtmlGenerator(item, index)
+                    itemHtmlGenerator(item, index, false)
                     :
                     //mostrar todos itens
                     selectedList === 'TODOS' ?
-                    itemHtmlGenerator(item, index)
+                    itemHtmlGenerator(item, index, false)
                     : null
                 })
                 :props.catalogIs==='mais comprados' ?
                     maisCompradosPreco.map((item)=>{
                         return storeModel.map((itemZ, indexZ)=>{
-                        return item === itemZ.numDeCompras ?
-                            itemZ.class === selectedList ?
-                            itemHtmlGenerator(itemZ, indexZ)
-                            :
-                            selectedList === 'TODOS' ?
-                            itemHtmlGenerator(itemZ, indexZ)
+                            return item === itemZ.numDeCompras ?
+                                itemZ.class === selectedList ?
+                                    itemHtmlGenerator(itemZ, indexZ)
+                                    :
+                                    selectedList === 'TODOS' ?
+                                    itemHtmlGenerator(itemZ, indexZ)
+                                : null
                             : null
-                        : null
                         })
                     })
                 : null
                 }
             </div>
+        </div>
+        <div className="pageLinks linkLindo">[
+            {   numDeItens !== 0 ?
+                new Array(numDeItens).fill(undefined).map((item, index)=>{
+                    return index % 6 === 0 ?
+                    <div className="everyPage linkLindo" key={index} 
+                    onClick={()=>{setPaginaSelecionada(index / 6 +1)}}
+                    >
+                        {index / 6 +1}
+                    </div>
+                    : null
+                })
+                : 'loading...'
+            }
+        ]</div>
         </div>
     )
 }
