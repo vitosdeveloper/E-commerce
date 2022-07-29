@@ -1,74 +1,59 @@
-<<<<<<< HEAD
-# Getting Started with Create React App
+Live version: https://vitos-e-commerce.netlify.app/
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Linkedin: https://www.linkedin.com/in/vitosnatios/
 
-## Available Scripts
+E-mail: vitosdeveloper@gmail.com
 
-In the project directory, you can run:
+# My Fictional E-commerce
 
-### `npm start`
+This project wasnt made using any type of tutorial and its not part of any exercise or job.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+My goal when starting this project was to test my knowledge and challenge myself with the various problems that arise during a real development.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Technologies and languages used in the project
 
-### `npm test`
+This project is using:
+-ReactJS.
+-NodeJS.
+-ExpressJS.
+-MongoDB.
+-Mongoose.
+-Javascript.
+-Html.
+-Css.
+-Some others...
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Details about the application
 
-### `npm run build`
+### `About every item to buy and its data:`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Every item has its stock number, whenever some user buys it, the quantity is taken from its stock, and the same quantity is added to how much it got bought from the store.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The itens can be placed on the favorite-bar by clicking on the heart emoti, can also be placed on the cart from its own page and also from the favorite page. The fav and cart info are saved on the browser LocalStorage, so, you can pick favorites or even get them into the car, but you can only buy them after logged in.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### `About pagination:`
 
-### `npm run eject`
+Hard to make, but super functional. It detects how many itens the page is showing, then, it separates them by 6 itens per page, if the screen is showing less then 6 itens, it only shows the first page, and the site creates pages as the number of items grows, automatically.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### `About the login system:`
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+When the user registers, his password is automatically encrypted and stored in the database, when he logs in, the entered password is encrypted using the same method, then it is compared with the encrypted password that is in the database.
+If the passwords match, the user receives the data needed to feed the site through a Jwt token that expires in one hour. Whenever the user makes any changes that affect their own data, a validation is done in the JWT on the serverside, as well as the user ID that is sent to the server is compared with the ID that is inside the JWT, to avoid any forgeries of credentials. Once fully validated, the server responds with a fresh JWT token that contains the user's updated information, such as purchased items or changed profile data.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### `About the user data:`
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Every user data contains your login, encrypted password, items purchased, time of purchase, total price, unit price, gender, address and name.
 
-## Learn More
+### `About every item to buy:`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Every item has data about its img source, title, price, status (if its on sale or with normal price), its inventory and how many times has it been purchased.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### `About the search bar:`
 
-### Code Splitting
+It looks for items that start with the letters you typed, regardless of whether you typed in uppercase or lowercase letters.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Thanks for your interest.
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-=======
-# E-commerce
->>>>>>> 203e308190dee266dca82d0696509d35a96eff07
+You can contact me anytime you want! I'm looking for job opportunities!
+Linkedin: https://www.linkedin.com/in/vitosnatios/
+E-mail: vitosdeveloper@gmail.com
