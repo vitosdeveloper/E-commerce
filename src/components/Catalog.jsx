@@ -61,7 +61,19 @@ function Catalog(props) {
         return (
             <Link key={index} to={item._id} style={isHidden?{display: 'none'}:null}>
             <div className="itemToBuy">
-            <span onClick={(e)=>{e.preventDefault(); favoritar(e, item._id);}} className="favoriteHeart">♥</span>
+            {
+                window.innerWidth < 1200 ?
+                <img src='img/favHeart.png'
+                className="favoriteHeart"
+                style={{right: '4px'}}
+                onClick={(e)=>{
+                    e.preventDefault();
+                    favoritar(e, item._id);
+                    e.target.setAttribute('src', 'img/favHeart2.png');
+                    }}
+                alt="" />
+                : <span onClick={(e)=>{e.preventDefault(); favoritar(e, item._id);}} className="favoriteHeart">♥</span>
+            }
             
             {
                 item.status==='promoção'? <img className="promoHot" src="https://i.pinimg.com/originals/c8/cb/ff/c8cbffccee47e8d229aaf97f08cb1e2b.png" alt="hotPromo" />
