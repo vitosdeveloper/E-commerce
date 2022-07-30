@@ -51,6 +51,9 @@ function NavBar() {
       }
     }, [search])
 
+    //abrir ou fechar menu mobile
+    const [isOpen, setIsOpen] = useState(false);
+
     return (
         <div className="navBarOne">
             <div className="logo">
@@ -84,12 +87,17 @@ function NavBar() {
               </div>
             </div>
             <div>
-              <ul className="ulMenuItens">
+              <ul className={isOpen? 'active ulMenuItens' : "ulMenuItens"}>
                 {navBarOneItens.map((item, index)=>{
-                  return <li className="menuItenss" key={index}><Link className="linkLindo" to={item.linkPath}>{item.name}</Link></li>
+                  return <li className='menuItenss' key={index}><Link className="linkLindo" to={item.linkPath}>{item.name}</Link></li>
                 })}
               </ul>
             </div>
+            <button 
+            onClick={()=>{
+              setIsOpen(!!isOpen?false:true)
+            }} 
+            className='mobileMenuButton'>{!isOpen ? 'Open Menu' : 'Close menu'}</button>
         </div>
     )
 }

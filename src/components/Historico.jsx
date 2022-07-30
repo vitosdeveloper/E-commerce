@@ -1,6 +1,7 @@
 import NavBar from './NavBar.jsx';
 import { useUsuarioDados, useItensDaLoja, useLoggedIn } from '../LoginContext.jsx';
 import { Link } from 'react-router-dom';
+import Footer from './Footer.jsx';
 
 function Historico(){
     const usuarioDados = useUsuarioDados();
@@ -72,6 +73,7 @@ function Historico(){
                 }
                 
             </div>
+            <Footer />
         </div>
     )
 }

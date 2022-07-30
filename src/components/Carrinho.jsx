@@ -3,6 +3,7 @@ import { useCarrinhoItens, useSetCarrinhoItens, useItensDaLoja, useLoggedIn, use
 import { Link, Navigate } from 'react-router-dom';
 import { useState } from 'react';
 import Axios from 'axios';
+import Footer from './Footer.jsx';
 
 function Carrinho(){
 
@@ -174,13 +175,13 @@ function Carrinho(){
                                                         <div className="imgBox">
                                                             <img className="img" src={item.productImg} alt="" />
                                                         </div>
-                                                        <div className="descri">
+                                                        <div className="descri fromCar">
                                                             <h5 className="desH5">{
                                                                 item.productTitle.length >= 42 ?
                                                                 item.productTitle.slice(0, 42) + '...'
                                                                 : item.productTitle.slice(0, 42)
                                                                 }</h5>
-                                                            <h5 className="price">{item.productPrice}</h5>
+                                                            <h5 className="price">{item.productPrice+' R$'}</h5>
                                                             
                                                         </div>
                                                     </div>
@@ -220,8 +221,8 @@ function Carrinho(){
                                 <button onClick={()=>{setConfirmarCompra(true)}} type="submit" className="comprarBut">
                                     <h1>Comprar item</h1>
                                 </button>
-                    }
-                    </div>
+                    }<Footer />
+                </div>
             </div>
             
             {confirmarCompra?
@@ -263,6 +264,7 @@ function Carrinho(){
             : null
             }
             {redirectPosCompra}
+            
         </div>
     )
 }

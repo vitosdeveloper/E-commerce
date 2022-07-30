@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useItensDaLoja, useFavoritos, useSetFavoritos } from '../LoginContext.jsx';
 import { Link } from 'react-router-dom';
+import Footer from './Footer.jsx';
 
 function Catalog(props) {
     //fake data provisória
@@ -104,7 +105,7 @@ function Catalog(props) {
     //colocar maiores numeros de compra do maior pro menor (organização)
     let maisCompradosPreco = []
     storeModel.forEach((item)=>{
-        if (item.numDeCompras >= 1){
+        if (item.numDeCompras > 0 && !maisCompradosPreco.includes(item.numDeCompras)){
             maisCompradosPreco.push(item.numDeCompras)
         }
     })
@@ -130,20 +131,20 @@ function Catalog(props) {
         everyCard.forEach((item, index)=>{
             item.style.display = 'none';
         });
-        if (!!everyCard) {
-            setNumDeItens(everyCard.length)
-            everyCard.forEach((item, index)=>{
-                if (index < paginaSelecionada * 6 && index > paginaSelecionada * 6 -7) {
-                    item.style.display = 'inline-block';
-                }
-            })
-        }
+        setNumDeItens(everyCard.length)
+        everyCard.forEach((item, index)=>{
+            if (index < paginaSelecionada * 6 && index > paginaSelecionada * 6 -7) {
+                item.style.display = 'inline-block';
+            }
+        })
             // eslint-disable-next-line
     }, [selectedList, props.catalogIs, []])
 
     useEffect(()=>{
         setPaginaSelecionada(1)
     }, [props.catalogIs])
+
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     return (
         <div>
@@ -152,7 +153,9 @@ function Catalog(props) {
                 <span>●</span>
             </div>
             <div className="classificações">
-                <ul onClick={bolinhaAltura}>
+                <ul 
+                className={!!isMenuOpen? 'showCatalogue' : 'hideCatalogue' }
+                onClick={bolinhaAltura}>
                     <li onClick={(e)=>{filterList(e); setPaginaSelecionada(1)}}>TODOS</li>
                     {   //render pra abas de todos departamentos
                         props.catalogIs==='normal' ?
@@ -174,6 +177,13 @@ function Catalog(props) {
                     }
                 </ul>
             </div>
+            <button
+            className='mobileMenuButton'
+            onClick={()=>{
+                setIsMenuOpen(!!isMenuOpen?false:true)
+            }}
+            style={{textAlign: 'center', margin: '0'}}
+            >Show Catalogue</button>
             <div className="ecommerceItensDiv">
                 {props.catalogIs==='promoção'?
                 storeModel.map((item, index)=>{
@@ -218,7 +228,10 @@ function Catalog(props) {
                 new Array(numDeItens).fill(undefined).map((item, index)=>{
                     return index % 6 === 0 ?
                     <div className="everyPage linkLindo" key={index} 
-                    onClick={()=>{setPaginaSelecionada(index / 6 +1)}}
+                    onClick={()=>{
+                        setPaginaSelecionada(index / 6 +1)
+                        window.scrollTo({top: 0, behavior: "smooth"})
+                        }}
                     >
                         {index / 6 +1}
                     </div>
@@ -227,6 +240,7 @@ function Catalog(props) {
                 : 'loading...'
             }
         ]</div>
+        <Footer />
         </div>
     )
 }

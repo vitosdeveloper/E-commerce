@@ -4,6 +4,7 @@ import { useLoggedIn, useLoggedInUpdate, useSetJwt } from '../LoginContext.jsx';
 //pegar url atual e tals
 import { Navigate } from 'react-router-dom';
 import Axios from 'axios';
+import Footer from './Footer.jsx';
 
 function Login (){
     const isLoggedIn = useLoggedIn();
@@ -181,7 +182,9 @@ function Login (){
                         </div>
                     : null
                 }
-                
+            </div>
+            <div style={{position: 'relative', top: '60px'}}>
+                <Footer />
             </div>
         </div>
     )

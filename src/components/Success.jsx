@@ -8,7 +8,7 @@ export default function Success(){
     return (
         <div>
             <div className="favoritados">
-                <h1 className="success">Compra efetuada com sucesso! (っ＾▿＾)💨</h1>
+                <h1 className="success">Compra efetuada com sucesso! <br /> (っ＾▿＾)💨</h1>
                 <h4 className="success">Redirecionando...</h4>
             </div>
         </div>

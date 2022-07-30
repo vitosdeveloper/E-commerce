@@ -3,6 +3,7 @@ import NavBar from './NavBar.jsx';
 import { useItensDaLoja, useFavoritos, useSetFavoritos, useSetCarrinhoItens, useCarrinhoItens } from '../LoginContext.jsx';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
+import Footer from './Footer.jsx';
 
 function Favoritados(){
     const todosItens = useItensDaLoja();
@@ -98,8 +99,7 @@ function Favoritados(){
                                                         item.productTitle.slice(0, 48) + '...'
                                                         : item.productTitle.slice(0, 48)
                                                         }</h5>
-                                                    <h5 className="price">{item.productPrice}</h5>
-                                                    
+                                                    <h5 className="price">{item.productPrice+' R$'}</h5>
                                                 </div>
                                             </div>
                                         </Link>
@@ -113,8 +113,8 @@ function Favoritados(){
                             <h4>Aproveite e favorite seus itens preferidos através da <Link to="/">página principal</Link></h4>
                         </div>
                     }
-                
             </div>
+            <Footer />
         </div>
     )
 }

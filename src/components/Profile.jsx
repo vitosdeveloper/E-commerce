@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useLoggedIn, useLoggedInUpdate, useUsuarioDados, useSetUsuarioDados, useSetJwt, useJwt } from '../LoginContext.jsx';
 import { Navigate } from 'react-router-dom';
 import Axios from 'axios';
+import Footer from './Footer.jsx';
 
 function Profile(){
 
@@ -123,6 +124,7 @@ function Profile(){
                     {redirect}
                 </div>
             }
+            <Footer />
         </div>
     )
 }

@@ -41,12 +41,14 @@ body {
   list-style: none;
   margin-left: 20px;
 }
+.mobileMenuButton {
+  display: none;
+}
 
 /* departamentos */
 .departamentosDiv {
   background: rgb(111, 111, 170);
   text-align: center;
-  width: 100%;
 }
 .departamentosDiv ul {
   margin: 0;
@@ -665,10 +667,231 @@ body {
   text-align: center;
 }
 .pageLinks .everyPage {
-  display: inline;
+  display: inline-block;
   margin: 3px;
   font-size: 20px;
 }
 .pageLinks .everyPage:hover {
   cursor: pointer;
+}
+
+/* mobile responsive */
+
+@media only screen and (max-width: 1200px) {
+  .navBarOne {
+    display: block;
+    text-align: center;
+    padding: 0 0 2px 0;
+    min-width: 310px;
+    min-width: unset;
+  }
+  .navBarOne .logo {
+    position: initial;
+  }
+  .navBarOne .ulMenuItens {
+    position: absolute;
+    top: 103px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+  }
+  .navBarOne .active {
+    position: relative;
+    top: 42px;
+    display: block;
+  }
+  .navBarOne ul .menuItenss {
+    display: block;
+    margin: 0;
+  }
+  .searchUl {
+    position: relative;
+    z-index: 3;
+    text-align: -webkit-center;
+  }
+  .searchInput img {
+    display: none;
+  }
+  .departamentosDiv ul li {
+    display: block;
+  }
+  .departamentosDiv ul {
+    margin: 0;
+    padding: 5px 0 5px 0;
+    text-align: left;
+    display: inline-block;
+  } 
+  .departamentosDiv ul li.borderRight {
+    border-right: none;
+  }
+  .mobileMenuButton {
+    display: block;
+    background: rgb(142, 142, 223);
+    padding: 0 5px 0 5px;
+    margin: 5px 0 5px 0;
+    position: relative;
+    left: 50%;
+    top: 11px;
+    transform: translate(-50%, -50%);
+  }
+  .itensCatalogo {
+    width: auto;
+    display: block;
+    margin-top: 0;
+  }
+  .bolinhaMenu {
+    display: none;
+  }
+  .itensCatalogo .classificações {
+    width: 200px;
+    position: relative;
+    display: unset;
+  }
+  .itensCatalogo .classificações ul {
+    padding: 0;
+    text-align: center;
+    margin: 0;
+  }
+  .itensCatalogo .classificações ul li {
+    border-bottom-style: none;
+  }
+  .ecommerceItensDiv {
+    text-align: center;
+  }
+  .menuSublinhado {
+    display: none;
+  }
+
+  /* everyItem */
+  .itemIndividual {
+    width: 290px;
+    padding: 0;
+    background: white;
+    border-radius: 5px;
+    margin-bottom: 30px;
+  }
+  .itemIndividual .imgDiv img {
+    width: 270px;
+  }
+  .imgDiv .img {
+    max-height: 540px;
+    overflow: auto;
+    display: inline-block;
+    position: relative;
+    left: 50%;
+    top: 180px;
+    transform: translate(-50%, -50%);
+  }
+  .comprarAgora {
+    text-align: center;
+    bottom: 123px;
+    margin-left: 78px;
+    width: 230px;
+  }
+  .descDiv {
+    margin: 5px;
+    width: 272px;
+  }
+  .everyCompra {
+    margin: 0;
+  }
+  .everyItemLinkToCar {
+    margin-bottom: 80px;
+  }
+  .botaoCarrinho {
+    position: relative;
+    top: 40px;
+  }
+  .aboutEveryItem {
+    text-align: left;
+    padding: 15px;
+    background: #c6c6fb;
+    border-radius: 5px;
+    position: relative;
+    top: 10px;
+    right: 52px;
+    width: 200px;
+  }
+  /* favorites */
+  .favoritados {
+    width: 290px;
+    top: 10px;
+  }
+  .favoritados .listaDeItens {
+    width: 280px;
+    height: auto;
+    margin-top: 0;
+  }
+  .listaDeItens .item {
+    display: block;
+  }
+  .descri .desH5 {
+    width: 255px;
+    font-size: 22px;
+    margin: 0;
+    position: relative;
+    left: 10px;
+  }
+  .descri .price {
+    position: relative;
+    left: 10px;
+    margin-bottom: 10px;
+  }
+  .listaDeItens .item {
+    display: grid;
+  }
+  .quantidade {
+    left: 28px;
+    display: flex;
+    float: left;
+    position: relative;
+    bottom: -75px;
+    width: 200px;
+  }
+  .fromCar {
+    margin-top: 46px;
+  }
+  .quantityBut {
+    height: 20px;
+  }
+  /* meus pedidos */
+  .favoritados .historicoLista {
+    border: 1px dashed rgb(111, 111, 170);
+    background: rgb(133, 133, 187);
+    margin: 0px 5px 30px 5px;
+    padding: 0 8px 0px 8px;
+  }
+  .confirmarCompra {
+    width: 170px;
+  }
+  .itensCatalogo .classificações ul.showCatalogue {
+    display: block;
+  }
+  .itensCatalogo .classificações ul.hideCatalogue {
+    display: none;
+  }
+  /* página de sucesso */
+  .favoritados .success {
+    top: 5px;
+    padding: 0 30px 0 30px;
+  }
+  /* login screen */
+  .loginScreen  {
+    width: 290px;
+    padding: 0;
+  }
+  .aboutAcc {
+    position: relative;
+    top: 150px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    text-align: center;
+  }
+  .itemIndividual .itemTitle h1 {
+    word-break: break-word;
+  }
+  .descri h2 {
+    word-break: break-word;
+  }
 }
