@@ -158,6 +158,10 @@ function Catalog(props) {
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+    useEffect(()=>{
+        window.scrollTo({top: 0, behavior: "smooth"})
+    }, [paginaSelecionada])
+
     return (
         <div>
         <div className="itensCatalogo">
@@ -242,7 +246,6 @@ function Catalog(props) {
                     <div className="everyPage linkLindo" key={index} 
                     onClick={()=>{
                         setPaginaSelecionada(index / 6 +1)
-                        window.scrollTo({top: 0, behavior: "smooth"})
                         }}
                     >
                         {index / 6 +1}
