@@ -49,7 +49,7 @@ function Login (){
                 && toRegister.pass.length>0
                 && toRegister.repeatPass.length>0
             ) {
-                Axios.post("https://ecommercefakedb.herokuapp.com/registerUser", {toRegister})
+                Axios.post("https://vitos-e-commerce.herokuapp.com/registerUser", {toRegister})
                 .then(response => {
                     if (response.data.status==='success') {
                         document.querySelector('.logName').innerText = 'Registrado com sucesso!';
@@ -80,7 +80,7 @@ function Login (){
     }
     function logar(){
         if (toLogin.user.length>0 && toLogin.pass.length>0) {
-            Axios.post("https://ecommercefakedb.herokuapp.com/logar", {toLogin})
+            Axios.post("https://vitos-e-commerce.herokuapp.com/logar", {toLogin})
             .then(response => {
                 const result = document.querySelector('.result');
                 if(response.data.status==='success'){

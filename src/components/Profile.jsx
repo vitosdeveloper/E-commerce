@@ -59,7 +59,7 @@ function Profile(){
     function enviarForm(){
             const dadosComJwt = {...usuarioDados, jwt};
 
-            Axios.post('https://ecommercefakedb.herokuapp.com/editarUser', {dadosComJwt})
+            Axios.post('https://vitos-e-commerce.herokuapp.com/editarUser', {dadosComJwt})
             .then((response)=>{
                 const profileResult = document.querySelector('.profileChangeResult');
                 if (response.data.status==='success') {

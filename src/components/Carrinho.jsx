@@ -111,7 +111,7 @@ function Carrinho(){
             jwt: jwt
         }
         
-        Axios.post("https://ecommercefakedb.herokuapp.com/efetuarCompra", {formulario})
+        Axios.post("https://vitos-e-commerce.herokuapp.com/efetuarCompra", {formulario})
         .then(response => {
             if (response.data.status==="success") {
                 sucess.innerText = 'Processando compra...';
@@ -177,9 +177,9 @@ function Carrinho(){
                                                         </div>
                                                         <div className="descri fromCar">
                                                             <h5 className="desH5">{
-                                                                item.productTitle.length >= 42 ?
-                                                                item.productTitle.slice(0, 42) + '...'
-                                                                : item.productTitle.slice(0, 42)
+                                                                item.productTitle.length >= 35 ?
+                                                                item.productTitle.slice(0, 35) + '...'
+                                                                : item.productTitle.slice(0, 35)
                                                                 }</h5>
                                                             <h5 className="price">{item.productPrice+' R$'}</h5>
                                                             
