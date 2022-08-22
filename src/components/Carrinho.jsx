@@ -1,5 +1,5 @@
 import NavBar from './NavBar.jsx'
-import { useCarrinhoItens, useSetCarrinhoItens, useItensDaLoja, useLoggedIn, useUsuarioDados, useJwt, useSetJwt } from '../LoginContext.jsx';
+import { serverUrl, useCarrinhoItens, useSetCarrinhoItens, useItensDaLoja, useLoggedIn, useUsuarioDados, useJwt, useSetJwt } from '../LoginContext.jsx';
 import { Link, Navigate } from 'react-router-dom';
 import { useState } from 'react';
 import Axios from 'axios';
@@ -111,7 +111,7 @@ function Carrinho(){
             jwt: jwt
         }
         
-        Axios.post("https://vitos-e-commerce.herokuapp.com/efetuarCompra", {formulario})
+        Axios.post(serverUrl+"/efetuarCompra", {formulario})
         .then(response => {
             if (response.data.status==="success") {
                 sucess.innerText = 'Processando compra...';

@@ -1,7 +1,7 @@
 import NavBar from './NavBar.jsx';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useLoggedIn, useLoggedInUpdate, useUsuarioDados, useSetUsuarioDados, useSetJwt, useJwt } from '../LoginContext.jsx';
+import { useLoggedIn, useLoggedInUpdate, useUsuarioDados, useSetUsuarioDados, useSetJwt, useJwt, serverUrl } from '../LoginContext.jsx';
 import { Navigate } from 'react-router-dom';
 import Axios from 'axios';
 import Footer from './Footer.jsx';
@@ -55,11 +55,11 @@ function Profile(){
             itensComprados: []
         })
     };
-
+    
     function enviarForm(){
             const dadosComJwt = {...usuarioDados, jwt};
 
-            Axios.post('https://vitos-e-commerce.herokuapp.com/editarUser', {dadosComJwt})
+            Axios.post(serverUrl+'/editarUser', {dadosComJwt})
             .then((response)=>{
                 const profileResult = document.querySelector('.profileChangeResult');
                 if (response.data.status==='success') {

@@ -1,6 +1,6 @@
 import NavBar from './NavBar.jsx';
 import { useState } from 'react';
-import { useLoggedIn, useLoggedInUpdate, useSetJwt } from '../LoginContext.jsx';
+import { useLoggedIn, useLoggedInUpdate, useSetJwt, serverUrl } from '../LoginContext.jsx';
 //pegar url atual e tals
 import { Navigate } from 'react-router-dom';
 import Axios from 'axios';
@@ -49,7 +49,7 @@ function Login (){
                 && toRegister.pass.length>0
                 && toRegister.repeatPass.length>0
             ) {
-                Axios.post("https://vitos-e-commerce.herokuapp.com/registerUser", {toRegister})
+                Axios.post(serverUrl+"/registerUser", {toRegister})
                 .then(response => {
                     if (response.data.status==='success') {
                         document.querySelector('.logName').innerText = 'Registrado com sucesso!';
@@ -80,7 +80,7 @@ function Login (){
     }
     function logar(){
         if (toLogin.user.length>0 && toLogin.pass.length>0) {
-            Axios.post("https://vitos-e-commerce.herokuapp.com/logar", {toLogin})
+            Axios.post(serverUrl+"/logar", {toLogin})
             .then(response => {
                 const result = document.querySelector('.result');
                 if(response.data.status==='success'){

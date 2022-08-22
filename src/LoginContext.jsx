@@ -64,6 +64,8 @@ const CheckJwt = React.createContext();
 export function useCheckJwt(){
     return useContext(CheckJwt)
 }
+//endereço sem barra no final pf
+export const serverUrl = 'https://vitos-e-commerce.herokuapp.com';
 
 export function IsLoggedInProvider({ children }){
 
@@ -92,7 +94,7 @@ export function IsLoggedInProvider({ children }){
     //checar valiadde do jwt e entregar dados do usuário
 
     const checkJwt = function(){
-        Axios.post("https://vitos-e-commerce.herokuapp.com/checkJwt", {jwt})
+        Axios.post(serverUrl+"/checkJwt", {jwt})
         .then(response =>{
             if (response.data.status==='ok') {
                 setUsuarioDados(response.data.user);
@@ -113,7 +115,7 @@ export function IsLoggedInProvider({ children }){
     }
 
     useEffect(() => {
-        fetch("https://vitos-e-commerce.herokuapp.com/itensDaLoja").then(
+        fetch(serverUrl+"/itensDaLoja").then(
             response => response.json()
           ).then(
             data => {

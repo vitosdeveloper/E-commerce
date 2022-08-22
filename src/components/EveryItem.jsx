@@ -1,6 +1,6 @@
 import NavBar from './NavBar.jsx';
 import { useState, useEffect } from 'react';
-import { useSetCarrinhoItens, useUsuarioDados, useJwt, useSetJwt, useLoggedIn } from '../LoginContext.jsx';
+import { useSetCarrinhoItens, useUsuarioDados, useJwt, useSetJwt, useLoggedIn, serverUrl } from '../LoginContext.jsx';
 import { Link, Navigate } from 'react-router-dom';
 import Axios from 'axios';
 
@@ -93,7 +93,7 @@ function EveryItem(props){
             jwt: jwt
         }
         
-        Axios.post("https://vitos-e-commerce.herokuapp.com/efetuarCompraPeloItem", {formulario})
+        Axios.post(serverUrl+"/efetuarCompraPeloItem", {formulario})
         .then(response => {
             if (response.data.status==='success'){
                 setJwt(response.data.jwt);
