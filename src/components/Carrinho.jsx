@@ -1,12 +1,12 @@
 import NavBar from './NavBar.jsx'
-import { serverUrl, useCarrinhoItens, useSetCarrinhoItens, useItensDaLoja, useLoggedIn, useUsuarioDados, useJwt, useSetJwt } from '../LoginContext.jsx';
+import { serverUrl, useCarrinhoItens, useSetCarrinhoItens, useItensDaLoja, useLoggedIn, useUsuarioDados, useJwt, useSetJwt, useCheckJwt } from '../LoginContext.jsx';
 import { Link, Navigate } from 'react-router-dom';
 import { useState } from 'react';
 import Axios from 'axios';
 import Footer from './Footer.jsx';
 
 function Carrinho(){
-
+    const checkJwt = useCheckJwt();
     const jwt = useJwt();
     const setJwt = useSetJwt();
     //carrinho
@@ -19,7 +19,6 @@ function Carrinho(){
     //dados usuario
     const dadosUsuario = useUsuarioDados();
 
-    const sucess = document.querySelector('.favoritados .favTitle');
     const [redirectPosCompra, setRedirectPosCompra] = useState(false);
 
     //deletar do carrinho 
@@ -110,17 +109,25 @@ function Carrinho(){
             horarioDeCompra: horario+amOrPm,
             jwt: jwt
         }
-        
+
+        document.querySelector('button.finalizarCompra').remove();
+        document.querySelector('.divResponse').innerText = "Processando...";
+
         Axios.post(serverUrl+"/efetuarCompra", {formulario})
         .then(response => {
             if (response.data.status==="success") {
-                sucess.innerText = 'Processando compra...';
                 setJwt(response.data.jwt);
                 setConfirmarCompra(false);
                 setCarrinho([])
                 setRedirectPosCompra(<Navigate to="/success" />);
             } else if (response.data.status==="err") {
-                console.log('erro :s');
+                document.querySelector('.divResponse').innerText = "Alguma coisa deu errado, relogue e tente novamente.";
+                checkJwt();
+                setTimeout(() => {
+                    setRedirectPosCompra(<Navigate to="/login" />);
+                }, 2000);
+            } else if (response.data.status==='estoqueFail'){
+                document.querySelector('.divResponse').innerText = "Algum dos itens está fora de estoque!";
             }
         })
     }
@@ -252,7 +259,7 @@ function Carrinho(){
                         <h1 className="valorTotal">{precoTotal}</h1>
                     </div>
                 </div>
-                <div>
+                <div className="divResponse">
                     {
                         precoTotal !== 0 ?
                             <button onClick={formularioDaCompra} className="finalizarCompra"><h2>Efetuar compra</h2></button>
