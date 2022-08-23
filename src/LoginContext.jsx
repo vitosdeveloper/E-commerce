@@ -65,7 +65,7 @@ export function useCheckJwt(){
     return useContext(CheckJwt)
 }
 //endereço sem barra no final pf
-export const serverUrl = 'https://vitos-e-commerce.herokuapp.com/';
+export const serverUrl = 'https://vitos-e-commerce.herokuapp.com';
 
 export function IsLoggedInProvider({ children }){
 
