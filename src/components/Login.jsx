@@ -1,6 +1,6 @@
 import NavBar from './NavBar.jsx';
 import { useState } from 'react';
-import { useLoggedIn, useLoggedInUpdate, useSetJwt, serverUrl } from '../LoginContext.jsx';
+import { useLoggedIn, useSetJwt, serverUrl } from '../LoginContext.jsx';
 //pegar url atual e tals
 import { Navigate } from 'react-router-dom';
 import Axios from 'axios';
@@ -8,7 +8,6 @@ import Footer from './Footer.jsx';
 
 function Login (){
     const isLoggedIn = useLoggedIn();
-    const setIsLoggedIn = useLoggedInUpdate();
     const setJwt = useSetJwt();
 
     const [logOrReg, setLogOrReg] = useState('choose');
@@ -23,7 +22,6 @@ function Login (){
     function logadoComSucesso(){
         setTimeout(() => {
             window.location.href = '/';
-            setIsLoggedIn(true)
         }, 2500);
     }
     //registro
@@ -78,28 +76,31 @@ function Login (){
             }
         })
     }
-    function logar(){
+    async function logar(){
+        const resultElement = document.querySelector('.result');
         if (toLogin.user.length>0 && toLogin.pass.length>0) {
-            Axios.post(serverUrl+"/logar", {toLogin})
-            .then(response => {
-                const result = document.querySelector('.result');
+            try {
+                const response = await Axios.post(serverUrl+"/logar", {toLogin});
                 if(response.data.status==='success'){
                     setJwt(response.data.jwt);
-                    result.innerText="Logado com sucesso!";
-                    result.style.color = 'green';
                     //passar o jwt pro useLocalStorage
                     //depois, sempre q ele for validado com açao do usuário
                     //o site será alimentado no useState
                     setLogOrReg('logou');
                     logadoComSucesso();
                 } else if (response.data.status==='404user'){
-                    result.innerText="Usuário não encontrado";
-                    result.style.color = '#e91111';
+                    resultElement.innerText="Usuário não encontrado";
+                    resultElement.style.color = '#e91111';
                 } else if (response.data.status==='wrongPass'){
-                    result.innerText="Senha incorreta";
-                    result.style.color = '#e91111';
-                }
-            })
+                    resultElement.innerText="Senha incorreta";
+                    resultElement.style.color = '#e91111';
+                } 
+            } catch(err){
+                console.log(err);
+                resultElement.innerText="Algo errado com o servidor. @_@";
+                resultElement.style.color = '#e91111';
+            }
+            
         } else {
             document.querySelector('.logName').innerText = 'Preencha todos campos.'
         }
@@ -118,6 +119,7 @@ function Login (){
                         </div>
                     : logOrReg==='log' ?
                         <div>
+                        <form id="loginForm" action="submit">
                             <h3>Login</h3>
                             <h4>Bem-vindo de volta, </h4>
                             <h3 className="logName" value={toLogin.user}>{toLogin.user}</h3><br/>
@@ -132,12 +134,14 @@ function Login (){
                             onChange={makeLoginForm} 
                             type='password' placeholder='Password' className="loginInput"></input>
                             <br/>
-                            <h3 className="loginButtonLogin" 
+                            <h3 className="loginButtonLogin" type="submit" 
                             onClick={logar}
                             >Login</h3><br/>
                             <h5 className="result" style={{position: 'absolute', left:'50%', top: '68%', transform: 'translate(-50%, -50%)'}}> </h5>
                             <h3 className="loginButtonsBack" onClick={()=>{setLogOrReg('choose')}}>Back</h3>
+                        </form>
                         </div>
+                        
                         
                     : logOrReg==='reg' ?
                         <div>
@@ -168,6 +172,11 @@ function Login (){
                             <br/>
                             <h3 className="loginButtonLogin" onClick={registerForm}>Register</h3><br/>
                             <h3 className="regButtonsBack" onClick={()=>{setLogOrReg('choose')}}>Back</h3>
+                        </div>
+                    : logOrReg==='processando' ?  
+                        <div className="logou">
+                            <h4>Processando</h4>
+                            <h4>Por favor, aguarde...</h4>
                         </div>
                     : logOrReg==='logou' ?
                         <div className="logou">

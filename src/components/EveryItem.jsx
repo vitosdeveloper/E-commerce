@@ -1,11 +1,12 @@
 import NavBar from './NavBar.jsx';
 import { useState, useEffect } from 'react';
-import { useSetCarrinhoItens, useUsuarioDados, useJwt, useSetJwt, useLoggedIn, serverUrl } from '../LoginContext.jsx';
+import { useSetCarrinhoItens, useUsuarioDados, useJwt, useSetJwt, useLoggedIn, serverUrl, useCheckJwt } from '../LoginContext.jsx';
 import { Link, Navigate } from 'react-router-dom';
 import Axios from 'axios';
 
 function EveryItem(props){
 
+    const checkJwt = useCheckJwt();
     const setCarrinhoItens = useSetCarrinhoItens();
     const jwt = useJwt();
     const setJwt = useSetJwt();
@@ -18,7 +19,7 @@ function EveryItem(props){
 
     const precoTotal = quantidadeDoItem * parseFloat(props.item.productPrice);
     
-    const [redirectPosCompra, setRedirectPosCompra] = useState(false);
+    const [redirectPosCompra, setRedirectPosCompra] = useState();
 
     function addItem(){
         if (quantidadeDoItem > 0 && quantidadeDoItem < props.item.estoque){
@@ -68,9 +69,11 @@ function EveryItem(props){
 
     //depois fazer formulário e enviar os dados pra db com axios ou algo, testar com console.log
     function formularioDaCompra(){
+        const divDoBotao = document.querySelector('.divDaCompra');
+        divDoBotao.querySelector('.finalizarCompra').style.display = 'none';
+        divDoBotao.innerText = 'Processando...';
+
         const diaCompleto = new Date();
-        
-        //lembrar de descontar do estoque
         let amOrPm = '';
         if (diaCompleto.getHours() < 12) {
             amOrPm = ' am';
@@ -98,14 +101,12 @@ function EveryItem(props){
             if (response.data.status==='success'){
                 setJwt(response.data.jwt);
                 setConfirmarCompra(false);
-                //checkJwt();
                 setRedirectPosCompra(<Navigate to="/success" />);
             } else if (response.data.status==='success') {
                 document.querySelector('.itemTitle').innerText='Quantidade de item comprado excede a quantidade no estoque. Tente novamente mais tarde.';
                 document.querySelector('.itemTitle').style.color='red';
             }
         })
-        //esvaziar carrinho após compra
     }
 
     return (
@@ -150,7 +151,7 @@ function EveryItem(props){
                             {
                                 isLoggedIn ?
                                 <button 
-                                onClick={()=>{setConfirmarCompra(true); window.scrollTo({top: 0, behavior: "smooth"})}} 
+                                onClick={()=>{checkJwt(); setConfirmarCompra(true); window.scrollTo({top: 0, behavior: "smooth"})}} 
                                 className="comprarBut everyCompra"
                                 ><h2>Comprar agora!</h2></button>
                                 :
@@ -199,7 +200,7 @@ function EveryItem(props){
                             <h1 className="valorTotal">{precoTotal}</h1>
                         </div>
                     </div>
-                    <div>
+                    <div className="divDaCompra">
                         {   isLoggedIn ?
                             precoTotal !== 0 ?
                                 <button onClick={formularioDaCompra} className="finalizarCompra"><h2>Efetuar compra</h2></button>

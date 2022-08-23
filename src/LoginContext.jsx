@@ -65,7 +65,7 @@ export function useCheckJwt(){
     return useContext(CheckJwt)
 }
 //endereço sem barra no final pf
-export const serverUrl = 'https://vitos-e-commerce.herokuapp.com';
+export const serverUrl = 'http://localhost:5000';
 
 export function IsLoggedInProvider({ children }){
 
@@ -93,43 +93,38 @@ export function IsLoggedInProvider({ children }){
     const [jwt, setJwt] = useLocalStorage('jwt', )
     //checar valiadde do jwt e entregar dados do usuário
 
-    const checkJwt = function(){
-        Axios.post(serverUrl+"/checkJwt", {jwt})
-        .then(response =>{
-            if (response.data.status==='ok') {
-                setUsuarioDados(response.data.user);
-                setIsLoggedIn(true);
-            } else if (response.data.status==='err') {
-                setIsLoggedIn(false);
-                setUsuarioDados({
-                    _id: '',
-                    login: '',
-                    nome: '',
-                    endereco: '',
-                    sexo: '',
-                    itensComprados: []
-                });
-                setJwt();
-            }
-        })
+    const checkJwt = async ()=>{
+        const response = await Axios.post(serverUrl+"/checkJwt", {jwt});
+        if (response.data.status==='ok') {
+            setUsuarioDados(response.data.user);
+            setIsLoggedIn(true);
+        } else if (response.data.status==='err') {
+            setIsLoggedIn(false);
+            setUsuarioDados({
+                _id: '',
+                login: '',
+                nome: '',
+                endereco: '',
+                sexo: '',
+                itensComprados: []
+            });
+            setJwt();
+        }
     }
-
+    
     useEffect(() => {
-        fetch(serverUrl+"/itensDaLoja").then(
-            response => response.json()
-          ).then(
-            data => {
-                const dataEmbaralhada = data.sort(()=>{ return Math.random() - 0.5 })
-                setItensDaLoja(dataEmbaralhada);
-                checkJwt();
-                setInterval(() => {
-                        checkJwt();
-                }, 60000);
-            }
-          )
+        console.log('sss')
+        checkJwt();
+        const asyncInsideUseEffect = async()=>{
+            const response = fetch(serverUrl+"/itensDaLoja");
+            const data = await (await response).json();
+            const dataEmbaralhada = data.sort(()=>{ return Math.random() - 0.5 })
+            setItensDaLoja(dataEmbaralhada);
+        }
+        asyncInsideUseEffect();
         // eslint-disable-next-line
     }, []);
-
+    
     return (
         <IsLoggedInContext.Provider value={isLoggedIn}>
             <SetIsLoggedInContext.Provider value={setIsLoggedIn}>

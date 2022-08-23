@@ -221,11 +221,11 @@ function Carrinho(){
                                 </button></Link>
                         
                             :carrinho.length > 1?
-                                <button onClick={()=>{setConfirmarCompra(true); window.scrollTo({top: 0, behavior: "smooth"})}} type="submit" className="comprarBut">
+                                <button onClick={()=>{checkJwt(); setConfirmarCompra(true); window.scrollTo({top: 0, behavior: "smooth"})}} type="submit" className="comprarBut">
                                     <h1>Comprar itens</h1>
                                 </button>
                             :
-                                <button onClick={()=>{setConfirmarCompra(true)}} type="submit" className="comprarBut">
+                                <button onClick={()=>{checkJwt(); setConfirmarCompra(true)}} type="submit" className="comprarBut">
                                     <h1>Comprar item</h1>
                                 </button>
                     }<Footer />

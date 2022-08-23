@@ -21,6 +21,7 @@ function Profile(){
     const [editando, setEditando] = useState(false);
     const [backupInfo, setBackupInfo] = useState({});
     function editToggle(){
+        profResHtml().innerText='';
         !editando ? setEditando(true) : setEditando(false)
     };
     function editarDeFato(e){
@@ -41,10 +42,10 @@ function Profile(){
     };
 
     function deslogar(){
+        setIsLoggedIn(false);
         setTimeout(() => {
             setRedirect(<Navigate to="/" />)
         }, 1500);
-        setIsLoggedIn(false);
         setJwt();
         setUsuarioDados({
             _id: '',
@@ -55,24 +56,32 @@ function Profile(){
             itensComprados: []
         })
     };
+    //nao da pra declarar como constante fora da function porque na primeira lida o elemento realmente n existe,
+    //já que no lugar da tela de profile, está a tela/component de login no lugar
+    function profResHtml(){
+        const profileResult = document.querySelector('.profileChangeResult');
+        return profileResult;
+    }
     
-    function enviarForm(){
+    async function enviarForm(){
+        try {
             const dadosComJwt = {...usuarioDados, jwt};
-
-            Axios.post(serverUrl+'/editarUser', {dadosComJwt})
-            .then((response)=>{
-                const profileResult = document.querySelector('.profileChangeResult');
-                if (response.data.status==='success') {
-                    setJwt(response.data.jwt);
-                    profileResult.innerText = 'Alterações realizadas com sucesso. Relogue aplicar as alterações.';
-                    profileResult.style.color = 'green';
-                    profileResult.style.opacity = '100';
-                } else if (response.data.status==='err') {
-                    profileResult.innerText = 'Houve algum erro. Por favor, tente mais tarde..';
-                    profileResult.style.color = 'red';
-                    profileResult.style.opacity = '100';
-                }
-            })
+            profResHtml().style.opacity = '100';
+            profResHtml().style.color = 'black';
+            profResHtml().innerText = 'Processando...';
+            const response = await Axios.post(serverUrl+'/editarUser', {dadosComJwt});
+            if (response.data.status==='success') {
+                setJwt(response.data.jwt);
+                profResHtml().innerText = 'Alterações realizadas com sucesso.';
+                profResHtml().style.color = 'green';
+            } else if (response.data.status==='err') {
+                profResHtml().innerText = 'Houve algum erro. Por favor, tente mais tarde..';
+                profResHtml().style.color = 'red';
+            }
+        } catch(err) {
+            profResHtml().innerText = 'Algo errado com o servidor. Por favor, tente mais tarde..';
+            profResHtml().style.color = 'red';
+        }
     }
 
     return (
@@ -106,10 +115,9 @@ function Profile(){
                             <button className="editButton" onClick={()=>{editToggle(); enviarForm();}}>Salvar</button><br/><button className="editButton" onClick={()=>{editToggle(); voltarAoBackup();}}>Cancelar</button>
                         </div>}
                     </div>
-                    {!editando ?
-                    <h4 className="profileChangeResult" style={{opacity: '0', margin: '0'}}>hidden content</h4>
-                    : null
-                    }
+                    <div>
+                        <h4 className="profileChangeResult" style={{opacity: '0', margin: '0'}}> </h4>
+                    </div>
                     <div className="linksDoProfile">
                         <Link className="linkLindo" to="/carrinho"><p>Ir para carrinho</p></Link>
                         <Link className="linkLindo" to="/meus-pedidos"><p>Ver para histórico de pedidos</p></Link>
