@@ -1,17 +1,17 @@
 import NavBar from './NavBar.jsx';
-import { useUsuarioDados, useItensDaLoja, useLoggedIn } from '../LoginContext.jsx';
+import { useItensDaLoja, useLoggedIn, useUserHistory } from '../LoginContext.jsx';
 import { Link } from 'react-router-dom';
 import Footer from './Footer.jsx';
 
 function Historico(){
-    const usuarioDados = useUsuarioDados();
     const itensDaLoja = useItensDaLoja();
     const isloggedIn = useLoggedIn();
+    const itensComprados = useUserHistory();
 
     return (
         <div>
             <NavBar />
-            <div className="favoritados">
+            <div className="favoritados historicoItens">
                 <h1 className="favTitle">Meus pedidos ⌛</h1>
                 {    !isloggedIn?
                     
@@ -19,15 +19,15 @@ function Historico(){
                         <h2>Você precisa logar para acessar essa página.</h2>
                         <h4><Link to="/login">Login/Register</Link></h4>
                     </div> 
-                    : isloggedIn === true && usuarioDados.itensComprados.length > 0 ?
+                    : isloggedIn === true && itensComprados.length > 0 ?
 
-                    usuarioDados.itensComprados.map((item, index)=>{
+                    itensComprados.map((compra, index)=>{
                         return (
                             <div key={index} className="historicoLista">
-                                <h3>Data e horário da compra: {item.detalhes.dataDaCompra}</h3>
+                                <h3>Data e horário da compra: {compra.detalhes.dataDaCompra}</h3>
                                 
                                     {   
-                                        item.itens.map((itemToPost, indexToPost)=>{
+                                        compra.itens.map((itemToPost, indexToPost)=>{
                                             
                                             return  (   
                                                         <div key={indexToPost}>
@@ -59,16 +59,18 @@ function Historico(){
                                                 })
                                     }
                                 
-                                <h1 className="precoTotalHist">Preço total: {item.detalhes.valor} R$.</h1>
+                                <h1 className="precoTotalHist">Preço total: {(compra.detalhes.valor).toLocaleString('pt-BR', {
+                                    style: 'currency',
+                                    currency: 'BRL'
+                                })}.</h1>
                             </div>
                         )
                     }).reverse()
-                    : isloggedIn === true && usuarioDados.itensComprados.length === 0 ?
+                    : isloggedIn === true && itensComprados.length === 0 ?
                         <div className="ifNotLogged">
                             <h2>Parece que você ainda não comprou nada.</h2>
                             <h4>Aproveite e encomende seus itens preferidos através da <Link to="/">página principal</Link></h4>
                         </div>  
-                      
                     : null
                 }
                 

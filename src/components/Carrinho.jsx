@@ -86,7 +86,7 @@ function Carrinho(){
     const [confirmarCompra, setConfirmarCompra] = useState(false);
 
     //depois fazer formulário e enviar os dados pra db com axios ou algo, testar com console.log
-    function formularioDaCompra(){
+    async function formularioDaCompra(){
         const diaCompleto = new Date();
         
         //lembrar de descontar do estoque
@@ -113,23 +113,24 @@ function Carrinho(){
         document.querySelector('button.finalizarCompra').remove();
         document.querySelector('.divResponse').innerText = "Processando...";
 
-        Axios.post(serverUrl+"/efetuarCompra", {formulario})
-        .then(response => {
-            if (response.data.status==="success") {
-                setJwt(response.data.jwt);
-                setConfirmarCompra(false);
-                setCarrinho([])
-                setRedirectPosCompra(<Navigate to="/success" />);
-            } else if (response.data.status==="err") {
-                document.querySelector('.divResponse').innerText = "Alguma coisa deu errado, relogue e tente novamente.";
-                checkJwt();
-                setTimeout(() => {
-                    setRedirectPosCompra(<Navigate to="/login" />);
-                }, 2000);
-            } else if (response.data.status==='estoqueFail'){
-                document.querySelector('.divResponse').innerText = "Algum dos itens está fora de estoque!";
-            }
-        })
+        const response = await Axios.post(serverUrl+"/efetuarCompra", {formulario});
+        if (response.data.status==="success") {
+            setJwt(response.data.jwt);
+            setConfirmarCompra(false);
+            setCarrinho([])
+            setRedirectPosCompra(<Navigate to="/success" />);
+        } else if (response.data.status==="err") {
+            document.querySelector('.divResponse').innerText = "Alguma coisa deu errado, relogue e tente novamente.";
+            checkJwt();
+            setTimeout(() => {
+                setRedirectPosCompra(<Navigate to="/login" />);
+            }, 2000);
+        } else if (response.data.status==='estoqueFail'){
+            document.querySelector('.divResponse').innerText = "Algum dos itens está fora de estoque!";
+            setTimeout(() => {
+                window.location.reload();
+            }, 1500);
+        }
     }
 
     return (
@@ -188,8 +189,9 @@ function Carrinho(){
                                                                 item.productTitle.slice(0, 35) + '...'
                                                                 : item.productTitle.slice(0, 35)
                                                                 }</h5>
-                                                            <h5 className="price">{item.productPrice+' R$'}</h5>
-                                                            
+                                                            <h5 className="price">
+                                                            {'R$ '+item.productPrice}
+                                                            </h5>
                                                         </div>
                                                     </div>
                                                 </Link>
@@ -207,7 +209,10 @@ function Carrinho(){
                     <div className="precoTotal" style={ carrinho.length === 1 ? {marginTop: '60px'} : {}}>
                     {   
                         carrinho.length > 0 ?
-                        <h3>Preço total: {precoTotal}</h3>
+                        <h3>Preço total: <br />{precoTotal.toLocaleString('pt-BR', {
+                            style: 'currency',
+                            currency: 'BRL'
+                        })}</h3>
                         : null
                     }
                     {
@@ -228,9 +233,9 @@ function Carrinho(){
                                 <button onClick={()=>{checkJwt(); setConfirmarCompra(true)}} type="submit" className="comprarBut">
                                     <h1>Comprar item</h1>
                                 </button>
-                    }<Footer />
+                    }
                 </div>
-            </div>
+            </div><Footer />
             
             {confirmarCompra?
                 <div className="confirmarCompra">

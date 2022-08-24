@@ -44,7 +44,7 @@ function Departamentos(props) {
                 <ul>
                     <li onClick={(e)=>{clickCatalog('normal'); posicionarBarra(e.target);}} className="borderRight">Todos departamentos</li>
                     <li onClick={(e)=>{clickCatalog('promoção'); posicionarBarra(e.target);}} className="borderRight">Promoções</li>
-                    <li onClick={(e)=>{clickCatalog('mais comprados'); posicionarBarra(e.target);}}>Mais comprados</li>
+                    <li onClick={(e)=>{clickCatalog('mais comprados'); posicionarBarra(e.target);}} className="borderRight">Mais comprados</li>
                 </ul>
                 <h1 className="menuSublinhado" style={{
                         top: posicaoDaBarra.altura + 'px', 

@@ -68,9 +68,10 @@ function EveryItem(props){
     const [confirmarCompra, setConfirmarCompra] = useState(false);
 
     //depois fazer formulário e enviar os dados pra db com axios ou algo, testar com console.log
-    function formularioDaCompra(){
+    async function formularioDaCompra(){
         const divDoBotao = document.querySelector('.divDaCompra');
         divDoBotao.querySelector('.finalizarCompra').style.display = 'none';
+        divDoBotao.style.color = 'black';
         divDoBotao.innerText = 'Processando...';
 
         const diaCompleto = new Date();
@@ -96,17 +97,24 @@ function EveryItem(props){
             jwt: jwt
         }
         
-        Axios.post(serverUrl+"/efetuarCompraPeloItem", {formulario})
-        .then(response => {
-            if (response.data.status==='success'){
-                setJwt(response.data.jwt);
-                setConfirmarCompra(false);
-                setRedirectPosCompra(<Navigate to="/success" />);
-            } else if (response.data.status==='success') {
-                document.querySelector('.itemTitle').innerText='Quantidade de item comprado excede a quantidade no estoque. Tente novamente mais tarde.';
-                document.querySelector('.itemTitle').style.color='red';
-            }
-        })
+        const response = await Axios.post(serverUrl+"/efetuarCompraPeloItem", {formulario});
+        if (response.data.status==='success'){
+            setJwt(response.data.jwt);
+            setConfirmarCompra(false);
+            setRedirectPosCompra(<Navigate to="/success" />);
+        } else if (response.data.status==='err') {
+            divDoBotao.innerText = 'Houve algum erro. Tente novamente mais tarde.';
+            divDoBotao.style.color = '#670707';
+            setTimeout(() => {
+                window.location.reload();
+            }, 1500);
+        } else if (response.data.status==='estoqueFail'){
+            divDoBotao.innerText= "Algum dos itens está fora de estoque!";
+            divDoBotao.style.color = '#670707';
+            setTimeout(() => {
+                window.location.reload();
+            }, 1500);
+        }
     }
 
     return (
@@ -147,7 +155,11 @@ function EveryItem(props){
                                 </button><br/>
                             </div>
                             
-                            <h4 className="h4Inline">Valor total:</h4> <h2 className="h4Inline bigFontEveryItem">{quantidadeDoItem * parseFloat(props.item.productPrice)}</h2>
+                            <h2 className="h4Inline bigFontEveryItem">
+                            {(quantidadeDoItem * parseFloat(props.item.productPrice)).toLocaleString('pt-BR', {
+                                style: 'currency',
+                                currency: 'BRL'
+                            })}</h2>
                             {
                                 isLoggedIn ?
                                 <button 

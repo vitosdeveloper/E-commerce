@@ -1,5 +1,9 @@
+/* Globais */
 body {
   background: lavender;
+}
+button, div, img, input, select {
+  border-radius: 5px;
 }
 /* navbar */
 .navBarOne * {
@@ -10,6 +14,7 @@ body {
   background: #b3a8f1;
   padding: 20px 0 20px 0;
   display: flex;
+  border-radius: 0;
 }
 .navBarOne .logo {
   position: absolute;
@@ -49,6 +54,7 @@ body {
 .departamentosDiv {
   background: rgb(111, 111, 170);
   text-align: center;
+  border-radius: 0;
 }
 .departamentosDiv ul {
   margin: 0;
@@ -63,13 +69,12 @@ body {
   cursor: pointer;
 }
 .departamentosDiv ul li.borderRight {
-  border-right: 1px solid rgb(77, 108, 110);
+  display: inline;
 }
 .menuSublinhado {
   position: absolute;
   font-size: 120px;
   margin: 0;
-  transition: 0.3s;
   z-index: -1;
 }
 
@@ -152,6 +157,7 @@ body {
   top: 270px;
   padding-left: 5px;
   font-family: sans-serif;
+  text-align: left;
 }
 .itemToBuy .prices .price {
   color: grey;
@@ -172,6 +178,7 @@ body {
 /* itensDiv */
 .ecommerceItensDiv {
   min-width: 66px;
+  max-width: 900px;
 }
 .promoHot {
   max-width: 110px;
@@ -215,6 +222,7 @@ body {
   position: relative;
   top: 60px;
   text-align: center;
+  animation: menu-change .3s;
 }
 .logChoose {
   padding-top: 50px;
@@ -284,6 +292,7 @@ body {
   margin: 30px auto 0 auto;
   padding: 15px 70px 0 70px;
   background: rgb(200, 200, 241);
+  animation: menu-change .3s;
 }
 .linksDoProfile {
   cursor: pointer;
@@ -312,6 +321,17 @@ body {
   margin: 0 auto 50px auto;
   position: relative;
   top: 30px;
+  animation: menu-change .5s;
+}
+@keyframes menu-change {
+  from {
+    opacity: 0.3;
+    transform: translate3d(0,15px,0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0,0,0);
+  }
 }
 .favTitle {
   text-align: center;
@@ -395,8 +415,8 @@ body {
 .precoTotal {
   position: relative;
   display: block;
-  float: right;
   text-align: right;
+  margin: 0 10px 10px 0;
 }
 .precoTotal h3 {
   font-size: 35px;
@@ -552,6 +572,7 @@ body {
   background: white;
   border-radius: 5px;
   margin-bottom: 30px;
+  animation: show-down .3s;
 }
 .itemIndividual .itemTitle {
   padding: 2px 8px 6px 8px;
@@ -675,13 +696,24 @@ body {
   cursor: pointer;
 }
 
+@keyframes show-down {
+  from {
+    opacity: 0;
+    transform: translate3d(0,-30px,0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0,o,0);
+  }
+}
+
 /* mobile responsive */
 
 @media only screen and (max-width: 1200px) {
   .navBarOne {
     display: block;
     text-align: center;
-    padding: 0 0 2px 0;
+    padding: 0 0 4px 0;
     min-width: 310px;
     min-width: unset;
   }
@@ -689,20 +721,14 @@ body {
     position: initial;
   }
   .navBarOne .ulMenuItens {
-    position: absolute;
-    top: 103px;
-    left: 50%;
-    transform: translate(-50%, -50%);
     display: none;
-  }
-  .navBarOne .active {
+    right: initial;
     position: relative;
-    top: 42px;
-    display: block;
+    display: inline-flex;
   }
   .navBarOne ul .menuItenss {
     display: block;
-    margin: 0;
+    margin: 0 4px 0 4px;
   }
   .searchUl {
     position: relative;
@@ -723,6 +749,7 @@ body {
   } 
   .departamentosDiv ul li.borderRight {
     border-right: none;
+    font-size: 13px;
   }
   .mobileMenuButton {
     display: block;
@@ -731,8 +758,9 @@ body {
     margin: 5px 0 5px 0;
     position: relative;
     left: 50%;
-    top: 11px;
+    top: 17px;
     transform: translate(-50%, -50%);
+    padding: 3px 10px;
   }
   .itensCatalogo {
     width: auto;
@@ -757,6 +785,8 @@ body {
   }
   .ecommerceItensDiv {
     text-align: center;
+    max-width: unset;
+    margin-top: 5px;
   }
   .menuSublinhado {
     display: none;
@@ -783,7 +813,7 @@ body {
     transform: translate(-50%, -50%);
   }
   .comprarAgora {
-    text-align: center;
+    /* text-align: center; */
     bottom: 123px;
     margin-left: 78px;
     width: 230px;
@@ -797,6 +827,9 @@ body {
   }
   .everyItemLinkToCar {
     margin-bottom: 80px;
+  }
+  .everyItemLinkToCar button {
+    margin-bottom: 25px;
   }
   .botaoCarrinho {
     position: relative;
@@ -812,15 +845,20 @@ body {
     right: 52px;
     width: 200px;
   }
+  .bigFontEveryItem {
+    font-size: 30px;
+  }
   /* favorites */
   .favoritados {
     width: 290px;
     top: 10px;
+    padding: 0 10px 0 10px;
   }
   .favoritados .listaDeItens {
     width: 280px;
     height: auto;
     margin-top: 0;
+    padding: 5px 0;
   }
   .listaDeItens .item {
     display: block;
@@ -841,18 +879,24 @@ body {
     display: grid;
   }
   .quantidade {
-    left: 28px;
+    left: 18px;
     display: flex;
     float: left;
     position: relative;
     bottom: -75px;
     width: 200px;
   }
+  .quantidadeParaComprar, .h4Inline.bigFontEveryItem {
+    position: relative;
+    right: 30px;
+    bottom: 15px;
+  }
   .fromCar {
     margin-top: 46px;
   }
   .quantityBut {
     height: 20px;
+    margin: 0 2.5px;
   }
   /* meus pedidos */
   .favoritados .historicoLista {
@@ -866,6 +910,7 @@ body {
   }
   .itensCatalogo .classificações ul.showCatalogue {
     display: block;
+    animation: show-down .1s;
   }
   .itensCatalogo .classificações ul.hideCatalogue {
     display: none;
@@ -877,8 +922,10 @@ body {
   }
   /* login screen */
   .loginScreen  {
-    width: 290px;
     padding: 0;
+    width: 290px;
+    padding: 0 10px 0 10px;
+    margin-top: 10px;
   }
   .aboutAcc {
     position: relative;
@@ -903,5 +950,12 @@ body {
   top: 5px;
   z-index: 2;
   -webkit-text-stroke: 2px black;
+  }
+  /* Carrinho */
+  .precoTotal {
+    margin: 0 0 10px 0;
+  }
+  .quantidade .disp {
+    margin-right: 26px;
   }
 }

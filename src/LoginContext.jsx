@@ -64,6 +64,11 @@ const CheckJwt = React.createContext();
 export function useCheckJwt(){
     return useContext(CheckJwt)
 }
+
+const UserHistory = React.createContext();
+export function useUserHistory(){
+    return useContext(UserHistory)
+}
 //endereço sem barra no final pf
 export const serverUrl = 'https://vitos-e-commerce.herokuapp.com';
 
@@ -92,6 +97,7 @@ export function IsLoggedInProvider({ children }){
 
     const [jwt, setJwt] = useLocalStorage('jwt', )
     //checar valiadde do jwt e entregar dados do usuário
+    const [comprasDoUser, setComprasDoUser] = useState([]);
 
     const checkJwt = async ()=>{
         const response = await Axios.post(serverUrl+"/checkJwt", {jwt});
@@ -112,8 +118,8 @@ export function IsLoggedInProvider({ children }){
         }
     }
     
+    //checagem de jwt e carregamento iniciais de itens da loja
     useEffect(() => {
-        console.log('sss')
         checkJwt();
         const asyncInsideUseEffect = async()=>{
             const response = fetch(serverUrl+"/itensDaLoja");
@@ -124,6 +130,22 @@ export function IsLoggedInProvider({ children }){
         asyncInsideUseEffect();
         // eslint-disable-next-line
     }, []);
+
+    //antes o jwt carregava itens comprados pelo usuário, o que sobrecarregava o tamanho do jwt, agora é feito um fetch direto após verificação jwt
+    useEffect(()=>{
+        const atualizarComprasDoUser = async ()=>{
+            const dataToVerify = {
+                userId: usuariosDados._id,
+                jwt: jwt
+            }
+            if((dataToVerify.userId).length > 0 && (dataToVerify.jwt).length>0) {
+                const checkJwtAndGetUserHist = await Axios.post(serverUrl+"/alimentarHistorico", {dataToVerify});
+                const compradosPeloUser = checkJwtAndGetUserHist.data.status;
+                setComprasDoUser(compradosPeloUser);
+            }
+        }
+        atualizarComprasDoUser();
+    }, [usuariosDados, jwt])
     
     return (
         <IsLoggedInContext.Provider value={isLoggedIn}>
@@ -138,7 +160,9 @@ export function IsLoggedInProvider({ children }){
                                             <Jwt.Provider value={jwt}>
                                                 <SetJwt.Provider value={setJwt}>
                                                     <CheckJwt.Provider value={checkJwt}>
-                                                        {children}
+                                                        <UserHistory.Provider value={comprasDoUser}>
+                                                            {children}
+                                                        </UserHistory.Provider>
                                                     </CheckJwt.Provider>
                                                 </SetJwt.Provider>
                                             </Jwt.Provider>

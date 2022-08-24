@@ -8,7 +8,7 @@ function NavBar() {
 
     const navBarOneItens = [
       {
-        name: isLoggedIn ? 'Profile' : "Login/Register",
+        name: isLoggedIn ? 'Profile' : "Login",
         linkPath: isLoggedIn ? '/profile' : '/login'
       }, {
         name: 'Favoritados',
@@ -51,9 +51,6 @@ function NavBar() {
       }
     }, [search])
 
-    //abrir ou fechar menu mobile
-    const [isOpen, setIsOpen] = useState(false);
-
     return (
         <div className="navBarOne">
             <div className="logo">
@@ -87,17 +84,17 @@ function NavBar() {
               </div>
             </div>
             <div>
-              <ul className={isOpen? 'active ulMenuItens' : "ulMenuItens"}>
+              <ul className="ulMenuItens">
                 {navBarOneItens.map((item, index)=>{
                   return <li className='menuItenss' key={index}><Link className="linkLindo" to={item.linkPath}>{item.name}</Link></li>
                 })}
               </ul>
             </div>
-            <button 
+            {/* <button 
             onClick={()=>{
               setIsOpen(!!isOpen?false:true)
             }} 
-            className='mobileMenuButton'>{!isOpen ? 'Open Menu' : 'Close menu'}</button>
+            className='mobileMenuButton'>{!isOpen ? 'Open Menu' : 'Close menu'}</button> */}
         </div>
     )
 }

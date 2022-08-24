@@ -22,7 +22,7 @@ function Login (){
     function logadoComSucesso(){
         setTimeout(() => {
             window.location.href = '/';
-        }, 2500);
+        }, 500);
     }
     //registro
     const [toRegister, setToRegister] = useState({
@@ -39,25 +39,30 @@ function Login (){
             }
         })
     }
-    function registerForm(){
+    async function registerForm(){
+        const logName = document.querySelector('.logName');
+        const botao = document.querySelector('.loginButtonLogin');
+        botao.style.display = 'none';
+        logName.innerText = 'Processando...'
         if (toRegister.pass !== toRegister.repeatPass) {
-            document.querySelector('.logName').innerText = 'Repita a senha corretamente.'
+            logName.innerText = 'Repita a senha corretamente.';
+            botao.style.display = 'inline';
         } else {
             if (toRegister.user.length>0
                 && toRegister.pass.length>0
                 && toRegister.repeatPass.length>0
             ) {
-                Axios.post(serverUrl+"/registerUser", {toRegister})
-                .then(response => {
-                    if (response.data.status==='success') {
-                        document.querySelector('.logName').innerText = 'Registrado com sucesso!';
-                        setLogOrReg('registrou');
-                    } else {
-                        document.querySelector('.logName').innerText = 'O usuário já está sendo utilizado.'
-                    }
-                })
+                const response = await Axios.post(serverUrl+"/registerUser", {toRegister});
+                if (response.data.status==='success') {
+                    logName.innerText = 'Registrado com sucesso!';
+                    setLogOrReg('registrou');
+                } else {
+                    logName.innerText = 'O usuário já está sendo utilizado.';
+                    botao.style.display = 'inline';
+                }
             } else {
-                document.querySelector('.logName').innerText = 'Preencha todos campos.'
+                logName.innerText = 'Preencha todos campos.';
+                botao.style.display = 'inline';
             }
         }
     }
@@ -78,31 +83,33 @@ function Login (){
     }
     async function logar(){
         const resultElement = document.querySelector('.result');
+        const botaoLogin = document.querySelector('.loginButtonLogin');
+        resultElement.innerText = 'Processando...';
+        botaoLogin.style.display = 'none';
         if (toLogin.user.length>0 && toLogin.pass.length>0) {
             try {
                 const response = await Axios.post(serverUrl+"/logar", {toLogin});
                 if(response.data.status==='success'){
                     setJwt(response.data.jwt);
-                    //passar o jwt pro useLocalStorage
-                    //depois, sempre q ele for validado com açao do usuário
-                    //o site será alimentado no useState
                     setLogOrReg('logou');
                     logadoComSucesso();
                 } else if (response.data.status==='404user'){
                     resultElement.innerText="Usuário não encontrado";
                     resultElement.style.color = '#e91111';
+                    botaoLogin.style.display = 'inline';
                 } else if (response.data.status==='wrongPass'){
                     resultElement.innerText="Senha incorreta";
                     resultElement.style.color = '#e91111';
+                    botaoLogin.style.display = 'inline';
                 } 
             } catch(err){
-                console.log(err);
                 resultElement.innerText="Algo errado com o servidor. @_@";
                 resultElement.style.color = '#e91111';
             }
-            
         } else {
-            document.querySelector('.logName').innerText = 'Preencha todos campos.'
+            document.querySelector('.logName').innerText = 'Preencha todos campos.';
+            botaoLogin.style.display = 'inline';
+            resultElement.innerText = '';
         }
     }
 
