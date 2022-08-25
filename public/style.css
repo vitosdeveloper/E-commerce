@@ -107,7 +107,7 @@ body::-webkit-scrollbar-thumb, .img::-webkit-scrollbar-thumb {
 
 /* catálogo de itens */
 .itensCatalogo {
-  margin-top: 30px;
+  margin-top: 15px;
   width: 1050px;
   margin-left: auto;
   margin-right: auto;
