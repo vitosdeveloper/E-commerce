@@ -933,7 +933,7 @@ body::-webkit-scrollbar-thumb, .img::-webkit-scrollbar-thumb {
   /* meus pedidos */
   .favoritados .historicoLista {
     margin: 0px 5px 30px 5px;
-    padding: 0 8px 0px 8px;
+    padding: 1px 8px 0px 8px;
   }
   .confirmarCompra {
     width: 170px;
