@@ -5,6 +5,32 @@ body {
 button, div, img, input, select {
   border-radius: 5px;
 }
+/* Sombras */
+.favoritados, .listaDeItens, .favAddCart, .quantityBut, .imgBox, .comprarBut, .historicoLista, .readyItem, .everyItemLinkToCar button, 
+.confirmarCompra, .loginScreen, .loginOrRegister, .itemIndividual, .aboutEveryItem, .editButton, .favButComum, .mobileMenuButton {
+  box-shadow: 5px 5px 5px rgb(76 38 117 / 40%);
+}
+/* Grown on hover */
+.readyItem:hover, .listaDeItens:hover, li:hover, .logo:hover, .aboutEveryItem:hover, button:hover {
+  scale: 1.02;
+  transition: .3s;
+}
+.imgBox.v2 {
+  width: 0;
+}
+/* scrollbars */
+body::-webkit-scrollbar, .img::-webkit-scrollbar {
+  width: 10px;
+  background: #b3a8f1;
+}
+body::-webkit-scrollbar-track, .img::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+body::-webkit-scrollbar-thumb, .img::-webkit-scrollbar-thumb {
+  background-color: rgb(111, 111, 170);
+  border-radius: 5px;
+  outline: 1px solid rgb(91, 108, 124);
+}
 /* navbar */
 .navBarOne * {
   margin: 0;
@@ -52,7 +78,7 @@ button, div, img, input, select {
 
 /* departamentos */
 .departamentosDiv {
-  background: rgb(111, 111, 170);
+  background: rgb(0 120 255 / 12%);
   text-align: center;
   border-radius: 0;
 }
@@ -64,8 +90,7 @@ button, div, img, input, select {
   list-style: none;
   display: inline;
   padding: 0 5px 0 5px;
-  color: white;
-  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: rgb(58, 69, 73);
   cursor: pointer;
 }
 .departamentosDiv ul li.borderRight {
@@ -76,6 +101,8 @@ button, div, img, input, select {
   font-size: 120px;
   margin: 0;
   z-index: -1;
+  transition: .3s;
+  color: #6353bf;
 }
 
 /* catálogo de itens */
@@ -92,12 +119,9 @@ button, div, img, input, select {
 }
 .itensCatalogo .classificações ul li {
   list-style: none;
-  margin-top: 2px;
   color: rgb(58, 69, 73);
-  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   cursor: pointer;
   font-size: 17px;
-  border-bottom: 1px solid black;
   -webkit-user-select: none;
   user-select: none;
 }
@@ -111,13 +135,13 @@ button, div, img, input, select {
   background: white;
   margin: 10px;
   padding: 10px;
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
+  box-shadow: 5px 5px 5px rgb(76 38 117 / 40%);
   cursor: pointer;
 }
 .itemToBuy:hover {
   transition: 0.2s;
   transform: scale(1.02);
-  box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.35);
+  box-shadow: 6px 6px 6px rgb(76 38 117 0.35);
 }
 .itemToBuy .favoriteHeart {
   color: white;
@@ -198,6 +222,7 @@ button, div, img, input, select {
   position: relative;
   left: 35px;
   transition: 0.3s;
+  color: #b3a8f1;
 }
 /* linksTeste */
 .linkLindo {
@@ -213,11 +238,10 @@ button, div, img, input, select {
 }
 /* loogin/register screen */
 .loginOrRegister {
-  border: 3px dashed rgb(111, 111, 170);
   background: rgb(200, 200, 241);
   width: 300px;
   height: 340px;
-  padding: auto;
+  padding-top: 1px;
   margin: auto;
   position: relative;
   top: 60px;
@@ -288,11 +312,11 @@ button, div, img, input, select {
   text-align: center;
   width: 600px;
   height: 500px;
-  border: 3px dashed rgb(111, 111, 170);
   margin: 30px auto 0 auto;
   padding: 15px 70px 0 70px;
   background: rgb(200, 200, 241);
   animation: menu-change .3s;
+  padding: 1px 0;
 }
 .linksDoProfile {
   cursor: pointer;
@@ -314,7 +338,8 @@ button, div, img, input, select {
 }
 /* favoritados */
 .favoritados {
-  border: 3px dashed rgb(111, 111, 170);
+  padding-top: 10px;
+  padding-bottom: 1px;
   background: rgb(200, 200, 241);
   width: 1100px;
   min-height: 300px;
@@ -323,6 +348,10 @@ button, div, img, input, select {
   top: 30px;
   animation: menu-change .5s;
 }
+.maisOuMenos {
+  display: inline;
+}
+
 @keyframes menu-change {
   from {
     opacity: 0.3;
@@ -337,11 +366,11 @@ button, div, img, input, select {
   text-align: center;
 }
 .favoritados .listaDeItens {
-  border: 1px dashed rgb(111, 111, 170);
   background: rgb(171 171 220);
   width: 890px;
   height: 90px;
   margin: 60px auto 30px auto;
+  padding: 5px 0 0 0;
 }
 
 .listaDeItens .imgBox {
@@ -428,7 +457,7 @@ button, div, img, input, select {
   right: 30px;
   float: left;
   position: relative;
-  bottom: -50px;
+  bottom: -47px;
 }
 .quantidade .disp {
   margin-right: 15px;
@@ -437,6 +466,7 @@ button, div, img, input, select {
   border: 1px solid black;
   background: rgb(111, 111, 170);
   cursor: pointer;
+  width: 21.8px;
 }
 .editButton {
   width: 90px;
@@ -463,7 +493,6 @@ button, div, img, input, select {
   width: 200px;
   height: 400px;
   background: rgb(111, 111, 194);
-  border: 4px dashed rgb(164, 164, 235);
   position: absolute;
   top: 100px;
   display: inline-block;
@@ -522,18 +551,16 @@ button, div, img, input, select {
 }
 /* meus pedidos */
 .favoritados .historicoLista {
-  border: 1px dashed rgb(111, 111, 170);
   background: rgb(133, 133, 187);
   margin: 60px 200px 30px 200px;
-  padding: 0 40px 25px 40px;
+  padding: 1px 40px 25px 40px;
 }
 .readyItem {
-  border: 1px dashed black;
   background: rgb(171 171 220);
   margin: 10px 0 10px 0;
   padding-left: 40px;
   padding-right: 40px;
-  padding-top: 5px;
+  padding-top: 15px;
 }
 .descri h2 {
   display: inline-block;
@@ -618,8 +645,8 @@ button, div, img, input, select {
 }
 .everyItemLinkToCar button {
   width: 70px;
-  margin: 15px 3px 15px 3px;
-  height: 70px;
+  margin: 22px 3px 15px 3px;
+  height: 64px;
   border: 1px solid black;
   background: rgb(111, 111, 170);
   cursor: pointer;
@@ -682,7 +709,6 @@ button, div, img, input, select {
   font-size: 13px;
   font-family: monospace;
 }
-
 /* paginaçao */
 .pageLinks {
   text-align: center;
@@ -725,6 +751,7 @@ button, div, img, input, select {
     right: initial;
     position: relative;
     display: inline-flex;
+    margin-top: 3px;
   }
   .navBarOne ul .menuItenss {
     display: block;
@@ -743,7 +770,7 @@ button, div, img, input, select {
   }
   .departamentosDiv ul {
     margin: 0;
-    padding: 5px 0 5px 0;
+    padding: 0 0 5px 0;
     text-align: left;
     display: inline-block;
   } 
@@ -753,7 +780,7 @@ button, div, img, input, select {
   }
   .mobileMenuButton {
     display: block;
-    background: rgb(142, 142, 223);
+    background: rgb(0 120 255);
     padding: 0 5px 0 5px;
     margin: 5px 0 5px 0;
     position: relative;
@@ -761,6 +788,8 @@ button, div, img, input, select {
     top: 17px;
     transform: translate(-50%, -50%);
     padding: 3px 10px;
+    border: none;
+    color: white;
   }
   .itensCatalogo {
     width: auto;
@@ -795,13 +824,14 @@ button, div, img, input, select {
   /* everyItem */
   .itemIndividual {
     width: 290px;
-    padding: 0;
+    padding: 1px 0 0 0;
     background: white;
     border-radius: 5px;
     margin-bottom: 30px;
   }
   .itemIndividual .imgDiv img {
     width: 270px;
+    margin-bottom: 15px;
   }
   .imgDiv .img {
     max-height: 540px;
@@ -824,6 +854,7 @@ button, div, img, input, select {
   }
   .everyCompra {
     margin: 0;
+    width: 198px;
   }
   .everyItemLinkToCar {
     margin-bottom: 80px;
@@ -834,6 +865,7 @@ button, div, img, input, select {
   .botaoCarrinho {
     position: relative;
     top: 40px;
+    left: 1px;
   }
   .aboutEveryItem {
     text-align: left;
@@ -842,8 +874,8 @@ button, div, img, input, select {
     border-radius: 5px;
     position: relative;
     top: 10px;
-    right: 52px;
-    width: 200px;
+    right: 73px;
+    width: 240px;
   }
   .bigFontEveryItem {
     font-size: 30px;
@@ -852,7 +884,7 @@ button, div, img, input, select {
   .favoritados {
     width: 290px;
     top: 10px;
-    padding: 0 10px 0 10px;
+    padding: 1px 10px 1px 10px;
   }
   .favoritados .listaDeItens {
     width: 280px;
@@ -900,8 +932,6 @@ button, div, img, input, select {
   }
   /* meus pedidos */
   .favoritados .historicoLista {
-    border: 1px dashed rgb(111, 111, 170);
-    background: rgb(133, 133, 187);
     margin: 0px 5px 30px 5px;
     padding: 0 8px 0px 8px;
   }
@@ -922,9 +952,8 @@ button, div, img, input, select {
   }
   /* login screen */
   .loginScreen  {
-    padding: 0;
     width: 290px;
-    padding: 0 10px 0 10px;
+    padding: 1px 10px 0 10px;
     margin-top: 10px;
   }
   .aboutAcc {
@@ -957,5 +986,14 @@ button, div, img, input, select {
   }
   .quantidade .disp {
     margin-right: 26px;
+  }
+  /* Botoes de add do cart */
+  .maisOuMenos {
+    display: flex;
+    margin-left: 67px;
+    margin-top: 3px;
+  }
+  .maisOuMenos .quantityBut {
+    margin: 0 9px;
   }
 }

@@ -37,6 +37,7 @@ function EveryItem(props){
     }
 
     useEffect(()=>{
+        window.scrollTo({top: 0, behavior: "smooth"});
         if (props.item.estoque < 1){
             setQuantidadeDoItem(0)
         }
@@ -141,7 +142,6 @@ function EveryItem(props){
                         </div>
                         <div className="comprarAgora">
                             <div className="quantidadeParaComprar">
-                                <h4 className="h4Inline">Quantidade:</h4><span> </span>
                                 <button value={props.item.estoque} 
                                 onClick={subItem} name={props.item._id} href={props.item.productPrice} className="quantityBut">
                                     -

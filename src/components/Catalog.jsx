@@ -110,8 +110,11 @@ function Catalog(props) {
     useEffect(() => {
         const topDoUl = document.querySelector('.classificações ul').getBoundingClientRect().top
         const topDoLi = document.querySelectorAll('.classificações ul li')[0].getBoundingClientRect().top
-        setBolinhaHeight(topDoUl - topDoLi + 13)
+        setBolinhaHeight(topDoUl - topDoLi + 15)
         setSelectedList('TODOS')
+        setTimeout(() => {
+            document.querySelector('.bolinhaMenu').style.opacity = '1';
+        }, 230);
     }, [props.catalogIs]);
 
     //colocar maiores numeros de compra do maior pro menor (organização)
@@ -129,7 +132,7 @@ function Catalog(props) {
     function bolinhaAltura(e){
         //só vai pegar se clicar no LI uwu
         if (e.target.constructor.name === 'HTMLLIElement'){
-            setBolinhaHeight(Math.round(e.target.getBoundingClientRect().top - e.currentTarget.getBoundingClientRect().top + 13))
+            setBolinhaHeight(Math.round(e.target.getBoundingClientRect().top - e.currentTarget.getBoundingClientRect().top + 14))
         }
     }
 
@@ -165,7 +168,7 @@ function Catalog(props) {
     return (
         <div>
         <div className="itensCatalogo">
-            <div className="bolinhaMenu" style={{top: bolinhaHeight + 'px'}}>
+            <div className="bolinhaMenu" style={{top: bolinhaHeight + 'px', opacity: '0'}}>
                 <span>●</span>
             </div>
             <div className="classificações">

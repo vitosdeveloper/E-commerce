@@ -159,18 +159,19 @@ function Carrinho(){
                                                                 <span className="disp">
                                                                     Disponíveis: {item.estoque}
                                                                 </span>
-                                                                Quantidade:<span> </span>
-                                                                <button value={item.estoque} 
-                                                                onClick={removerItem} name={item._id} href={item.productPrice} id={carItem.quantidade} className="quantityBut">
-                                                                    -
-                                                                </button>
-                                                                <span> </span>
-                                                                {carItem.quantidade}
-                                                                <span> </span>
-                                                                <button value={item.estoque} href={item.productPrice} onClick={addItem} id={carItem.quantidade} name={item._id} 
-                                                                className="quantityBut">
-                                                                    +
-                                                                </button>
+                                                                <div className="maisOuMenos">
+                                                                    <button value={item.estoque} 
+                                                                    onClick={removerItem} name={item._id} href={item.productPrice} id={carItem.quantidade} className="quantityBut">
+                                                                        -
+                                                                    </button>
+                                                                    <span> </span>
+                                                                    {carItem.quantidade}
+                                                                    <span> </span>
+                                                                    <button value={item.estoque} href={item.productPrice} onClick={addItem} id={carItem.quantidade} name={item._id} 
+                                                                    className="quantityBut">
+                                                                        +
+                                                                    </button>
+                                                                </div>
                                                             </>
                                                         }
                                                     </div>

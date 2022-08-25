@@ -34,7 +34,7 @@ function Departamentos(props) {
         setPosicaoDaBarra((lastValues)=>{
             return {
                 ...lastValues,
-                altura: departMenuBottom.getBoundingClientRect().bottom - 140
+                altura: departMenuBottom.getBoundingClientRect().bottom - 110
             } 
         })
     }, []);
@@ -50,7 +50,7 @@ function Departamentos(props) {
                         top: posicaoDaBarra.altura + 'px', 
                         opacity: '0',
                         left: posicaoDaBarra.posicaoNoBotao + 'px'
-                    }}>_</h1>
+                    }}>.</h1>
             </div>
             )
 }

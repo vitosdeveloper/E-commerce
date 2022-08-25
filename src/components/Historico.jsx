@@ -37,7 +37,7 @@ function Historico(){
                                                                         readyToPost._id === itemToPost._id ?
                                                                         <Link key={readyIndex} className="linkLindo" to={"/"+readyToPost._id}>
                                                                             <div className="readyItem">
-                                                                                <div className="imgBox">
+                                                                                <div className="imgBox v2">
                                                                                     <img className="img" src={readyToPost.productImg} alt="" />
                                                                                 </div>
                                                                                 <div className="descri">
