@@ -1,21 +1,14 @@
 import NavBar from './NavBar.jsx';
 import { useState, useEffect } from 'react';
-import { useSetCarrinhoItens, useUsuarioDados, useJwt, useSetJwt, useLoggedIn, serverUrl, useCheckJwt } from '../LoginContext.jsx';
+import { useGlobalContext } from '../GlobalContext.jsx';
 import { Link, Navigate } from 'react-router-dom';
 import Axios from 'axios';
 
 function EveryItem(props){
 
-    const checkJwt = useCheckJwt();
-    const setCarrinhoItens = useSetCarrinhoItens();
-    const jwt = useJwt();
-    const setJwt = useSetJwt();
-    const isLoggedIn = useLoggedIn();
+    const {checkJwt, isLoggedIn, usuariosDados, serverUrl, setCarrinhoItens, jwt, setJwt} = useGlobalContext();
 
     const [quantidadeDoItem, setQuantidadeDoItem] = useState(1);
-    
-    //dados usuario
-    const dadosUsuario = useUsuarioDados();
 
     const precoTotal = quantidadeDoItem * parseFloat(props.item.productPrice);
     
@@ -91,7 +84,7 @@ function EveryItem(props){
         }
         
         const formulario = {
-            userId: dadosUsuario._id,
+            userId: usuariosDados._id,
             valorDaCompra: quantidadeDoItem * parseFloat(props.item.productPrice),
             itensByIdAndItsQuantity: itemDaPage,
             horarioDeCompra: horario+amOrPm,
@@ -192,7 +185,7 @@ function EveryItem(props){
                             setConfirmarCompra(false);
                         }}>🗙</span>
                         <h4>Seu endereço:</h4>
-                        <small><p>{dadosUsuario.endereco.slice(0, 26) + '...'}</p></small>
+                        <small><p>{usuariosDados.endereco.slice(0, 26) + '...'}</p></small>
                         <Link to="/profile"><button className="trocarEndereço">Trocar meu endereço</button></Link>
                         <h4>Escolha o serviço de frete:</h4>
                         <div>

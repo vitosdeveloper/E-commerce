@@ -1,16 +1,11 @@
 import NavBar from './NavBar.jsx';
-//trocar pelo context certo que vou fazer
-import { useItensDaLoja, useFavoritos, useSetFavoritos, useSetCarrinhoItens, useCarrinhoItens } from '../LoginContext.jsx';
+import { useGlobalContext } from '../GlobalContext.jsx';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import Footer from './Footer.jsx';
 
 function Favoritados(){
-    const todosItens = useItensDaLoja();
-    const fav = useFavoritos();
-    const setFav = useSetFavoritos();
-    const carrinhoItens = useCarrinhoItens();
-    const setCarrinhoItens = useSetCarrinhoItens();
+    const {itensDaLoja, favoritos, setFavoritos, carrinhoItens, setCarrinhoItens} = useGlobalContext();
     
     //efeitos nos botoes
     useEffect(() => {
@@ -28,8 +23,8 @@ function Favoritados(){
     //deletar favoritos
     function favDelete(e){
         const idToDelete = e.currentTarget.name;
-            setFav(
-                fav.filter((item)=>{
+            setFavoritos(
+                favoritos.filter((item)=>{
                     return item !== idToDelete
             })
         );
@@ -39,7 +34,7 @@ function Favoritados(){
     function favToCart(e){
         const itemId = e.currentTarget.name;
         let pricePerItem = '';
-        todosItens.forEach((itemZ)=>{
+        itensDaLoja.forEach((itemZ)=>{
             return itemZ._id === itemId ?
             pricePerItem = itemZ.productPrice
             : null;
@@ -47,7 +42,7 @@ function Favoritados(){
 
         setCarrinhoItens((prevItens)=>{
             let emFalta = 0;
-            const itemFound = todosItens.find((item)=>{
+            const itemFound = itensDaLoja.find((item)=>{
                 return item._id === itemId;
             })
             if (itemFound.estoque > 1) {
@@ -71,10 +66,10 @@ function Favoritados(){
                 <h1 className="favTitle">Favoritos ❤️</h1>
                     
                     {   
-                        fav.length >= 1 ? 
-                            todosItens.map((item, index)=>{
+                        favoritos.length >= 1 ? 
+                            itensDaLoja.map((item, index)=>{
                                 return (
-                                    fav.includes(item._id)?
+                                    favoritos.includes(item._id)?
                                     <div key={index} className="listaDeItens">
                                         <div className="favButtons">
                                             <button name={item._id} onClick={favDelete} className="favExcluir favButComum">

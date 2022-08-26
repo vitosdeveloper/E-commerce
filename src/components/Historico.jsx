@@ -1,27 +1,25 @@
 import NavBar from './NavBar.jsx';
-import { useItensDaLoja, useLoggedIn, useUserHistory } from '../LoginContext.jsx';
+import { useGlobalContext } from '../GlobalContext.jsx';
 import { Link } from 'react-router-dom';
 import Footer from './Footer.jsx';
 
 function Historico(){
-    const itensDaLoja = useItensDaLoja();
-    const isloggedIn = useLoggedIn();
-    const itensComprados = useUserHistory();
+    const {itensDaLoja, isLoggedIn, comprasDoUser} = useGlobalContext();
 
     return (
         <div>
             <NavBar />
             <div className="favoritados historicoItens">
                 <h1 className="favTitle">Meus pedidos ⌛</h1>
-                {    !isloggedIn?
+                {    !isLoggedIn?
                     
                     <div className="ifNotLogged">
                         <h2>Você precisa logar para acessar essa página.</h2>
                         <h4><Link to="/login">Login/Register</Link></h4>
                     </div> 
-                    : isloggedIn === true && itensComprados.length > 0 ?
+                    : isLoggedIn === true && comprasDoUser.length > 0 ?
 
-                    itensComprados.map((compra, index)=>{
+                    comprasDoUser.map((compra, index)=>{
                         return (
                             <div key={index} className="historicoLista">
                                 <h3>Data e horário da compra: {compra.detalhes.dataDaCompra}</h3>
@@ -66,7 +64,7 @@ function Historico(){
                             </div>
                         )
                     }).reverse()
-                    : isloggedIn === true && itensComprados.length === 0 ?
+                    : isLoggedIn === true && comprasDoUser.length === 0 ?
                         <div className="ifNotLogged">
                             <h2>Parece que você ainda não comprou nada.</h2>
                             <h4>Aproveite e encomende seus itens preferidos através da <Link to="/">página principal</Link></h4>

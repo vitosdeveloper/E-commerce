@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
-import { useItensDaLoja, useFavoritos, useSetFavoritos } from '../LoginContext.jsx';
+import { useGlobalContext } from '../GlobalContext.jsx';
 import { Link } from 'react-router-dom';
 import Footer from './Footer.jsx';
 
 function Catalog(props) {
-    //fake data provisória
-    const storeModel = useItensDaLoja();
+
+    const {itensDaLoja, setFavoritos, favoritos} = useGlobalContext();
     
     //lista de todos departamentos
     const [catalogList, setCatalogList] = useState([]);
     //nomes de classe repetidos são ignorados
-    storeModel.forEach((item)=>{
+    itensDaLoja.forEach((item)=>{
         if (!catalogList.includes(item.class) /* && item.status==='promoção' */) {
             setCatalogList([...catalogList, item.class]);
         }
@@ -19,7 +19,7 @@ function Catalog(props) {
     //lista de promoções
     const [catalogListPromo, setCatalogListPromo] = useState([]);
     //nomes de classe repetidos são ignorados
-    storeModel.forEach((item)=>{
+    itensDaLoja.forEach((item)=>{
         if (!catalogListPromo.includes(item.class) && item.status==='promoção') {
             setCatalogListPromo([...catalogListPromo, item.class])
         }
@@ -28,7 +28,7 @@ function Catalog(props) {
     //lista de mais comprados
     const [catalogMaisComprados, setCatalogMaisComprados] = useState([]);
     //nomes de classe repetidos são ignorados³
-    storeModel.forEach((item)=>{
+    itensDaLoja.forEach((item)=>{
         if (!catalogMaisComprados.includes(item.class) && item.numDeCompras >= 1){
             setCatalogMaisComprados([...catalogMaisComprados, item.class])
         }
@@ -40,13 +40,9 @@ function Catalog(props) {
         setSelectedList(e.target.innerText)
     }
 
-    //favHeart
-    const fav = useFavoritos();
-    const setFav = useSetFavoritos();
-
     function favoritar(e, itemId){
-        if (!fav.includes(itemId)){
-            setFav((prevData)=>{
+        if (!favoritos.includes(itemId)){
+            setFavoritos((prevData)=>{
                 return [
                     ...prevData, 
                     itemId
@@ -119,7 +115,7 @@ function Catalog(props) {
 
     //colocar maiores numeros de compra do maior pro menor (organização)
     let maisCompradosPreco = []
-    storeModel.forEach((item)=>{
+    itensDaLoja.forEach((item)=>{
         if (item.numDeCompras > 0 && !maisCompradosPreco.includes(item.numDeCompras)){
             maisCompradosPreco.push(item.numDeCompras)
         }
@@ -205,7 +201,7 @@ function Catalog(props) {
             >Show Catalogue</button>
             <div className="ecommerceItensDiv">
                 {props.catalogIs==='promoção'?
-                storeModel.map((item, index)=>{
+                itensDaLoja.map((item, index)=>{
                     return item.status==='promoção' && item.class === selectedList?
                     //se estiver em promoção
                     itemHtmlGenerator(item, index)
@@ -215,7 +211,7 @@ function Catalog(props) {
                     : null 
                 })
                 :props.catalogIs==='normal'?
-                storeModel.map((item, index)=>{
+                itensDaLoja.map((item, index)=>{
                     return item.class === selectedList ?
                     //mostrar apenas itens de determinada classe
                     itemHtmlGenerator(item, index, false)
@@ -227,7 +223,7 @@ function Catalog(props) {
                 })
                 :props.catalogIs==='mais comprados' ?
                     maisCompradosPreco.map((item)=>{
-                        return storeModel.map((itemZ, indexZ)=>{
+                        return itensDaLoja.map((itemZ, indexZ)=>{
                             return item === itemZ.numDeCompras ?
                                 itemZ.class === selectedList ?
                                     itemHtmlGenerator(itemZ, indexZ)

@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import Login from './components/Login.jsx';
 import Profile from './components/Profile.jsx';
 import MainPage from './components/MainPage.jsx';
-import { useItensDaLoja } from './LoginContext.jsx';
+import { useGlobalContext } from './GlobalContext.jsx';
 import Favoritados from './components/Favoritados.jsx';
 import Carrinho from './components/Carrinho.jsx';
 import Historico from './components/Historico.jsx';
@@ -11,7 +11,7 @@ import EveryItem from './components/EveryItem.jsx';
 
 function App() {
   
-  const itensDaLojaTeste = useItensDaLoja();
+  const {itensDaLoja} = useGlobalContext();
 
   return (
       <div>
@@ -24,7 +24,7 @@ function App() {
             <Route path="meus-pedidos" element={<Historico />} />
             <Route path="success" element={<Success />} />
             {   
-              itensDaLojaTeste.map((item, index)=>{
+              itensDaLoja.map((item, index)=>{
                 return <Route key={index} path={item._id} element={<EveryItem item={item} />} />
               })
             }

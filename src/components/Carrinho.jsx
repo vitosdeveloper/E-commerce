@@ -1,31 +1,20 @@
 import NavBar from './NavBar.jsx'
-import { serverUrl, useCarrinhoItens, useSetCarrinhoItens, useItensDaLoja, useLoggedIn, useUsuarioDados, useJwt, useSetJwt, useCheckJwt } from '../LoginContext.jsx';
+import { useGlobalContext } from '../GlobalContext.jsx';
 import { Link, Navigate } from 'react-router-dom';
 import { useState } from 'react';
 import Axios from 'axios';
 import Footer from './Footer.jsx';
 
 function Carrinho(){
-    const checkJwt = useCheckJwt();
-    const jwt = useJwt();
-    const setJwt = useSetJwt();
-    //carrinho
-    const carrinho = useCarrinhoItens();
-    const setCarrinho = useSetCarrinhoItens();
-    //todos itens
-    const todosItens = useItensDaLoja();
-    //logado ou n
-    const isLoggedIn = useLoggedIn();
-    //dados usuario
-    const dadosUsuario = useUsuarioDados();
-
+    const {checkJwt, itensDaLoja, isLoggedIn, usuariosDados, serverUrl, jwt, setJwt, setCarrinhoItens, carrinhoItens} = useGlobalContext();
+    
     const [redirectPosCompra, setRedirectPosCompra] = useState(false);
 
     //deletar do carrinho 
     function carDelete(e){
         const idToDelete = e.target.name;
-        setCarrinho(
-            carrinho.filter((item)=>{
+        setCarrinhoItens(
+            carrinhoItens.filter((item)=>{
                 return item._id !== idToDelete
             })
         );
@@ -33,9 +22,9 @@ function Carrinho(){
 
     //preço total
     let preco = [];
-    todosItens.forEach((item)=>{
+    itensDaLoja.forEach((item)=>{
         const itemToAdd = parseFloat(item.productPrice.replace(',', '.'));
-        carrinho.forEach((carItem)=>{
+        carrinhoItens.forEach((carItem)=>{
             if (item._id === carItem._id && item.estoque > 0){
                 preco.push(itemToAdd * carItem.quantidade)
             }
@@ -53,9 +42,9 @@ function Carrinho(){
         const disponiveis = e.currentTarget.value;
         const precoDoItem = e.currentTarget.getAttribute('href');
         if (itemQuantidade <= disponiveis) {
-            carrinho.forEach((item)=>{
+            carrinhoItens.forEach((item)=>{
                 if (item._id === itemId) {
-                    setCarrinho((lastValues)=>{
+                    setCarrinhoItens((lastValues)=>{
                         const carrinhoFiltrado = lastValues.filter((itemFilter)=>{
                             return itemFilter._id !== itemId
                         })
@@ -70,9 +59,9 @@ function Carrinho(){
         const itemId = e.currentTarget.name;
         const precoDoItem = e.currentTarget.getAttribute('href');
         if (itemQuantidade > 1) {
-            carrinho.forEach((item)=>{
+            carrinhoItens.forEach((item)=>{
                 if (item._id === itemId) {
-                    setCarrinho((lastValues)=>{
+                    setCarrinhoItens((lastValues)=>{
                         const carrinhoFiltrado = lastValues.filter((itemFilter)=>{
                             return itemFilter._id !== itemId
                         })
@@ -98,12 +87,12 @@ function Carrinho(){
         }
         const horario = (diaCompleto.getMonth()+1).toString().padStart(2, 0)+'/'+diaCompleto.getDate().toString().padStart(2, 0)+', às '+diaCompleto.getHours().toString().padStart(2, 0)+':'+(diaCompleto.getMinutes().toString().padStart(2, 0));
 
-        const carrinhoFiltrado = carrinho.filter((item)=>{
+        const carrinhoFiltrado = carrinhoItens.filter((item)=>{
             return item.quantidade >= 1;
         })
     
         const formulario = {
-            userId: dadosUsuario._id,
+            userId: usuariosDados._id,
             valorDaCompra: precoTotal,
             itensByIdAndItsQuantity: carrinhoFiltrado,
             horarioDeCompra: horario+amOrPm,
@@ -117,12 +106,12 @@ function Carrinho(){
         if (response.data.status==="success") {
             setJwt(response.data.jwt);
             setConfirmarCompra(false);
-            setCarrinho([])
+            setCarrinhoItens([])
             setRedirectPosCompra(<Navigate to="/success" />);
         } else if (response.data.status==="err") {
             document.querySelector('.divResponse').innerText = "Alguma coisa deu errado, relogue e tente novamente.";
-            checkJwt();
             setTimeout(() => {
+                checkJwt();
                 setRedirectPosCompra(<Navigate to="/login" />);
             }, 2000);
         } else if (response.data.status==='estoqueFail'){
@@ -140,10 +129,10 @@ function Carrinho(){
                 <h1 className="favTitle">Carrinho 🛒</h1>
 
                 {
-                        carrinho.length > 0 ? 
-                            todosItens.map((item, index)=>{
+                    carrinhoItens.length > 0 ? 
+                            itensDaLoja.map((item, index)=>{
                                 return (
-                                    carrinho.map((carItem)=>{
+                                    carrinhoItens.map((carItem)=>{
                                         return carItem._id === item._id ?
                                             <div key={index} className="listaDeItens">
                                                 <div className="favButtons">
@@ -207,9 +196,9 @@ function Carrinho(){
                             <h4><Link to="/">Página principal</Link></h4>
                         </div>
                     }
-                    <div className="precoTotal" style={ carrinho.length === 1 ? {marginTop: '60px'} : {}}>
+                    <div className="precoTotal" style={ carrinhoItens.length === 1 ? {marginTop: '60px'} : {}}>
                     {   
-                        carrinho.length > 0 ?
+                        carrinhoItens.length > 0 ?
                         <h3>Preço total: <br />{precoTotal.toLocaleString('pt-BR', {
                             style: 'currency',
                             currency: 'BRL'
@@ -217,7 +206,7 @@ function Carrinho(){
                         : null
                     }
                     {
-                        carrinho.length === 0 ?
+                        carrinhoItens.length === 0 ?
                             null
                             :
                             isLoggedIn === false ?
@@ -226,7 +215,7 @@ function Carrinho(){
                                     <h1>Logue para efetuar a compra!</h1>
                                 </button></Link>
                         
-                            :carrinho.length > 1?
+                            :carrinhoItens.length > 1?
                                 <button onClick={()=>{checkJwt(); setConfirmarCompra(true); window.scrollTo({top: 0, behavior: "smooth"})}} type="submit" className="comprarBut">
                                     <h1>Comprar itens</h1>
                                 </button>
@@ -245,7 +234,7 @@ function Carrinho(){
                         setConfirmarCompra(false);
                     }}>🗙</span>
                     <h4>Seu endereço:</h4>
-                    <small><p>{dadosUsuario.endereco.slice(0, 26) + '...'}</p></small>
+                    <small><p>{usuariosDados.endereco.slice(0, 26) + '...'}</p></small>
                     <Link to="/profile"><button className="trocarEndereço">Trocar meu endereço</button></Link>
                     <h4>Escolha o serviço de frete:</h4>
                     <div>

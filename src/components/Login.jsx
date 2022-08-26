@@ -1,14 +1,12 @@
 import NavBar from './NavBar.jsx';
 import { useState } from 'react';
-import { useLoggedIn, useSetJwt, serverUrl } from '../LoginContext.jsx';
-//pegar url atual e tals
+import { useGlobalContext } from '../GlobalContext.jsx';
 import { Navigate } from 'react-router-dom';
 import Axios from 'axios';
 import Footer from './Footer.jsx';
 
 function Login (){
-    const isLoggedIn = useLoggedIn();
-    const setJwt = useSetJwt();
+    const {serverUrl, isLoggedIn, setJwt} = useGlobalContext();
 
     const [logOrReg, setLogOrReg] = useState('choose');
     

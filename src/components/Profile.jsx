@@ -1,23 +1,17 @@
 import NavBar from './NavBar.jsx';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useLoggedIn, useLoggedInUpdate, useUsuarioDados, useSetUsuarioDados, useSetJwt, useJwt, serverUrl } from '../LoginContext.jsx';
+import { useGlobalContext, useSetGlobalContext } from '../GlobalContext.jsx';
 import { Navigate } from 'react-router-dom';
 import Axios from 'axios';
 import Footer from './Footer.jsx';
 
 function Profile(){
 
-    const jwt = useJwt();
-    const setJwt = useSetJwt();
+    const setGlobalContext = useSetGlobalContext();
+    const {isLoggedIn, usuariosDados, serverUrl, jwt, setJwt} = useGlobalContext();
 
-    const isLoggedIn = useLoggedIn();
-    const setIsLoggedIn = useLoggedInUpdate();
     const [redirect, setRedirect] = useState('');
- 
-    const usuarioDados = useUsuarioDados();
-    const setUsuarioDados = useSetUsuarioDados();
-
     const [editando, setEditando] = useState(false);
     const [backupInfo, setBackupInfo] = useState({});
     function editToggle(){
@@ -26,35 +20,49 @@ function Profile(){
     };
     function editarDeFato(e){
         const {value, name} = e.target;
-        setUsuarioDados((lastValues)=>{
+        setGlobalContext(prev=>{
             return {
-                ...lastValues,
-                [name]: value,
+                ...prev,
+                usuariosDados: {
+                    ...prev.usuariosDados,
+                    [name]: value
+                }
             }
         })
     };
     //pro botao cancelar do editar
     function backupDasInfos(){
-        setBackupInfo(usuarioDados)
+        setBackupInfo(usuariosDados)
     };
     function voltarAoBackup(){
-        setUsuarioDados(backupInfo)
+        setGlobalContext(prev=>{
+            return {
+                ...prev,
+                usuariosDados: backupInfo
+            }
+        })
+        //setUsuarioDados(backupInfo)
     };
 
     function deslogar(){
-        setIsLoggedIn(false);
+        setGlobalContext(prev=>{
+            return {
+                ...prev,
+                isLoggedIn: false,
+                usuariosDados: {
+                    _id: '',
+                    login: '',
+                    nome: '',
+                    endereco: '',
+                    sexo: '',
+                    itensComprados: []
+                }
+            }
+        })
         setTimeout(() => {
             setRedirect(<Navigate to="/" />)
         }, 1500);
         setJwt();
-        setUsuarioDados({
-            _id: '',
-            login: '',
-            nome: '',
-            endereco: '',
-            sexo: '',
-            itensComprados: []
-        })
     };
     //nao da pra declarar como constante fora da function porque na primeira lida o elemento realmente n existe,
     //já que no lugar da tela de profile, está a tela/component de login no lugar
@@ -65,7 +73,7 @@ function Profile(){
     
     async function enviarForm(){
         try {
-            const dadosComJwt = {...usuarioDados, jwt};
+            const dadosComJwt = {...usuariosDados, jwt};
             profResHtml().style.opacity = '100';
             profResHtml().style.color = 'black';
             profResHtml().innerText = 'Processando...';
@@ -93,12 +101,12 @@ function Profile(){
                     <div className="aboutAcc">
                         <h1>Sobre a conta</h1>
                         <h4>Nome:</h4>
-                        {!editando ? <p>{usuarioDados.nome}</p> : <input placeholder="Insira seu nome" maxLength="50" value={usuarioDados.nome} name="nome" onChange={editarDeFato} className="inputEdit"/>}
+                        {!editando ? <p>{usuariosDados.nome}</p> : <input placeholder="Insira seu nome" maxLength="50" value={usuariosDados.nome} name="nome" onChange={editarDeFato} className="inputEdit"/>}
                         <h4>Endereço:</h4>
-                        {!editando ? <p>{usuarioDados.endereco}</p> : <div><input placeholder="Insira seu endereço" value={usuarioDados.endereco} name="endereco" onChange={editarDeFato} className="inputEdit"/><br/></div>}
+                        {!editando ? <p>{usuariosDados.endereco}</p> : <div><input placeholder="Insira seu endereço" value={usuariosDados.endereco} name="endereco" onChange={editarDeFato} className="inputEdit"/><br/></div>}
                         <h4>Sexo:</h4>
                         {
-                        !editando ? <p>{usuarioDados.sexo}</p> : 
+                        !editando ? <p>{usuariosDados.sexo}</p> : 
                             <div>
                                 <select className="inputEdit" name="sexo" onChange={editarDeFato}>
 	                                	<option value="">Escolha seu sexo</option>

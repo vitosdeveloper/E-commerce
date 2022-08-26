@@ -1,10 +1,9 @@
 import { Link } from 'react-router-dom';
-import { useLoggedIn, useItensDaLoja } from '../LoginContext.jsx';
+import { useGlobalContext } from '../GlobalContext.jsx';
 import { useState, useEffect } from 'react';
 
 function NavBar() {
-    const isLoggedIn = useLoggedIn();
-    const itensDaLoja = useItensDaLoja();
+    const {isLoggedIn, itensDaLoja} = useGlobalContext();
 
     const navBarOneItens = [
       {
