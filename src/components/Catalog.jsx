@@ -161,6 +161,14 @@ function Catalog(props) {
         window.scrollTo({top: 0, behavior: "smooth"})
     }, [paginaSelecionada])
 
+    const [extraLoadingMessage, setExtraLoadingMessage] = useState('');
+
+    async function updateLoadingMessage(){
+        setTimeout(() => {
+            setExtraLoadingMessage("it's a free server, it can take a little long to wake up for the first time!");
+        }, 700);
+    }
+
     return (
         <div>
         <div className="itensCatalogo">
@@ -238,22 +246,24 @@ function Catalog(props) {
                 }
             </div>
         </div>
-        <div className="pageLinks linkLindo">[
-            {   numDeItens !== 0 ?
-                new Array(numDeItens).fill(undefined).map((item, index)=>{
-                    return index % 6 === 0 ?
-                    <div className="everyPage linkLindo" key={index} 
-                    onClick={()=>{
-                        setPaginaSelecionada(index / 6 +1)
-                        }}
-                    >
-                        {index / 6 +1}
-                    </div>
-                    : null
-                })
-                : 'loading...'
-            }
-        ]</div>
+        <div className="pageLinks linkLindo">
+            <h3 onLoad={updateLoadingMessage()}>[
+                {   numDeItens !== 0 ?
+                    new Array(numDeItens).fill(undefined).map((item, index)=>{
+                        return index % 6 === 0 ?
+                        <div className="everyPage linkLindo" key={index} 
+                        onClick={()=>{
+                            setPaginaSelecionada(index / 6 +1)
+                            }}
+                        >
+                            {index / 6 +1}
+                        </div>
+                        : null
+                    })
+                    : 'loading... '+extraLoadingMessage
+                }
+            ]</h3>
+        </div>
         <Footer />
         </div>
     )

@@ -16,7 +16,7 @@ export function GlobalProvider({ children }){
 
     const [favoritos, setFavoritos] = useLocalStorage('fav', []);
     const [carrinhoItens, setCarrinhoItens] = useLocalStorage('carrinho', []);
-    const [jwt, setJwt] = useLocalStorage('jwt', );
+    const [jwt, setJwt] = useLocalStorage('jwt', '');
 
     const jwtCheck = async ()=>{
         const response = await Axios.post(globalContextState.serverUrl+"/checkJwt", {jwt});
@@ -93,7 +93,6 @@ export function GlobalProvider({ children }){
             });
         }
         asyncInsideUseEffect();
-        
     }, [globalContextState.serverUrl]);
     //antihack em nao vai brincar de alterar jwt
     useEffect(()=>{
