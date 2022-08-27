@@ -163,7 +163,7 @@ function Catalog(props) {
 
     const [extraLoadingMessage, setExtraLoadingMessage] = useState('');
 
-    async function updateLoadingMessage(){
+    function updateLoadingMessage(){
         setTimeout(() => {
             setExtraLoadingMessage("it's a free server, it can take a little long to wake up for the first time!");
         }, 700);
