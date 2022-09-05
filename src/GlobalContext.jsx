@@ -66,7 +66,7 @@ export function GlobalProvider({ children }){
         setCarrinhoItens: setCarrinhoItens,
         jwt: jwt,
         setJwt: setJwt,
-        serverUrl: 'https://vitos-e-commerce.herokuapp.com'
+        serverUrl: 'https://vitos-ecommerce-server.onrender.com'
     })
     //esse é pra atualizar alguns detalhes do obj qnd for preciso, pois o valor do state não atualiza depois de setado no objeto como outra variável, segundo meus testes
     useEffect(()=>{

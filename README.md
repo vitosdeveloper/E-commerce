@@ -1,6 +1,6 @@
 Live version: https://vitos-e-commerce.netlify.app/
 
-Server adress: https://vitos-e-commerce.herokuapp.com/
+Server adress: https://vitos-ecommerce-server.onrender.com/ \
 Server repo: https://github.com/vitosnatios/E-commerce-back-end
 
 My linkedin: https://www.linkedin.com/in/vitosnatios/
@@ -15,15 +15,15 @@ My goal when starting this project was to test my knowledge and challenge myself
 
 ## Technologies and languages used in the project
 
-This project is using:
--ReactJS.
--NodeJS.
--ExpressJS.
--MongoDB.
--Mongoose.
--Javascript.
--Html.
--Css.
+This project is using: \
+-ReactJS. \
+-NodeJS. \
+-ExpressJS. \
+-MongoDB. \
+-Mongoose. \
+-Javascript. \
+-Html. \
+-Css. \
 -Some others...
 
 ## Details about the application
@@ -57,6 +57,6 @@ It looks for items that start with the letters you typed, regardless of whether 
 
 ## Thanks for your interest.
 
-You can contact me anytime you want! I'm looking for job opportunities!
-Linkedin: https://www.linkedin.com/in/vitosnatios/
+You can contact me anytime you want! I'm looking for job opportunities! \
+Linkedin: https://www.linkedin.com/in/vitosnatios/ \
 E-mail: vitosdeveloper@gmail.com
