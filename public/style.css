@@ -13,31 +13,57 @@ code {
     monospace;
 }
 
-button, div, img, input, select {
+button,
+div,
+img,
+input,
+select {
   border-radius: 5px;
 }
 /* Sombras */
-.favoritados, .listaDeItens, .favAddCart, .quantityBut, .imgBox, .comprarBut, .historicoLista, .readyItem, .everyItemLinkToCar button, 
-.confirmarCompra, .loginScreen, .loginOrRegister, .itemIndividual, .aboutEveryItem, .editButton, .favButComum, .mobileMenuButton {
+.favoritados,
+.listaDeItens,
+.favAddCart,
+.quantityBut,
+.imgBox,
+.comprarBut,
+.historicoLista,
+.readyItem,
+.everyItemLinkToCar button,
+.confirmarCompra,
+.loginScreen,
+.loginOrRegister,
+.itemIndividual,
+.aboutEveryItem,
+.editButton,
+.favButComum,
+.mobileMenuButton {
   box-shadow: 5px 5px 5px rgb(76 38 117 / 40%);
 }
 /* Grown on hover */
-.readyItem:hover, .listaDeItens:hover, li:hover, .logo:hover, .aboutEveryItem:hover, button:hover {
+.readyItem:hover,
+.listaDeItens:hover,
+li:hover,
+.logo:hover,
+.aboutEveryItem:hover,
+button:hover {
   scale: 1.02;
-  transition: .3s;
 }
 .imgBox.v2 {
   width: 0;
 }
 /* scrollbars */
-body::-webkit-scrollbar, .img::-webkit-scrollbar {
+body::-webkit-scrollbar,
+.img::-webkit-scrollbar {
   width: 10px;
   background: #b3a8f1;
 }
-body::-webkit-scrollbar-track, .img::-webkit-scrollbar-track {
+body::-webkit-scrollbar-track,
+.img::-webkit-scrollbar-track {
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
-body::-webkit-scrollbar-thumb, .img::-webkit-scrollbar-thumb {
+body::-webkit-scrollbar-thumb,
+.img::-webkit-scrollbar-thumb {
   background-color: rgb(111, 111, 170);
   border-radius: 5px;
   outline: 1px solid rgb(91, 108, 124);
@@ -112,7 +138,7 @@ body::-webkit-scrollbar-thumb, .img::-webkit-scrollbar-thumb {
   font-size: 120px;
   margin: 0;
   z-index: -1;
-  transition: .3s;
+  transition: 0.3s;
   color: #6353bf;
 }
 
@@ -257,7 +283,7 @@ body::-webkit-scrollbar-thumb, .img::-webkit-scrollbar-thumb {
   position: relative;
   top: 60px;
   text-align: center;
-  animation: menu-change .3s;
+  animation: menu-change 0.3s;
 }
 .logChoose {
   padding-top: 50px;
@@ -326,7 +352,7 @@ body::-webkit-scrollbar-thumb, .img::-webkit-scrollbar-thumb {
   margin: 30px auto 0 auto;
   padding: 15px 70px 0 70px;
   background: rgb(200, 200, 241);
-  animation: menu-change .3s;
+  animation: menu-change 0.3s;
   padding: 1px 0;
 }
 .linksDoProfile {
@@ -357,7 +383,7 @@ body::-webkit-scrollbar-thumb, .img::-webkit-scrollbar-thumb {
   margin: 0 auto 50px auto;
   position: relative;
   top: 30px;
-  animation: menu-change .5s;
+  animation: menu-change 0.5s;
 }
 .maisOuMenos {
   display: inline;
@@ -366,11 +392,11 @@ body::-webkit-scrollbar-thumb, .img::-webkit-scrollbar-thumb {
 @keyframes menu-change {
   from {
     opacity: 0.3;
-    transform: translate3d(0,15px,0);
+    transform: translate3d(0, 15px, 0);
   }
   to {
     opacity: 1;
-    transform: translate3d(0,0,0);
+    transform: translate3d(0, 0, 0);
   }
 }
 .favTitle {
@@ -388,7 +414,7 @@ body::-webkit-scrollbar-thumb, .img::-webkit-scrollbar-thumb {
   border: 1px solid black;
   max-height: 70px;
   min-width: 90px;
-  max-widtH: 90px;
+  max-width: 90px;
   margin-left: 7px;
   position: relative;
   margin-top: 7px;
@@ -610,7 +636,7 @@ body::-webkit-scrollbar-thumb, .img::-webkit-scrollbar-thumb {
   background: white;
   border-radius: 5px;
   margin-bottom: 30px;
-  animation: show-down .3s;
+  animation: show-down 0.3s;
 }
 .itemIndividual .itemTitle {
   padding: 2px 8px 6px 8px;
@@ -689,7 +715,7 @@ body::-webkit-scrollbar-thumb, .img::-webkit-scrollbar-thumb {
   width: 370px;
   top: 340px;
   padding: 15px;
-  background: #c6c6fb;;
+  background: #c6c6fb;
   border-radius: 5px;
 }
 .aboutEveryItem li {
@@ -736,11 +762,11 @@ body::-webkit-scrollbar-thumb, .img::-webkit-scrollbar-thumb {
 @keyframes show-down {
   from {
     opacity: 0;
-    transform: translate3d(0,-30px,0);
+    transform: translate3d(0, -30px, 0);
   }
   to {
     opacity: 1;
-    transform: translate3d(0,o,0);
+    transform: translate3d(0, o, 0);
   }
 }
 
@@ -784,7 +810,7 @@ body::-webkit-scrollbar-thumb, .img::-webkit-scrollbar-thumb {
     padding: 0 0 5px 0;
     text-align: left;
     display: inline-block;
-  } 
+  }
   .departamentosDiv ul li.borderRight {
     border-right: none;
     font-size: 13px;
@@ -854,7 +880,6 @@ body::-webkit-scrollbar-thumb, .img::-webkit-scrollbar-thumb {
     transform: translate(-50%, -50%);
   }
   .comprarAgora {
-    /* text-align: center; */
     bottom: 123px;
     margin-left: 78px;
     width: 230px;
@@ -929,7 +954,8 @@ body::-webkit-scrollbar-thumb, .img::-webkit-scrollbar-thumb {
     bottom: -75px;
     width: 200px;
   }
-  .quantidadeParaComprar, .h4Inline.bigFontEveryItem {
+  .quantidadeParaComprar,
+  .h4Inline.bigFontEveryItem {
     position: relative;
     right: 30px;
     bottom: 15px;
@@ -951,7 +977,7 @@ body::-webkit-scrollbar-thumb, .img::-webkit-scrollbar-thumb {
   }
   .itensCatalogo .classificações ul.showCatalogue {
     display: block;
-    animation: show-down .1s;
+    animation: show-down 0.1s;
   }
   .itensCatalogo .classificações ul.hideCatalogue {
     display: none;
@@ -962,7 +988,7 @@ body::-webkit-scrollbar-thumb, .img::-webkit-scrollbar-thumb {
     padding: 0 30px 0 30px;
   }
   /* login screen */
-  .loginScreen  {
+  .loginScreen {
     width: 290px;
     padding: 1px 10px 0 10px;
     margin-top: 10px;
@@ -982,14 +1008,14 @@ body::-webkit-scrollbar-thumb, .img::-webkit-scrollbar-thumb {
     word-break: break-word;
   }
   .itemToBuy .favoriteHeart {
-  color: white;
-  position: absolute;
-  right: 10px;
-  font-size: 40px;
-  display: inline-block;
-  top: 5px;
-  z-index: 2;
-  -webkit-text-stroke: 2px black;
+    color: white;
+    position: absolute;
+    right: 10px;
+    font-size: 40px;
+    display: inline-block;
+    top: 5px;
+    z-index: 2;
+    -webkit-text-stroke: 2px black;
   }
   /* Carrinho */
   .precoTotal {
