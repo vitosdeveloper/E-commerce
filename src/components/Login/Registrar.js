@@ -33,7 +33,11 @@ const Registrar = () => {
       <Input type='text' label='Usuário' id='username' {...username} />
       <Input type='password' label='Senha' id='password' {...password} />
       <Error error={error} />
-      {loading ? <Button disabled>Logando...</Button> : <Button>Logar</Button>}
+      {loading ? (
+        <Button disabled>Registrando...</Button>
+      ) : (
+        <Button>Registrar</Button>
+      )}
       <Link to='/login'>Back</Link>
     </form>
   );
