@@ -1,0 +1,38 @@
+.form h1,
+.form h2,
+.form h3,
+.form h4,
+.form h5,
+.form h6,
+.form p {
+  margin: 0;
+}
+
+.form {
+  width: 260px;
+}
+
+.form button {
+  margin: 0.5rem 0;
+}
+
+.form h3 {
+  text-decoration: underline;
+}
+
+.center {
+  justify-items: center;
+}
+
+.container {
+  background: rgb(200, 200, 241);
+  box-shadow: 5px 5px 5px rgb(76 38 117 / 40%);
+  display: grid;
+  margin: 2rem auto;
+  padding: 2rem 2rem 4rem 2rem;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+  justify-items: center;
+  border-radius: 0.4rem;
+  width: 260px;
+}
