@@ -1,0 +1,46 @@
+/* h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+} */
+
+/* ul,
+li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+} */
+
+a {
+  text-decoration: none;
+  font-weight: bold;
+  color: #333;
+}
+
+a:hover,
+a:focus {
+  color: black;
+  text-decoration: underline;
+}
+
+.container {
+  background: rgb(200, 200, 241);
+  box-shadow: 5px 5px 5px rgb(76 38 117 / 40%);
+  display: grid;
+  margin: 0 auto;
+  padding: 2rem;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+  justify-items: start;
+  border-radius: 0.4rem;
+  margin-top: 2rem;
+}
+
+.title {
+  color: #333;
+  font-size: 3rem;
+}
