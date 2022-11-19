@@ -2,7 +2,17 @@ import React from 'react';
 import Error from '../Helper/Error';
 import styles from './Input.module.css';
 
-const Input = ({ type, label, id, value, onChange, error, onBlur }) => {
+const Input = ({
+  type,
+  label,
+  id,
+  value,
+  onChange,
+  error,
+  onBlur,
+  inpuRefLog,
+  inputRefReg,
+}) => {
   return (
     <div>
       <label className={styles.label} htmlFor={id}>
@@ -16,6 +26,7 @@ const Input = ({ type, label, id, value, onChange, error, onBlur }) => {
         onChange={onChange}
         onBlur={onBlur}
         className={styles.input}
+        ref={inpuRefLog || inputRefReg}
       />
       <Error error={error} />
     </div>

@@ -112,6 +112,7 @@ function EveryItem() {
       setJwt(response.data.jwt);
       setConfirmarCompra(false);
       setRedirectPosCompra(<Navigate to='/success' />);
+      setTimeout(checkJwt, 0);
     } else if (response.data.status === 'err') {
       divDoBotao.innerText = 'Houve algum erro. Tente novamente mais tarde.';
       divDoBotao.style.color = '#670707';
@@ -199,7 +200,6 @@ function EveryItem() {
                 {isLoggedIn ? (
                   <button
                     onClick={() => {
-                      checkJwt();
                       setConfirmarCompra(true);
                       window.scrollTo({ top: 0, behavior: 'smooth' });
                     }}

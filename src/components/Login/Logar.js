@@ -6,12 +6,14 @@ import Input from '../Form/Input';
 import styles from './Logar.module.css';
 import useFetch from '../../Hooks/useFetch';
 import Error from '../Helper/Error';
+import { useRef } from 'react';
+import { useEffect } from 'react';
 
 const Logar = () => {
   const { error, loading, logar } = useFetch();
-
   const username = useForm();
   const password = useForm();
+  const inputRef = useRef();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,12 +27,22 @@ const Logar = () => {
     }
   };
 
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
   return (
     <form className={`${styles.form} container`} onSubmit={handleSubmit}>
       <h1 className='title'>Login</h1>
       <h4>Bem-vindo de volta, </h4>
       <h3>{username.value}</h3>
-      <Input type='text' label='Usuário' id='username' {...username} />
+      <Input
+        inpuRefLog={inputRef}
+        type='text'
+        label='Usuário'
+        id='username'
+        {...username}
+      />
       <Input type='password' label='Senha' id='password' {...password} />
       <Error error={error} />
       {loading ? <Button disabled>Logando...</Button> : <Button>Logar</Button>}

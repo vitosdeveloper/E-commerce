@@ -269,6 +269,7 @@ body::-webkit-scrollbar-thumb,
 }
 .linkLindo:hover {
   color: black;
+  text-decoration: none;
 }
 .linkLindo p {
   margin-top: 0;
