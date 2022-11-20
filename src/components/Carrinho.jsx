@@ -6,7 +6,6 @@ import Footer from './Footer.jsx';
 
 function Carrinho() {
   const {
-    checkJwt,
     itensDaLoja,
     isLoggedIn,
     usuariosDados,
@@ -136,7 +135,6 @@ function Carrinho() {
       document.querySelector('.divResponse').innerText =
         'Alguma coisa deu errado, relogue e tente novamente.';
       setTimeout(() => {
-        checkJwt();
         setRedirectPosCompra(<Navigate to='/login' />);
       }, 2000);
     } else if (response.data.status === 'estoqueFail') {
@@ -253,7 +251,6 @@ function Carrinho() {
           ) : carrinhoItens.length > 1 ? (
             <button
               onClick={() => {
-                checkJwt();
                 setConfirmarCompra(true);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
@@ -265,7 +262,6 @@ function Carrinho() {
           ) : (
             <button
               onClick={() => {
-                checkJwt();
                 setConfirmarCompra(true);
               }}
               type='submit'

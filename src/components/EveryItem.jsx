@@ -11,7 +11,6 @@ function EveryItem() {
 
   const params = useParams();
   const {
-    checkJwt,
     isLoggedIn,
     usuariosDados,
     serverUrl,
@@ -112,7 +111,6 @@ function EveryItem() {
       setJwt(response.data.jwt);
       setConfirmarCompra(false);
       setRedirectPosCompra(<Navigate to='/success' />);
-      setTimeout(checkJwt, 0);
     } else if (response.data.status === 'err') {
       divDoBotao.innerText = 'Houve algum erro. Tente novamente mais tarde.';
       divDoBotao.style.color = '#670707';
