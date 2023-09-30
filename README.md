@@ -1,6 +1,6 @@
 Live version: https://vitos-e-commerce.netlify.app/
 
-Server adress: https://vitos-ecommerce-server.onrender.com/ \
+Server adress: https://e-commerce-back-end-fawn.vercel.app/api/ \
 Server repo: https://github.com/vitosnatios/E-commerce-back-end
 
 My linkedin: https://www.linkedin.com/in/vitosnatios/
