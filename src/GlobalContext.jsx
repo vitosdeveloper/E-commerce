@@ -68,7 +68,7 @@ export function GlobalProvider({ children }) {
     setCarrinhoItens: setCarrinhoItens,
     jwt: jwt,
     setJwt: setJwt,
-    serverUrl: 'https://vitos-ecommerce-server.onrender.com',
+    serverUrl: 'https://e-commerce-back-end-fawn.vercel.app/api',
   });
   //esse é pra atualizar alguns detalhes do obj qnd for preciso, pois o valor do state não atualiza depois de setado no objeto como outra variável, segundo meus testes
   useEffect(() => {
